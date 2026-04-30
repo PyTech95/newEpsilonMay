@@ -22,17 +22,19 @@ export default function Navbar() {
   const transparent = onHome && !scrolled;
 
   const baseNav = 'font-caps text-[0.7rem] font-semibold tracking-[0.2em] transition-colors';
-  const navColor = transparent ? 'text-cream hover:text-gold' : 'text-navy hover:text-gold';
+  const navColor = 'text-cream hover:text-gold';
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        transparent ? 'bg-transparent' : 'bg-cream/95 backdrop-blur border-b border-navy/5'
+        transparent
+          ? 'bg-navy-deep/30 backdrop-blur-sm'
+          : 'bg-navy-deep/95 backdrop-blur border-b border-gold/10'
       }`}
     >
-      <div className="container-x flex items-center justify-between h-[88px]">
+      <div className="container-x flex items-center justify-between h-[112px]">
         <Link to="/" className="flex items-center gap-2">
-          <img src={LOGO_URL} alt="Epsilon" className="h-12 w-auto object-contain" />
+          <img src={LOGO_URL} alt="Epsilon" className="h-[90px] w-auto object-contain" />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-10">
@@ -77,14 +79,14 @@ export default function Navbar() {
             href="https://moodle.org/login/index.php"
             target="_blank"
             rel="noopener noreferrer"
-            className={transparent ? 'btn-gold' : 'btn-navy'}
+            className="btn-outline-gold"
           >
             <LogIn size={14} /> Sign In
           </a>
         </div>
 
         <button
-          className={`lg:hidden ${transparent ? 'text-cream' : 'text-navy'}`}
+          className="lg:hidden text-cream"
           onClick={() => setMobileOpen((v) => !v)}
           aria-label="Toggle Menu"
         >
