@@ -159,7 +159,7 @@ export const leadFaculty = [
       'ex-Interpublic Group, ex-Publicis Group, ex-Horizon Media',
       'Former Adjunct Faculty, NYU, Columbia University and ISPP'
     ],
-    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=900&q=80',
+    image: 'https://customer-assets.emergentagent.com/job_logos-11/artifacts/oimw09re_image.png',
     bio: 'Kent Bhupathi is an economist, data science leader and educator with more than 15 years of experience leading applied research and analytics work across marketing sciences, healthcare analytics, supply chain, business intelligence, litigation and professional services. He has worked at the intersection of economics, statistics, machine learning and decision support, helping organisations turn complex analysis into practical business action and return on investment (ROI).',
     bio2: 'He holds a dual degree in Economics and Architecture from the University of Texas at Austin and a Master\u2019s in Applied Econometrics from New York University. Across his teaching career, he has led curriculum design and lectured on applied statistics, data science, machine learning, quantitative business methods, data visualisation and technical communication. His prior teaching appointments include New York University (NYU), Columbia University and the Indian School of Public Policy (ISPP).',
     tags: ['Economics', 'Data Science', 'Machine Learning', 'Decision Support']
