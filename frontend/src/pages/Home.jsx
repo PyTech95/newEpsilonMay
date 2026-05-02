@@ -146,7 +146,7 @@ function BrochureDownload({ programs, brochure }) {
 }
 
 /* ---------- Admissions + Contact inline ---------- */
-function AdmissionsContact() {
+function AdmissionsContact({ sections, contact }) {
   const [form, setForm] = useState({ name: '', email: '', topic: 'Admissions Question', message: '' });
   const [sent, setSent] = useState(false);
 
@@ -162,13 +162,13 @@ function AdmissionsContact() {
       <div className="container-x grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-14 lg:gap-16">
         {/* Admissions process */}
         <div>
-          <p className="eyebrow mb-4">Admissions</p>
+          <p className="eyebrow mb-4">{sections?.admissionsEyebrow || 'Admissions'}</p>
           <span className="gold-rule-lg" />
           <h2 className="font-display text-navy text-[2rem] md:text-[3rem] leading-[1.05] mt-6 max-w-lg">
-            A personal conversation. <span className="italic font-editorial text-gold">Not a funnel.</span>
+            {sections?.admissionsTitle || 'A personal conversation. Not a funnel.'}
           </h2>
           <p className="font-editorial text-navy/80 text-[1.15rem] leading-relaxed mt-6 max-w-xl">
-            Every applicant speaks with an admissions lead before a seat is offered. Start with a message — we will write back personally.
+            {sections?.admissionsSubtitle || 'Every applicant speaks with an admissions lead before a seat is offered. Start with a message — we will write back personally.'}
           </p>
 
           <div className="mt-10 space-y-6 max-w-md">
@@ -191,15 +191,15 @@ function AdmissionsContact() {
           <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
             <div className="flex gap-3">
               <Mail size={16} className="text-gold mt-1 flex-shrink-0" />
-              <span className="text-navy/85">admissions@epsilon-edu.in</span>
+              <span className="text-navy/85">{contact?.email || 'admissions@epsilon-edu.in'}</span>
             </div>
             <div className="flex gap-3">
               <Phone size={16} className="text-gold mt-1 flex-shrink-0" />
-              <span className="text-navy/85">+91 · on request</span>
+              <span className="text-navy/85">{contact?.phone || '+91 · on request'}</span>
             </div>
             <div className="flex gap-3">
               <MapPin size={16} className="text-gold mt-1 flex-shrink-0" />
-              <span className="text-navy/85">Live online · India</span>
+              <span className="text-navy/85">{contact?.address || 'Live online · India'}</span>
             </div>
           </div>
         </div>
@@ -276,6 +276,9 @@ export default function Home() {
   const brochure = home?.brochure || {};
   const about = home?.about || {};
   const cta = home?.cta || {};
+  const sections = home?.sections || {};
+  const contact = home?.contact || {};
+  const footer = home?.footer || {};
   const heroImage = hero.heroImage || 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=2400&q=80';
 
   return (
@@ -322,7 +325,7 @@ export default function Home() {
       {/* 2. PROGRAM SHOWCASE */}
       <section className="bg-cream py-24 md:py-32">
         <div className="container-x">
-          <p className="eyebrow mb-4">Flagship Programme</p>
+          <p className="eyebrow mb-4">{sections.flagshipEyebrow || 'Flagship Programme'}</p>
           <span className="gold-rule-lg" />
 
           <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-stretch">
@@ -390,7 +393,7 @@ export default function Home() {
       <FacultyShowcase />
 
       {/* 5. ADMISSIONS + CONTACT */}
-      <AdmissionsContact />
+      <AdmissionsContact sections={sections} contact={contact} />
 
       {/* 6. ABOUT */}
       <section className="bg-bone py-24 md:py-32">
@@ -427,10 +430,10 @@ export default function Home() {
       <section className="bg-navy-deep text-cream py-24 md:py-32 relative overflow-hidden">
         <div className="absolute inset-0 starfield opacity-40" />
         <div className="container-x relative">
-          <p className="eyebrow mb-4">In Their Words</p>
+          <p className="eyebrow mb-4">{sections.testimonialsEyebrow || 'In Their Words'}</p>
           <span className="gold-rule-lg" />
           <h2 className="font-display text-cream text-[2rem] md:text-[3rem] leading-[1.05] mt-6 max-w-3xl">
-            The judgement shows up in <span className="italic font-editorial text-gold">their work.</span>
+            {sections.testimonialsTitle || 'The judgement shows up in their work.'}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-14">
             {testimonials.map((t) => (
@@ -466,7 +469,7 @@ export default function Home() {
           <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
             <Link to="/apply" className="btn-gold justify-center">Apply Now <ArrowRight size={16} /></Link>
             <Link to="/contact" className="btn-outline-gold justify-center">Talk to Admissions</Link>
-            <a href="https://moodle.org/login/index.php" target="_blank" rel="noopener noreferrer" className="btn-outline-gold justify-center">
+            <a href={footer.signInUrl || 'https://moodle.org/login/index.php'} target="_blank" rel="noopener noreferrer" className="btn-outline-gold justify-center">
               <LogIn size={16} /> Sign In
             </a>
           </div>

@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, Mail, Phone, MapPin } from 'lucide-react';
 import PageHero from '../components/PageHero';
 import { api } from '../admin/api';
+import { useSiteContent } from '../context/SiteContent';
 
 const TOPICS = ['General Inquiry','Admissions Question','Programme Fit','Corporate / Cohort Partnerships','Press & Media'];
 
 export default function Contact() {
+  const ctx = useSiteContent();
+  const contact = ctx?.home?.contact || {};
   const [sent, setSent] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', topic: TOPICS[0], message: '' });
 
@@ -22,7 +25,7 @@ export default function Contact() {
       <PageHero
         eyebrow="Contact"
         title="Talk to admissions."
-        subtitle="Questions about a programme, fit, fees, or partnerships? Drop us a line and a member of the team will write back personally."
+        subtitle={contact.subtext || 'Questions about a programme, fit, fees, or partnerships? Drop us a line and a member of the team will write back personally.'}
       />
 
       <section className="bg-cream py-24">
@@ -32,21 +35,21 @@ export default function Contact() {
               <Mail size={18} className="text-gold mt-1" />
               <div>
                 <p className="font-caps text-[0.65rem] text-navy/60">Email</p>
-                <p className="font-display text-navy mt-1">admissions@epsilon-edu.in</p>
+                <p className="font-display text-navy mt-1">{contact.email || 'admissions@epsilon-edu.in'}</p>
               </div>
             </div>
             <div className="flex gap-4">
               <Phone size={18} className="text-gold mt-1" />
               <div>
                 <p className="font-caps text-[0.65rem] text-navy/60">Phone</p>
-                <p className="font-display text-navy mt-1">+91 · on request</p>
+                <p className="font-display text-navy mt-1">{contact.phone || '+91 · on request'}</p>
               </div>
             </div>
             <div className="flex gap-4">
               <MapPin size={18} className="text-gold mt-1" />
               <div>
                 <p className="font-caps text-[0.65rem] text-navy/60">Where</p>
-                <p className="font-display text-navy mt-1">Live online · cohorts based in India</p>
+                <p className="font-display text-navy mt-1">{contact.address || 'Live online · cohorts based in India'}</p>
               </div>
             </div>
           </div>

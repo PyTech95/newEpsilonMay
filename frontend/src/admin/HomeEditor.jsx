@@ -143,6 +143,29 @@ export default function HomeEditor() {
         <F label="Subtitle" textarea value={data.cta?.subtitle} onChange={(v) => update('cta.subtitle', v)} />
       </Section>
 
+      <Section title="Contact Details (used across the site)">
+        <F label="Email" value={data.contact?.email} onChange={(v) => update('contact.email', v)} />
+        <F label="Phone" value={data.contact?.phone} onChange={(v) => update('contact.phone', v)} />
+        <F label="Address / Location" value={data.contact?.address} onChange={(v) => update('contact.address', v)} />
+        <F label="Contact page subtext" textarea value={data.contact?.subtext} onChange={(v) => update('contact.subtext', v)} />
+      </Section>
+
+      <Section title="Footer">
+        <F label="Tagline" textarea value={data.footer?.tagline} onChange={(v) => update('footer.tagline', v)} />
+        <F label="Copyright line" value={data.footer?.copyright} onChange={(v) => update('footer.copyright', v)} />
+        <F label="Subscribe heading" value={data.footer?.subscribeHeading} onChange={(v) => update('footer.subscribeHeading', v)} />
+        <F label="Sign-in URL (Moodle)" value={data.footer?.signInUrl} onChange={(v) => update('footer.signInUrl', v)} />
+      </Section>
+
+      <Section title="Section Headers (home page)">
+        <F label="Flagship programme eyebrow" value={data.sections?.flagshipEyebrow} onChange={(v) => update('sections.flagshipEyebrow', v)} />
+        <F label="Testimonials eyebrow" value={data.sections?.testimonialsEyebrow} onChange={(v) => update('sections.testimonialsEyebrow', v)} />
+        <F label="Testimonials title" value={data.sections?.testimonialsTitle} onChange={(v) => update('sections.testimonialsTitle', v)} />
+        <F label="Admissions eyebrow" value={data.sections?.admissionsEyebrow} onChange={(v) => update('sections.admissionsEyebrow', v)} />
+        <F label="Admissions title" value={data.sections?.admissionsTitle} onChange={(v) => update('sections.admissionsTitle', v)} />
+        <F label="Admissions subtitle" textarea value={data.sections?.admissionsSubtitle} onChange={(v) => update('sections.admissionsSubtitle', v)} />
+      </Section>
+
       <Section title="Site">
         <F label="Logo URL" value={data.logoUrl} onChange={(v) => update('logoUrl', v)} />
       </Section>

@@ -8,6 +8,7 @@ export default function Navbar() {
   const ctx = useSiteContent();
   const programs = ctx?.programs?.length ? ctx.programs : mockPrograms;
   const logoUrl = ctx?.logoUrl || LOGO_URL;
+  const signInUrl = ctx?.home?.footer?.signInUrl || 'https://moodle.org/login/index.php';
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [progOpen, setProgOpen] = useState(false);
@@ -80,7 +81,7 @@ export default function Navbar() {
 
         <div className="hidden lg:flex items-center">
           <a
-            href="https://moodle.org/login/index.php"
+            href={signInUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-outline-gold"
@@ -107,7 +108,7 @@ export default function Navbar() {
             <Link to="/admissions" className="font-caps text-sm text-cream tracking-[0.2em]">Admissions</Link>
             <Link to="/about" className="font-caps text-sm text-cream tracking-[0.2em]">About</Link>
             <Link to="/contact" className="font-caps text-sm text-cream tracking-[0.2em]">Contact</Link>
-            <a href="https://moodle.org/login/index.php" className="btn-gold w-fit" target="_blank" rel="noopener noreferrer">
+            <a href={signInUrl} className="btn-gold w-fit" target="_blank" rel="noopener noreferrer">
               <LogIn size={14} /> Sign In
             </a>
           </div>

@@ -39,6 +39,26 @@ HOME_CONTENT = {
         "title": "Build the judgement your next decade demands.",
         "subtitle": "Apply, talk to admissions, or sign in to your learning environment.",
     },
+    "contact": {
+        "email": "admissions@epsilon-edu.in",
+        "phone": "+91 · on request",
+        "address": "Live online · cohorts based in India",
+        "subtext": "Questions about a programme, fit, fees, or partnerships? Drop us a line and a member of the team will write back personally.",
+    },
+    "footer": {
+        "tagline": "Turning technical fluency into strategic value — executive education for the AI era.",
+        "copyright": "© 2026 Epsilon Executive Education · All rights reserved",
+        "subscribeHeading": "Stay in the Loop",
+        "signInUrl": "https://moodle.org/login/index.php",
+    },
+    "sections": {
+        "flagshipEyebrow": "Flagship Programme",
+        "testimonialsEyebrow": "In Their Words",
+        "testimonialsTitle": "The judgement shows up in their work.",
+        "admissionsEyebrow": "Admissions",
+        "admissionsTitle": "A personal conversation. Not a funnel.",
+        "admissionsSubtitle": "Every applicant speaks with an admissions lead before a seat is offered. Start with a message — we will write back personally.",
+    },
     "logoUrl": LOGO_URL,
 }
 
@@ -240,6 +260,16 @@ async def seed_if_empty(db):
     """Populate DB with initial content if collections are empty."""
     if await db.site_content.count_documents({}) == 0:
         await db.site_content.insert_one(HOME_CONTENT)
+    else:
+        # Ensure any NEW top-level sections (contact, footer, sections) are present
+        # without overwriting admin-edited content.
+        existing = await db.site_content.find_one({"_id": "home"}) or {}
+        patch = {}
+        for key in ("contact", "footer", "sections"):
+            if key not in existing and key in HOME_CONTENT:
+                patch[key] = HOME_CONTENT[key]
+        if patch:
+            await db.site_content.update_one({"_id": "home"}, {"$set": patch})
     if await db.beliefs.count_documents({}) == 0:
         await db.beliefs.insert_many(BELIEFS)
     if await db.programs.count_documents({}) == 0:
