@@ -147,6 +147,13 @@ export const leadFaculty = [
     slug: 'kent-oliver-bhupathi',
     name: 'Kent Oliver Bhupathi',
     role: 'Founder and Instructor, Epsilon Executive Education',
+    badge: 'Lead Instructor',
+    heroHeading: 'Academic Excellence',
+    heroBlurb: 'Kent Oliver Bhupathi, Founder and lead instructor, brings a rare blend of ivory-league rigor and modern economic application. With credentials from NYU and Columbia, he is an economist focused on the interface of human judgment and algorithmic efficiency.',
+    credentials: [
+      { institution: 'NYU', detail: 'Graduate Studies' },
+      { institution: 'Columbia', detail: 'Visiting Faculty' }
+    ],
     affiliations: [
       'Co-Founder and Chief Economist, Market Theory AI',
       'ex-Interpublic Group, ex-Publicis Group, ex-Horizon Media',
@@ -161,24 +168,27 @@ export const leadFaculty = [
 
 export const guestLecturers = [
   {
-    slug: 'jayprakash-mistry',
-    name: 'Jayprakash Mistry',
-    role: 'Founder, Remarkables Capital and UnnichedHQ',
-    image: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&w=900&q=80',
-    bio: 'Jayprakash Mistry is an investor, advisor and strategist working across venture capital, private equity, credit and growth strategy. Through Remarkables Capital and UnnichedHQ, he works at the intersection of capital, technology and global systems, with a focus on AI, deeptech, life sciences, fintech and defense-adjacent sectors. His experience includes investing, portfolio management, go-to-market strategy and cross-border advisory work across the US, UK and India. He has also held roles at M&G Investments, Credit Suisse, BNY Mellon and Santander. His academic background spans finance, law and technology, including studies at the University of Oxford.',
-    tags: ['Venture Capital', 'AI', 'Deeptech', 'Cross-Border Strategy']
-  },
-  {
     slug: 'philip-wiseman',
-    name: 'Philip Wiseman, J.D.',
+    name: 'Philip Wiseman',
+    expertise: 'Legal & Compliance',
     role: 'Vice President of Legal Affairs & Assistant General Counsel, JPMorganChase',
     image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=900&q=80',
     bio: 'Philip Wiseman is a business attorney with experience across banking, private equity, fund formation, securities regulation and cross-border transactions. At JPMorganChase, he advises on securities, corporate and regulatory legal matters tied to investment activity across the Americas, Europe and Asia. Earlier in his career, he worked at Winston & Strawn, Simpson Thacher and Bracewell, where he advised clients on fundraising, compliance, M&A and international investment structures. He earned his J.D. from the University of California, Berkeley School of Law and his B.A. from the University of Texas at Austin.',
     tags: ['Securities Law', 'M&A', 'Compliance', 'Banking']
   },
   {
+    slug: 'jayprakash-mistry',
+    name: 'Jayprakash Mistry',
+    expertise: 'Capital & AI',
+    role: 'Founder, Remarkables Capital and UnnichedHQ',
+    image: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&w=900&q=80',
+    bio: 'Jayprakash Mistry is an investor, advisor and strategist working across venture capital, private equity, credit and growth strategy. Through Remarkables Capital and UnnichedHQ, he works at the intersection of capital, technology and global systems, with a focus on AI, deeptech, life sciences, fintech and defense-adjacent sectors. His experience includes investing, portfolio management, go-to-market strategy and cross-border advisory work across the US, UK and India. He has also held roles at M&G Investments, Credit Suisse, BNY Mellon and Santander. His academic background spans finance, law and technology, including studies at the University of Oxford.',
+    tags: ['Venture Capital', 'AI', 'Deeptech', 'Cross-Border Strategy']
+  },
+  {
     slug: 'alena-savera',
     name: 'Alena Savera',
+    expertise: 'Development Strategy',
     role: 'Vice President of Development, The NRP Group',
     image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=900&q=80',
     bio: 'Alena Savera is a real estate development leader based in Dallas-Fort Worth. At The NRP Group, she leads multifamily land acquisition and development across market-rate and PFC projects in the DFW region. Since joining the firm in 2020, she has helped originate multiple projects totaling more than 2,350 units and has led work through entitlement and zoning processes. Before NRP, she worked at Perkins&Will and StreetLights Residential, where she supported planning and feasibility work across large multifamily projects. She holds a Bachelor of Architecture from the University of Texas at Austin.',
@@ -186,7 +196,8 @@ export const guestLecturers = [
   },
   {
     slug: 'mardoqueo-arteaga',
-    name: 'Mardoqueo Arteaga, Ph.D.',
+    name: 'Mardoqueo Arteaga',
+    expertise: 'Marketing Science',
     role: 'Marketing Science Strategist, LinkedIn',
     image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80',
     bio: 'Mardoqueo Arteaga is an economist working at the intersection of marketing science, technology and applied research. At LinkedIn Marketing Solutions, he builds frameworks to measure B2B advertising effectiveness and develops research on the broader B2B economy. Before LinkedIn, he worked at KPMG on economic consulting and at the Central Bank of Chile on macro-financial forecasting and monetary policy research. He holds a Ph.D. in Economics from Fordham University, with specialisation in information economics, monetary economics and econometrics. His work brings a strong perspective on causal inference, measurement and business decision-making.',
