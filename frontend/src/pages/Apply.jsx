@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
-import { programs } from '../mock';
+import { programs as mockPrograms } from '../mock';
+import { useSiteContent } from '../context/SiteContent';
+import { api } from '../admin/api';
 
 const EXP = ['0–3 years','3–5 years','5–10 years','10–15 years','15+ years'];
 
 export default function Apply() {
+  const ctx = useSiteContent();
+  const programs = ctx?.programs?.length ? ctx.programs : mockPrograms;
   const [sent, setSent] = useState(false);
   const [form, setForm] = useState({
-    programme: programs[0].title,
+    programme: programs[0]?.title || '',
     fullName: '', email: '', phone: '',
     role: '', company: '', experience: EXP[2],
     why: '', heard: ''
   });
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    try { await api.submitApply(form); } catch {}
     try { localStorage.setItem('epsilon_application_'+Date.now(), JSON.stringify(form)); } catch {}
     setSent(true);
   };

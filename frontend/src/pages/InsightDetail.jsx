@@ -1,10 +1,13 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
-import { insights } from '../mock';
+import { insights as mockInsights } from '../mock';
+import { useSiteContent } from '../context/SiteContent';
 
 export default function InsightDetail() {
   const { slug } = useParams();
+  const ctx = useSiteContent();
+  const insights = ctx?.insights?.length ? ctx.insights : mockInsights;
   const article = insights.find((i) => i.slug === slug);
 
   if (!article) {

@@ -2,9 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Calendar, Clock, Video } from 'lucide-react';
 import PageHero from '../components/PageHero';
-import { events } from '../mock';
+import { events as mockEvents } from '../mock';
+import { useSiteContent } from '../context/SiteContent';
 
 export default function Events() {
+  const ctx = useSiteContent();
+  const events = ctx?.events?.length ? ctx.events : mockEvents;
   return (
     <div>
       <PageHero

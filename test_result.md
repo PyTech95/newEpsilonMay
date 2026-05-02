@@ -101,3 +101,168 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: "Test the Epsilon CMS backend API - authentication, public endpoints, protected endpoints, CRUD operations, submissions, and admin stats"
+
+backend:
+  - task: "Authentication - Login with valid credentials"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "POST /api/auth/login with admin@epsilon-edu.in / Epsilon@2026 returns token and email. Test passed."
+
+  - task: "Authentication - Login with invalid credentials"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "POST /api/auth/login with wrong password correctly returns 401. Test passed."
+
+  - task: "Authentication - Get current user with token"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "GET /api/auth/me with Bearer token returns email. Without token returns 401. Test passed."
+
+  - task: "Public GET endpoints"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "All public GET endpoints (/content/home, /content/beliefs, /programs, /cohorts, /testimonials, /lead-faculty, /guest-lecturers, /insights, /events) return seeded data without authentication. Test passed."
+
+  - task: "Protected endpoints require authentication"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Protected PUT/POST/DELETE endpoints correctly return 401 without Bearer token. Test passed."
+
+  - task: "Content update - PUT /api/content/home"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "PUT /api/content/home with Bearer token successfully updates hero.eyebrow field. Subsequent GET reflects the change. Test passed."
+
+  - task: "CRUD operations - Programs"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "POST /api/programs creates new program (count increased from 4 to 5), DELETE /api/programs/{id} removes it (count back to 4). Test passed."
+
+  - task: "Public submissions - POST endpoints"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Public POST endpoints (/submissions/apply, /submissions/contact, /submissions/brochure, /submissions/subscribe) work without authentication and return {ok: true, id}. Test passed."
+
+  - task: "Submissions retrieval - Protected GET"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "GET /api/submissions/apply without token returns 401. With Bearer token returns list of submissions including newly posted items. Test passed."
+
+  - task: "Admin stats endpoint"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "GET /api/admin/stats with Bearer token returns all required fields: programs, testimonials, lead_faculty, guest_lecturers, insights, events, cohorts, and submissions object with apply, contact, brochure, subscribe counts. Test passed."
+
+  - task: "Password change flow"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "POST /api/auth/change-password with wrong current password returns 401. With correct current password returns 200. Login with old password fails (401), login with new password succeeds (200). Password successfully reverted to Epsilon@2026. Test passed."
+
+frontend:
+  - task: "Frontend testing"
+    implemented: false
+    working: "NA"
+    file: ""
+    stuck_count: 0
+    priority: "low"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Frontend testing not performed as per system instructions - testing agent only tests backend."
+
+metadata:
+  created_by: "testing_agent"
+  version: "1.0"
+  test_sequence: 1
+  run_ui: false
+
+test_plan:
+  current_focus:
+    - "All backend API endpoints tested and verified"
+  stuck_tasks: []
+  test_all: true
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "testing"
+    message: "Completed comprehensive backend testing. All 30 test cases passed successfully. All 10 scenarios from review request verified: (1) Login with valid/invalid credentials, (2) /auth/me with/without token, (3) All public GET endpoints return seeded data, (4) Protected endpoints require auth, (5) Content update works and persists, (6) Program CRUD operations work, (7) Public submissions work, (8) Submission retrieval requires auth, (9) Admin stats endpoint works, (10) Password change flow works correctly. Minor warnings observed in logs (dotenv parsing, bcrypt version, JWT key length) but these do not affect functionality. Backend is fully operational."

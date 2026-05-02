@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, Mail, Phone, MapPin } from 'lucide-react';
 import PageHero from '../components/PageHero';
+import { api } from '../admin/api';
 
 const TOPICS = ['General Inquiry','Admissions Question','Programme Fit','Corporate / Cohort Partnerships','Press & Media'];
 
@@ -9,8 +10,9 @@ export default function Contact() {
   const [sent, setSent] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', topic: TOPICS[0], message: '' });
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    try { await api.submitContact(form); } catch {}
     try { localStorage.setItem('epsilon_contact_'+Date.now(), JSON.stringify(form)); } catch {}
     setSent(true);
   };

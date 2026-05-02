@@ -3,9 +3,13 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import PageHero from '../components/PageHero';
 import FacultyShowcase from '../components/FacultyShowcase';
-import { leadFaculty, guestLecturers } from '../mock';
+import { leadFaculty as mockLead, guestLecturers as mockGuests } from '../mock';
+import { useSiteContent } from '../context/SiteContent';
 
 export default function Faculty() {
+  const ctx = useSiteContent();
+  const leadFaculty = ctx?.leadFaculty?.length ? ctx.leadFaculty : mockLead;
+  const guestLecturers = ctx?.guestLecturers?.length ? ctx.guestLecturers : mockGuests;
   const lead = leadFaculty[0];
 
   return (

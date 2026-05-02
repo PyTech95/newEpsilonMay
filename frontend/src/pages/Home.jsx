@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Sparkles, ArrowRight, LogIn, Download, ArrowUpRight, Quote,
-  CheckCircle2, Check, FileText, Mail, Phone, MapPin, Calendar
+  CheckCircle2, Check, FileText, Mail, Phone, MapPin
 } from 'lucide-react';
-import { programs, testimonials, beliefs, LOGO_URL } from '../mock';
 import FacultyShowcase from '../components/FacultyShowcase';
 import NetworkBackground from '../components/NetworkBackground';
+import { useSiteContent } from '../context/SiteContent';
+import { api as adminApi } from '../admin/api';
+import { LOGO_URL as MOCK_LOGO } from '../mock';
 
 function HeroStat({ value, label }) {
   return (
@@ -18,17 +20,18 @@ function HeroStat({ value, label }) {
 }
 
 /* ---------- PDF Brochure gated download ---------- */
-function BrochureDownload() {
-  const [form, setForm] = useState({ name: '', phone: '', email: '', course: programs[0].title });
+function BrochureDownload({ programs, brochure }) {
+  const [form, setForm] = useState({ name: '', phone: '', email: '', course: programs[0]?.title || '' });
   const [sent, setSent] = useState(false);
+  const pdfUrl = brochure?.pdfUrl || 'https://customer-assets.emergentagent.com/job_logos-11/artifacts/pjvgovi6_brochure%203e%20sample.pdf';
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    try { await adminApi.submitBrochure(form); } catch {}
     try { localStorage.setItem('epsilon_brochure_'+Date.now(), JSON.stringify(form)); } catch {}
     setSent(true);
-    // Trigger a browser download of the brochure asset
     const link = document.createElement('a');
-    link.href = 'https://customer-assets.emergentagent.com/job_logos-11/artifacts/pjvgovi6_brochure%203e%20sample.pdf';
+    link.href = pdfUrl;
     link.download = 'Epsilon-Programme-Brochure.pdf';
     link.target = '_blank';
     link.rel = 'noopener';
@@ -41,20 +44,21 @@ function BrochureDownload() {
     <section className="bg-bone py-24 md:py-32">
       <div className="container-x grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
         {/* Left: visual */}
-        <div className="relative bg-navy-deep overflow-hidden min-h-[380px] flex items-center justify-center p-10">
-          <div className="absolute inset-0 starfield opacity-30" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full glow-gold" />
-          <div className="relative text-center">
-            <FileText size={46} className="text-gold mx-auto mb-6" />
-            <p className="eyebrow mb-3">Programme Brochure</p>
-            <h3 className="font-display text-cream text-[1.8rem] md:text-[2.4rem] leading-[1.1] max-w-sm mx-auto">
-              Everything you need to <span className="italic font-editorial text-gold">decide.</span>
-            </h3>
-            <p className="font-sans text-cream/75 text-sm mt-5 max-w-xs mx-auto">
-              28-page PDF · Programme overview, modules, fees, capstone, faculty and admissions.
-            </p>
+          <div className="relative bg-navy-deep overflow-hidden min-h-[380px] flex items-center justify-center p-10">
+            <div className="absolute inset-0 starfield opacity-30" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full glow-gold" />
+            <div className="relative text-center">
+              <FileText size={46} className="text-gold mx-auto mb-6" />
+              <p className="eyebrow mb-3">{brochure?.eyebrow || 'Programme Brochure'}</p>
+              <h3 className="font-display text-cream text-[1.8rem] md:text-[2.4rem] leading-[1.1] max-w-sm mx-auto">
+                {(brochure?.title || 'Everything you need to decide.').split(' ').slice(0, -1).join(' ')}{' '}
+                <span className="italic font-editorial text-gold">{(brochure?.title || 'decide.').split(' ').slice(-1)}</span>
+              </h3>
+              <p className="font-sans text-cream/75 text-sm mt-5 max-w-xs mx-auto">
+                {brochure?.description || '28-page PDF · Programme overview, modules, fees, capstone, faculty and admissions.'}
+              </p>
+            </div>
           </div>
-        </div>
 
         {/* Right: form */}
         <div className="bg-white p-8 md:p-12 border border-navy/10">
@@ -66,7 +70,7 @@ function BrochureDownload() {
                 The brochure should have opened in a new tab. If not, use the button below.
               </p>
               <a
-                href="https://customer-assets.emergentagent.com/job_logos-11/artifacts/pjvgovi6_brochure%203e%20sample.pdf"
+                href={pdfUrl}
                 download="Epsilon-Programme-Brochure.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -146,8 +150,9 @@ function AdmissionsContact() {
   const [form, setForm] = useState({ name: '', email: '', topic: 'Admissions Question', message: '' });
   const [sent, setSent] = useState(false);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    try { await adminApi.submitContact(form); } catch {}
     try { localStorage.setItem('epsilon_contact_home_' + Date.now(), JSON.stringify(form)); } catch {}
     setSent(true);
   };
@@ -258,18 +263,27 @@ function AdmissionsContact() {
 
 /* ---------- HOME ---------- */
 export default function Home() {
-  const featured = programs[0]; // Applied AI & ML
+  const ctx = useSiteContent();
+  const programs = ctx?.programs || [];
+  const testimonials = ctx?.testimonials || [];
+  const beliefs = ctx?.beliefs || [];
+  const home = ctx?.home;
+  const logoUrl = ctx?.logoUrl || MOCK_LOGO;
+  const featured = programs.find((p) => p.featured) || programs[0];
+  if (!featured) return null;
+
+  const hero = home?.hero || {};
+  const brochure = home?.brochure || {};
+  const about = home?.about || {};
+  const cta = home?.cta || {};
+  const heroImage = hero.heroImage || 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=2400&q=80';
 
   return (
     <div>
       {/* 1. HERO */}
       <section className="relative overflow-hidden bg-navy-deep text-cream min-h-[100vh]">
         <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=2400&q=80"
-            alt="AI"
-            className="absolute inset-0 w-full h-full object-cover opacity-25"
-          />
+          <img src={heroImage} alt="" className="absolute inset-0 w-full h-full object-cover opacity-25" />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(8,19,31,0.55), rgba(14,31,50,0.88), rgba(8,19,31,1))' }} />
         </div>
         <NetworkBackground className="opacity-70" />
@@ -277,28 +291,30 @@ export default function Home() {
 
         <div className="relative container-x pt-40 md:pt-44 pb-24">
           <p className="eyebrow mb-7 fade-up">
-            <Sparkles size={12} className="inline mr-2 -mt-1 text-gold" /> The AI Era of Executive Education
+            <Sparkles size={12} className="inline mr-2 -mt-1 text-gold" /> {hero.eyebrow || 'The AI Era of Executive Education'}
           </p>
           <h1 className="font-display uppercase text-[2.6rem] sm:text-[3.6rem] md:text-[5.4rem] lg:text-[6.4rem] leading-[1.02] tracking-tight max-w-6xl fade-up">
-            Turning technical fluency
+            {hero.titleLine1 || 'Turning technical fluency'}
           </h1>
           <h2 className="font-editorial italic text-gold text-[2.2rem] md:text-[4rem] lg:text-[4.8rem] leading-[1.05] mt-2 fade-up">
-            into strategic value.
+            {hero.titleLine2 || 'into strategic value.'}
           </h2>
           <p className="font-editorial text-[1.25rem] md:text-[1.55rem] leading-relaxed text-cream/85 mt-9 max-w-2xl fade-up">
-            Live online cohorts for working professionals who want to translate AI, data, and modern decision systems into evidence-based action &mdash; not theatre.
+            {hero.subtitle || 'Live online cohorts for working professionals who want to translate AI, data, and modern decision systems into evidence-based action — not theatre.'}
           </p>
           <div className="mt-12 flex flex-wrap items-center gap-4 fade-up">
-            <Link to="/apply" className="btn-gold">Apply Now <ArrowRight size={16} /></Link>
-            <a href="https://moodle.org/login/index.php" target="_blank" rel="noopener noreferrer" className="btn-outline-gold">
-              <LogIn size={16} /> Sign In to Learn
+            <Link to={hero.primaryCtaHref || '/apply'} className="btn-gold">
+              {hero.primaryCtaText || 'Apply Now'} <ArrowRight size={16} />
+            </Link>
+            <a
+              href={hero.secondaryCtaHref || 'https://moodle.org/login/index.php'}
+              target="_blank" rel="noopener noreferrer" className="btn-outline-gold"
+            >
+              <LogIn size={16} /> {hero.secondaryCtaText || 'Sign In to Learn'}
             </a>
           </div>
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 fade-up">
-            <HeroStat value="12 weeks" label="Cohort duration" />
-            <HeroStat value="Live online" label="Executive-friendly" />
-            <HeroStat value="15–20 hrs" label="Per-week commitment" />
-            <HeroStat value="Capstone" label="Portfolio outcome" />
+            {(hero.stats || []).map((s, i) => <HeroStat key={i} value={s.value} label={s.label} />)}
           </div>
         </div>
       </section>
@@ -310,7 +326,6 @@ export default function Home() {
           <span className="gold-rule-lg" />
 
           <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-stretch">
-            {/* Big image */}
             <div className="relative overflow-hidden min-h-[480px]">
               <img src={featured.image} alt={featured.title} className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-tr from-navy-deep/80 via-navy-deep/30 to-transparent" />
@@ -320,20 +335,13 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Content */}
             <div className="flex flex-col justify-center">
-              <h2 className="font-display text-navy text-[2rem] md:text-[3rem] leading-[1.05]">
-                {featured.title}
-              </h2>
-              <p className="font-editorial italic text-gold text-[1.3rem] md:text-[1.5rem] mt-4">
-                {featured.tagline}
-              </p>
-              <p className="font-editorial text-navy/85 text-[1.15rem] leading-relaxed mt-6">
-                {featured.long}
-              </p>
+              <h2 className="font-display text-navy text-[2rem] md:text-[3rem] leading-[1.05]">{featured.title}</h2>
+              <p className="font-editorial italic text-gold text-[1.3rem] md:text-[1.5rem] mt-4">{featured.tagline}</p>
+              <p className="font-editorial text-navy/85 text-[1.15rem] leading-relaxed mt-6">{featured.long}</p>
 
               <ul className="mt-8 space-y-3">
-                {featured.outcomes.slice(0, 4).map((o) => (
+                {(featured.outcomes || []).slice(0, 4).map((o) => (
                   <li key={o} className="flex gap-3 items-start">
                     <Check size={18} className="text-gold mt-1 flex-shrink-0" />
                     <span className="font-editorial text-navy/85 text-[1.1rem] leading-relaxed">{o}</span>
@@ -342,24 +350,13 @@ export default function Home() {
               </ul>
 
               <div className="mt-8 grid grid-cols-3 gap-4 max-w-md border-t border-b border-navy/10 py-6">
-                <div>
-                  <p className="font-caps text-[0.6rem] text-navy/60">Fee</p>
-                  <p className="font-display text-navy text-lg mt-1">{featured.fee}</p>
-                </div>
-                <div>
-                  <p className="font-caps text-[0.6rem] text-navy/60">Duration</p>
-                  <p className="font-display text-navy text-lg mt-1">{featured.weeks} weeks</p>
-                </div>
-                <div>
-                  <p className="font-caps text-[0.6rem] text-navy/60">Next Cohort</p>
-                  <p className="font-display text-navy text-[0.92rem] mt-1 leading-tight">{featured.nextCohort}</p>
-                </div>
+                <div><p className="font-caps text-[0.6rem] text-navy/60">Fee</p><p className="font-display text-navy text-lg mt-1">{featured.fee}</p></div>
+                <div><p className="font-caps text-[0.6rem] text-navy/60">Duration</p><p className="font-display text-navy text-lg mt-1">{featured.weeks} weeks</p></div>
+                <div><p className="font-caps text-[0.6rem] text-navy/60">Next Cohort</p><p className="font-display text-navy text-[0.92rem] mt-1 leading-tight">{featured.nextCohort}</p></div>
               </div>
 
               <div className="mt-8 flex flex-wrap gap-4">
-                <Link to="/apply" className="btn-gold">
-                  Enroll Now <ArrowRight size={16} />
-                </Link>
+                <Link to="/apply" className="btn-gold">Enroll Now <ArrowRight size={16} /></Link>
                 <Link to={`/programs/${featured.slug}`} className="btn-outline-gold border-navy/30 text-navy hover:text-gold">
                   Full Curriculum <ArrowUpRight size={14} />
                 </Link>
@@ -367,10 +364,9 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Other programmes strip */}
           <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {programs.slice(1).map((p) => (
-              <Link to={`/programs/${p.slug}`} key={p.slug}
+            {programs.filter((p) => p.slug !== featured.slug).slice(0, 3).map((p) => (
+              <Link to={`/programs/${p.slug}`} key={p.slug || p._id}
                     className="group bg-white border border-navy/10 hover:border-gold/50 transition-colors">
                 <div className="aspect-[4/3] overflow-hidden">
                   <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -387,8 +383,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3. BROCHURE DOWNLOAD (gated) */}
-      <BrochureDownload />
+      {/* 3. BROCHURE */}
+      <BrochureDownload programs={programs} brochure={brochure} />
 
       {/* 4. FACULTY */}
       <FacultyShowcase />
@@ -401,26 +397,23 @@ export default function Home() {
         <div className="container-x">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-14 items-start">
             <div>
-              <p className="eyebrow mb-4">About Epsilon</p>
+              <p className="eyebrow mb-4">{about.eyebrow || 'About Epsilon'}</p>
               <span className="gold-rule-lg" />
               <h2 className="font-display text-navy text-[2rem] md:text-[3rem] leading-[1.05] mt-6">
-                A school for the people who <span className="italic font-editorial text-gold">decide.</span>
+                {(about.title || 'A school for the people who decide.').replace(/\.$/, '')}
+                <span className="italic font-editorial text-gold">.</span>
               </h2>
             </div>
             <div className="space-y-6">
-              <p className="font-editorial text-navy/85 text-[1.2rem] leading-relaxed">
-                Knowing about AI is not the same as deciding with it. Reading a model report is not the same as defending a recommendation to a board. Our programmes are built around that gap &mdash; the difference between knowing and deciding.
-              </p>
-              <p className="font-editorial text-navy/85 text-[1.2rem] leading-relaxed">
-                We pair practitioner-educators with senior cohorts, hold them to a high bar of evidence, and end every programme with a portfolio-grade capstone &mdash; an artefact that proves capability, not attendance.
-              </p>
+              <p className="font-editorial text-navy/85 text-[1.2rem] leading-relaxed">{about.paragraph1}</p>
+              <p className="font-editorial text-navy/85 text-[1.2rem] leading-relaxed">{about.paragraph2}</p>
               <Link to="/about" className="link-gold inline-flex">Read more <ArrowUpRight size={13} /></Link>
             </div>
           </div>
 
           <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
             {beliefs.map((b) => (
-              <div key={b.n} className="bg-white p-8 hover:shadow-lg transition-shadow">
+              <div key={b._id || b.n} className="bg-white p-8 hover:shadow-lg transition-shadow">
                 <p className="font-display text-gold text-[2.5rem] leading-none">{b.n}</p>
                 <h3 className="font-display text-navy text-[1.35rem] leading-tight mt-5">{b.title}</h3>
                 <p className="font-editorial text-navy/75 text-base leading-relaxed mt-4">{b.body}</p>
@@ -440,8 +433,8 @@ export default function Home() {
             The judgement shows up in <span className="italic font-editorial text-gold">their work.</span>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-14">
-            {testimonials.map((t, i) => (
-              <div key={i} className="border border-gold/15 p-8 bg-navy/40">
+            {testimonials.map((t) => (
+              <div key={t._id || t.name} className="border border-gold/15 p-8 bg-navy/40">
                 <Quote size={20} className="text-gold mb-4" />
                 <p className="font-editorial italic text-[1.2rem] leading-relaxed text-cream/90">&ldquo;{t.quote}&rdquo;</p>
                 <div className="mt-6 flex items-center gap-3">
@@ -462,13 +455,13 @@ export default function Home() {
         <div className="absolute inset-0 starfield opacity-60" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[1100px] rounded-full glow-gold" />
         <div className="relative container-x text-center">
-          <img src={LOGO_URL} alt="Epsilon" className="mx-auto mb-8 h-[120px] w-auto object-contain" />
-          <p className="eyebrow">Take the next step</p>
+          <img src={logoUrl} alt="Epsilon" className="mx-auto mb-8 h-[120px] w-auto object-contain" />
+          <p className="eyebrow">{cta.eyebrow || 'Take the next step'}</p>
           <h2 className="font-display uppercase text-[2rem] md:text-[3.4rem] leading-[1.05] max-w-4xl mx-auto mt-5">
-            Build the judgement your <span className="italic font-editorial text-gold normal-case">next decade</span> demands.
+            {(cta.title || 'Build the judgement your next decade demands.')}
           </h2>
           <p className="font-editorial text-cream/80 text-[1.2rem] leading-relaxed mt-7 max-w-xl mx-auto">
-            Apply, talk to admissions, or sign in to your learning environment.
+            {cta.subtitle || 'Apply, talk to admissions, or sign in to your learning environment.'}
           </p>
           <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
             <Link to="/apply" className="btn-gold justify-center">Apply Now <ArrowRight size={16} /></Link>

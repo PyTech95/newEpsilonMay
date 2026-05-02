@@ -1,0 +1,157 @@
+import React, { useEffect, useState } from 'react';
+import { api } from './api';
+import { Save, Plus, Trash2 } from 'lucide-react';
+
+const F = ({ label, value, onChange, textarea, type = 'text' }) => (
+  <label className="block">
+    <span className="fld-label">{label}</span>
+    {textarea ? (
+      <textarea rows={3} className="fld-input" value={value || ''} onChange={(e) => onChange(e.target.value)} />
+    ) : (
+      <input type={type} className="fld-input" value={value || ''} onChange={(e) => onChange(e.target.value)} />
+    )}
+  </label>
+);
+
+export default function HomeEditor() {
+  const [data, setData] = useState(null);
+  const [beliefs, setBeliefs] = useState([]);
+  const [saving, setSaving] = useState(false);
+  const [toast, setToast] = useState('');
+
+  useEffect(() => {
+    api.getHome().then(setData);
+    api.getBeliefs().then(setBeliefs);
+  }, []);
+
+  if (!data) return <p>Loading…</p>;
+
+  const update = (path, value) => {
+    const d = JSON.parse(JSON.stringify(data));
+    const keys = path.split('.');
+    let cur = d;
+    for (let i = 0; i < keys.length - 1; i++) cur = cur[keys[i]];
+    cur[keys[keys.length - 1]] = value;
+    setData(d);
+  };
+
+  const updateStat = (i, key, value) => {
+    const d = JSON.parse(JSON.stringify(data));
+    d.hero.stats[i][key] = value;
+    setData(d);
+  };
+
+  const addStat = () => {
+    const d = JSON.parse(JSON.stringify(data));
+    d.hero.stats.push({ value: '', label: '' });
+    setData(d);
+  };
+  const removeStat = (i) => {
+    const d = JSON.parse(JSON.stringify(data));
+    d.hero.stats.splice(i, 1);
+    setData(d);
+  };
+
+  const updateBelief = (i, key, value) => {
+    const copy = [...beliefs];
+    copy[i] = { ...copy[i], [key]: value };
+    setBeliefs(copy);
+  };
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      await api.putHome(data);
+      await api.putBeliefs(beliefs);
+      setToast('Saved');
+      setTimeout(() => setToast(''), 2000);
+    } finally { setSaving(false); }
+  };
+
+  const Section = ({ title, children }) => (
+    <section className="bg-white p-6 md:p-8 border border-navy/10 mb-6">
+      <p className="font-caps text-[0.65rem] text-gold tracking-[0.22em] mb-4">{title}</p>
+      <div className="space-y-4">{children}</div>
+    </section>
+  );
+
+  return (
+    <div>
+      <div className="flex items-center justify-between sticky top-0 bg-cream py-3 -mx-8 px-8 z-10">
+        <h1 className="font-display text-navy text-[2rem]">Home Page Content</h1>
+        <button onClick={save} disabled={saving} className="btn-gold">
+          <Save size={14} /> {saving ? 'Saving…' : 'Save Changes'}
+        </button>
+      </div>
+      {toast && <p className="text-green-700 text-sm my-2">{toast}</p>}
+
+      <Section title="Hero">
+        <F label="Eyebrow" value={data.hero.eyebrow} onChange={(v) => update('hero.eyebrow', v)} />
+        <F label="Title Line 1" value={data.hero.titleLine1} onChange={(v) => update('hero.titleLine1', v)} />
+        <F label="Title Line 2 (italic gold)" value={data.hero.titleLine2} onChange={(v) => update('hero.titleLine2', v)} />
+        <F label="Subtitle" textarea value={data.hero.subtitle} onChange={(v) => update('hero.subtitle', v)} />
+        <div className="grid grid-cols-2 gap-4">
+          <F label="Primary CTA text" value={data.hero.primaryCtaText} onChange={(v) => update('hero.primaryCtaText', v)} />
+          <F label="Primary CTA href" value={data.hero.primaryCtaHref} onChange={(v) => update('hero.primaryCtaHref', v)} />
+          <F label="Secondary CTA text" value={data.hero.secondaryCtaText} onChange={(v) => update('hero.secondaryCtaText', v)} />
+          <F label="Secondary CTA href" value={data.hero.secondaryCtaHref} onChange={(v) => update('hero.secondaryCtaHref', v)} />
+        </div>
+        <F label="Hero background image URL" value={data.hero.heroImage} onChange={(v) => update('hero.heroImage', v)} />
+
+        <div>
+          <p className="font-caps text-[0.65rem] text-gold tracking-[0.22em] mt-6 mb-3">Hero Stats</p>
+          {data.hero.stats.map((s, i) => (
+            <div key={i} className="grid grid-cols-[1fr_1fr_auto] gap-3 items-end mb-3">
+              <F label="Value" value={s.value} onChange={(v) => updateStat(i, 'value', v)} />
+              <F label="Label" value={s.label} onChange={(v) => updateStat(i, 'label', v)} />
+              <button onClick={() => removeStat(i)} className="p-2.5 border border-navy/20 text-navy hover:border-red-400 hover:text-red-500"><Trash2 size={14} /></button>
+            </div>
+          ))}
+          <button onClick={addStat} className="btn-outline-gold border-navy/30 text-navy"><Plus size={14} /> Add stat</button>
+        </div>
+      </Section>
+
+      <Section title="Brochure Section">
+        <F label="Eyebrow" value={data.brochure?.eyebrow} onChange={(v) => update('brochure.eyebrow', v)} />
+        <F label="Title" value={data.brochure?.title} onChange={(v) => update('brochure.title', v)} />
+        <F label="Description" textarea value={data.brochure?.description} onChange={(v) => update('brochure.description', v)} />
+        <F label="PDF URL" value={data.brochure?.pdfUrl} onChange={(v) => update('brochure.pdfUrl', v)} />
+      </Section>
+
+      <Section title="About / Philosophy">
+        <F label="Eyebrow" value={data.about?.eyebrow} onChange={(v) => update('about.eyebrow', v)} />
+        <F label="Title" value={data.about?.title} onChange={(v) => update('about.title', v)} />
+        <F label="Paragraph 1" textarea value={data.about?.paragraph1} onChange={(v) => update('about.paragraph1', v)} />
+        <F label="Paragraph 2" textarea value={data.about?.paragraph2} onChange={(v) => update('about.paragraph2', v)} />
+      </Section>
+
+      <Section title="What we believe (3 cards)">
+        {beliefs.map((b, i) => (
+          <div key={b._id || i} className="grid grid-cols-[70px_1fr] gap-3 mb-4">
+            <F label="#" value={b.n} onChange={(v) => updateBelief(i, 'n', v)} />
+            <div className="space-y-3">
+              <F label="Title" value={b.title} onChange={(v) => updateBelief(i, 'title', v)} />
+              <F label="Body" textarea value={b.body} onChange={(v) => updateBelief(i, 'body', v)} />
+            </div>
+          </div>
+        ))}
+      </Section>
+
+      <Section title="Final CTA band">
+        <F label="Eyebrow" value={data.cta?.eyebrow} onChange={(v) => update('cta.eyebrow', v)} />
+        <F label="Title" value={data.cta?.title} onChange={(v) => update('cta.title', v)} />
+        <F label="Subtitle" textarea value={data.cta?.subtitle} onChange={(v) => update('cta.subtitle', v)} />
+      </Section>
+
+      <Section title="Site">
+        <F label="Logo URL" value={data.logoUrl} onChange={(v) => update('logoUrl', v)} />
+      </Section>
+
+      <div className="flex justify-end">
+        <button onClick={save} disabled={saving} className="btn-gold">
+          <Save size={14} /> {saving ? 'Saving…' : 'Save Changes'}
+        </button>
+      </div>
+    </div>
+  );
+}

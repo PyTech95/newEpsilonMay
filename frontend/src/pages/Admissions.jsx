@@ -2,9 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Calendar, Receipt } from 'lucide-react';
 import PageHero from '../components/PageHero';
-import { cohorts, programs } from '../mock';
+import { cohorts as mockCohorts, programs as mockPrograms } from '../mock';
+import { useSiteContent } from '../context/SiteContent';
 
 export default function Admissions() {
+  const ctx = useSiteContent();
+  const cohorts = ctx?.cohorts?.length ? ctx.cohorts : mockCohorts;
+  const programs = ctx?.programs?.length ? ctx.programs : mockPrograms;
   return (
     <div>
       <PageHero

@@ -1,10 +1,13 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight, Check, Calendar } from 'lucide-react';
-import { programs } from '../mock';
+import { programs as mockPrograms } from '../mock';
+import { useSiteContent } from '../context/SiteContent';
 
 export default function ProgramDetail() {
   const { slug } = useParams();
+  const ctx = useSiteContent();
+  const programs = ctx?.programs?.length ? ctx.programs : mockPrograms;
   const p = programs.find((x) => x.slug === slug);
 
   if (!p) {

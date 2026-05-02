@@ -1,8 +1,11 @@
 import React from 'react';
-import { leadFaculty, guestLecturers } from '../mock';
+import { leadFaculty as mockLead, guestLecturers as mockGuests } from '../mock';
+import { useSiteContent } from '../context/SiteContent';
 
 export default function FacultyShowcase() {
-  const lead = leadFaculty[0];
+  const ctx = useSiteContent();
+  const lead = (ctx?.leadFaculty?.[0]) || mockLead[0];
+  const guestLecturers = (ctx?.guestLecturers?.length ? ctx.guestLecturers : mockGuests);
 
   return (
     <section className="relative bg-navy-deep text-cream py-24 md:py-32 overflow-hidden">

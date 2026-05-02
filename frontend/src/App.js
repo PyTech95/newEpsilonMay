@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+// Public
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Programs from './pages/Programs';
@@ -14,25 +16,69 @@ import Insights from './pages/Insights';
 import InsightDetail from './pages/InsightDetail';
 import Events from './pages/Events';
 
+// Admin
+import { AdminAuthProvider } from './admin/AuthContext';
+import AdminLayout from './admin/AdminLayout';
+import AdminLogin from './admin/Login';
+import Dashboard from './admin/Dashboard';
+import HomeEditor from './admin/HomeEditor';
+import ProgramsEditor from './admin/ProgramsEditor';
+import FacultyEditor from './admin/FacultyEditor';
+import {
+  TestimonialsEditor,
+  CohortsEditor,
+  InsightsEditor,
+  EventsEditor,
+} from './admin/SimpleEditors';
+import SubmissionsInbox from './admin/SubmissionsInbox';
+import ChangePassword from './admin/ChangePassword';
+
+// Site content provider for public pages
+import { SiteContentProvider } from './context/SiteContent';
+
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/programs" element={<Programs />} />
-            <Route path="/programs/:slug" element={<ProgramDetail />} />
-            <Route path="/faculty" element={<Faculty />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/admissions" element={<Admissions />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/apply" element={<Apply />} />
-            <Route path="/insights" element={<Insights />} />
-            <Route path="/insights/:slug" element={<InsightDetail />} />
-            <Route path="/events" element={<Events />} />
-          </Route>
-        </Routes>
+        <AdminAuthProvider>
+          <Routes>
+            {/* Admin */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<Dashboard />} />
+              <Route path="home" element={<HomeEditor />} />
+              <Route path="programs" element={<ProgramsEditor />} />
+              <Route path="faculty" element={<FacultyEditor />} />
+              <Route path="testimonials" element={<TestimonialsEditor />} />
+              <Route path="cohorts" element={<CohortsEditor />} />
+              <Route path="insights" element={<InsightsEditor />} />
+              <Route path="events" element={<EventsEditor />} />
+              <Route path="submissions" element={<SubmissionsInbox />} />
+              <Route path="password" element={<ChangePassword />} />
+            </Route>
+
+            {/* Public */}
+            <Route
+              element={
+                <SiteContentProvider>
+                  <Layout />
+                </SiteContentProvider>
+              }
+            >
+              <Route path="/" element={<Home />} />
+              <Route path="/programs" element={<Programs />} />
+              <Route path="/programs/:slug" element={<ProgramDetail />} />
+              <Route path="/faculty" element={<Faculty />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/admissions" element={<Admissions />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/apply" element={<Apply />} />
+              <Route path="/insights" element={<Insights />} />
+              <Route path="/insights/:slug" element={<InsightDetail />} />
+              <Route path="/events" element={<Events />} />
+            </Route>
+          </Routes>
+        </AdminAuthProvider>
       </BrowserRouter>
     </div>
   );

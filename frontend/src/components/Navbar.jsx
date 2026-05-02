@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { LogIn, Menu, X, ChevronDown } from 'lucide-react';
-import { LOGO_URL, programs } from '../mock';
+import { LOGO_URL, programs as mockPrograms } from '../mock';
+import { useSiteContent } from '../context/SiteContent';
 
 export default function Navbar() {
+  const ctx = useSiteContent();
+  const programs = ctx?.programs?.length ? ctx.programs : mockPrograms;
+  const logoUrl = ctx?.logoUrl || LOGO_URL;
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [progOpen, setProgOpen] = useState(false);
@@ -34,7 +38,7 @@ export default function Navbar() {
     >
       <div className="container-x flex items-center justify-between h-[112px]">
         <Link to="/" className="flex items-center gap-2">
-          <img src={LOGO_URL} alt="Epsilon" className="h-[90px] w-auto object-contain" />
+          <img src={logoUrl} alt="Epsilon" className="h-[90px] w-auto object-contain" />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-10">

@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, ArrowRight, LogIn } from 'lucide-react';
-import { LOGO_URL, programs } from '../mock';
+import { LOGO_URL, programs as mockPrograms } from '../mock';
+import { useSiteContent } from '../context/SiteContent';
+import { api } from '../admin/api';
 
 export default function Footer() {
+  const ctx = useSiteContent();
+  const programs = ctx?.programs?.length ? ctx.programs : mockPrograms;
+  const logoUrl = ctx?.logoUrl || LOGO_URL;
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
-  const onSubscribe = (e) => {
+  const onSubscribe = async (e) => {
     e.preventDefault();
     if (!email) return;
+    try { await api.submitSubscribe({ email }); } catch {}
     try { localStorage.setItem('epsilon_subscriber_'+Date.now(), email); } catch {}
     setSubscribed(true);
     setEmail('');
@@ -23,7 +29,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-10">
           {/* Brand + email signup */}
           <div className="lg:col-span-2">
-            <img src={LOGO_URL} alt="Epsilon" className="h-[90px] w-auto object-contain mb-6 -ml-1" />
+            <img src={logoUrl} alt="Epsilon" className="h-[90px] w-auto object-contain mb-6 -ml-1" />
             <p className="font-editorial text-[1.1rem] leading-relaxed text-cream/80 max-w-md">
               Turning technical fluency into strategic value &mdash; executive education for the AI era.
             </p>

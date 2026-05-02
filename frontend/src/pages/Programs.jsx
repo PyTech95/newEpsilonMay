@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Filter } from 'lucide-react';
 import PageHero from '../components/PageHero';
-import { programs } from '../mock';
+import { programs as mockPrograms } from '../mock';
+import { useSiteContent } from '../context/SiteContent';
 
 const FILTERS = [
   { key: 'all', label: 'All Programmes' },
@@ -11,6 +12,8 @@ const FILTERS = [
 ];
 
 export default function Programs() {
+  const ctx = useSiteContent();
+  const programs = ctx?.programs?.length ? ctx.programs : mockPrograms;
   const [filter, setFilter] = useState('all');
   const list = programs.filter((p) => filter === 'all' || p.level === filter);
 
