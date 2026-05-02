@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Sparkles, ArrowRight, LogIn, FileText, Download, ArrowUpRight, BookOpen, Quote
+  Sparkles, ArrowRight, LogIn, Download, ArrowUpRight, Quote,
+  CheckCircle2, Check, FileText, Mail, Phone, MapPin, Calendar
 } from 'lucide-react';
-import { programs, testimonials, LOGO_URL } from '../mock';
+import { programs, testimonials, beliefs, LOGO_URL } from '../mock';
 import FacultyShowcase from '../components/FacultyShowcase';
 import NetworkBackground from '../components/NetworkBackground';
 
@@ -16,10 +17,252 @@ function HeroStat({ value, label }) {
   );
 }
 
+/* ---------- PDF Brochure gated download ---------- */
+function BrochureDownload() {
+  const [form, setForm] = useState({ name: '', phone: '', email: '', course: programs[0].title });
+  const [sent, setSent] = useState(false);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    try { localStorage.setItem('epsilon_brochure_'+Date.now(), JSON.stringify(form)); } catch {}
+    setSent(true);
+    // Trigger a browser download of the brochure asset
+    const link = document.createElement('a');
+    link.href = 'https://customer-assets.emergentagent.com/job_logos-11/artifacts/pjvgovi6_brochure%203e%20sample.pdf';
+    link.download = 'Epsilon-Programme-Brochure.pdf';
+    link.target = '_blank';
+    link.rel = 'noopener';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  return (
+    <section className="bg-bone py-24 md:py-32">
+      <div className="container-x grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
+        {/* Left: visual */}
+        <div className="relative bg-navy-deep overflow-hidden min-h-[380px] flex items-center justify-center p-10">
+          <div className="absolute inset-0 starfield opacity-30" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full glow-gold" />
+          <div className="relative text-center">
+            <FileText size={46} className="text-gold mx-auto mb-6" />
+            <p className="eyebrow mb-3">Programme Brochure</p>
+            <h3 className="font-display text-cream text-[1.8rem] md:text-[2.4rem] leading-[1.1] max-w-sm mx-auto">
+              Everything you need to <span className="italic font-editorial text-gold">decide.</span>
+            </h3>
+            <p className="font-sans text-cream/75 text-sm mt-5 max-w-xs mx-auto">
+              28-page PDF · Programme overview, modules, fees, capstone, faculty and admissions.
+            </p>
+          </div>
+        </div>
+
+        {/* Right: form */}
+        <div className="bg-white p-8 md:p-12 border border-navy/10">
+          {sent ? (
+            <div className="py-10 text-center">
+              <CheckCircle2 size={48} className="text-gold mx-auto mb-4" />
+              <h3 className="font-display text-navy text-[1.8rem]">Download started.</h3>
+              <p className="font-editorial text-navy/75 mt-3 max-w-md mx-auto">
+                The brochure should have opened in a new tab. If not, use the button below.
+              </p>
+              <a
+                href="https://customer-assets.emergentagent.com/job_logos-11/artifacts/pjvgovi6_brochure%203e%20sample.pdf"
+                download="Epsilon-Programme-Brochure.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-gold mt-7 inline-flex"
+              >
+                <Download size={16} /> Download Brochure
+              </a>
+              <button
+                onClick={() => setSent(false)}
+                className="block mx-auto mt-6 link-gold"
+              >
+                Request again
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={onSubmit} className="space-y-6">
+              <div>
+                <p className="eyebrow mb-2">Download the Brochure</p>
+                <h3 className="font-display text-navy text-[1.7rem] md:text-[2.1rem] leading-tight">
+                  Tell us who you are.
+                </h3>
+                <p className="font-editorial text-navy/70 mt-3">
+                  Your copy of the programme brochure will start downloading immediately.
+                </p>
+              </div>
+
+              <div>
+                <label className="fld-label">Full Name</label>
+                <input
+                  required className="fld-input" value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="fld-label">Phone</label>
+                  <input
+                    required className="fld-input" value={form.phone}
+                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                  />
+                </div>
+                <div>
+                  <label className="fld-label">Email</label>
+                  <input
+                    required type="email" className="fld-input" value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="fld-label">Course of Interest</label>
+                <select
+                  className="fld-input" value={form.course}
+                  onChange={(e) => setForm({ ...form, course: e.target.value })}
+                >
+                  {programs.map((p) => (
+                    <option key={p.slug} value={p.title}>{p.title}</option>
+                  ))}
+                </select>
+              </div>
+
+              <button type="submit" className="btn-gold">
+                <Download size={16} /> Download Brochure
+              </button>
+            </form>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Admissions + Contact inline ---------- */
+function AdmissionsContact() {
+  const [form, setForm] = useState({ name: '', email: '', topic: 'Admissions Question', message: '' });
+  const [sent, setSent] = useState(false);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    try { localStorage.setItem('epsilon_contact_home_' + Date.now(), JSON.stringify(form)); } catch {}
+    setSent(true);
+  };
+
+  return (
+    <section className="bg-cream py-24 md:py-32">
+      <div className="container-x grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-14 lg:gap-16">
+        {/* Admissions process */}
+        <div>
+          <p className="eyebrow mb-4">Admissions</p>
+          <span className="gold-rule-lg" />
+          <h2 className="font-display text-navy text-[2rem] md:text-[3rem] leading-[1.05] mt-6 max-w-lg">
+            A personal conversation. <span className="italic font-editorial text-gold">Not a funnel.</span>
+          </h2>
+          <p className="font-editorial text-navy/80 text-[1.15rem] leading-relaxed mt-6 max-w-xl">
+            Every applicant speaks with an admissions lead before a seat is offered. Start with a message — we will write back personally.
+          </p>
+
+          <div className="mt-10 space-y-6 max-w-md">
+            {[
+              { n: '01', t: 'Application', b: 'Tell us about your work and what you want to learn.' },
+              { n: '02', t: 'Conversation', b: 'A personal call to discuss fit and expectations.' },
+              { n: '03', t: 'Decision', b: 'A seat is offered based on fit, not first-come-first-served.' },
+              { n: '04', t: 'Onboarding', b: 'Pre-work, cohort introductions, and access to Moodle.' },
+            ].map((s) => (
+              <div key={s.n} className="flex gap-5 border-b border-navy/10 pb-5 last:border-0">
+                <p className="font-display text-gold text-[1.8rem] leading-none flex-shrink-0">{s.n}</p>
+                <div>
+                  <h4 className="font-display text-navy text-[1.1rem] leading-tight">{s.t}</h4>
+                  <p className="font-editorial text-navy/70 text-base leading-relaxed mt-1">{s.b}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+            <div className="flex gap-3">
+              <Mail size={16} className="text-gold mt-1 flex-shrink-0" />
+              <span className="text-navy/85">admissions@epsilon-edu.in</span>
+            </div>
+            <div className="flex gap-3">
+              <Phone size={16} className="text-gold mt-1 flex-shrink-0" />
+              <span className="text-navy/85">+91 · on request</span>
+            </div>
+            <div className="flex gap-3">
+              <MapPin size={16} className="text-gold mt-1 flex-shrink-0" />
+              <span className="text-navy/85">Live online · India</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Contact form */}
+        <div className="bg-white p-8 md:p-12 border border-navy/10">
+          {sent ? (
+            <div className="py-10 text-center">
+              <CheckCircle2 size={48} className="text-gold mx-auto mb-4" />
+              <h3 className="font-display text-navy text-[1.8rem]">Message sent.</h3>
+              <p className="font-editorial text-navy/75 mt-3">We&rsquo;ll write back personally within two working days.</p>
+              <button
+                onClick={() => { setSent(false); setForm({ name:'', email:'', topic:'Admissions Question', message:'' }); }}
+                className="link-gold mt-8 inline-flex"
+              >
+                Send another →
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={onSubmit} className="space-y-6">
+              <div>
+                <p className="eyebrow mb-2">Talk to Admissions</p>
+                <h3 className="font-display text-navy text-[1.7rem] md:text-[2.1rem] leading-tight">
+                  Start a conversation.
+                </h3>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="fld-label">Your Name</label>
+                  <input required className="fld-input" value={form.name} onChange={(e)=>setForm({...form,name:e.target.value})} />
+                </div>
+                <div>
+                  <label className="fld-label">Email</label>
+                  <input required type="email" className="fld-input" value={form.email} onChange={(e)=>setForm({...form,email:e.target.value})} />
+                </div>
+              </div>
+
+              <div>
+                <label className="fld-label">Topic</label>
+                <select className="fld-input" value={form.topic} onChange={(e)=>setForm({...form,topic:e.target.value})}>
+                  {['General Inquiry','Admissions Question','Programme Fit','Corporate / Cohort Partnerships','Press & Media'].map(t => (
+                    <option key={t} value={t}>{t}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="fld-label">Message</label>
+                <textarea required rows={5} className="fld-input" value={form.message} onChange={(e)=>setForm({...form,message:e.target.value})} />
+              </div>
+
+              <button type="submit" className="btn-gold">Send Message <ArrowRight size={16} /></button>
+            </form>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- HOME ---------- */
 export default function Home() {
+  const featured = programs[0]; // Applied AI & ML
+
   return (
     <div>
-      {/* HERO */}
+      {/* 1. HERO */}
       <section className="relative overflow-hidden bg-navy-deep text-cream min-h-[100vh]">
         <div className="absolute inset-0">
           <img
@@ -29,7 +272,6 @@ export default function Home() {
           />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(8,19,31,0.55), rgba(14,31,50,0.88), rgba(8,19,31,1))' }} />
         </div>
-        {/* Animated spider-net network */}
         <NetworkBackground className="opacity-70" />
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] rounded-full glow-gold pointer-events-none" />
 
@@ -52,7 +294,6 @@ export default function Home() {
               <LogIn size={16} /> Sign In to Learn
             </a>
           </div>
-
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 fade-up">
             <HeroStat value="12 weeks" label="Cohort duration" />
             <HeroStat value="Live online" label="Executive-friendly" />
@@ -62,123 +303,147 @@ export default function Home() {
         </div>
       </section>
 
-      {/* BENTO SNAPSHOT */}
-      <section className="bg-cream py-24 md:py-32 relative overflow-hidden">
-        <div className="absolute -top-32 -right-40 w-[600px] h-[600px] rounded-full opacity-[0.06] pointer-events-none"
-             style={{ background: 'radial-gradient(circle, #c2984c 0%, transparent 70%)' }} />
-        <div className="container-x relative">
-          <p className="eyebrow mb-4">A snapshot of Epsilon</p>
+      {/* 2. PROGRAM SHOWCASE */}
+      <section className="bg-cream py-24 md:py-32">
+        <div className="container-x">
+          <p className="eyebrow mb-4">Flagship Programme</p>
           <span className="gold-rule-lg" />
-          <h2 className="font-display text-navy text-[2.2rem] md:text-[3.4rem] leading-[1.05] mt-6 max-w-4xl">
-            Everything you need to <span className="italic font-editorial text-gold">decide</span>, in one frame.
-          </h2>
 
-          {/* Row 1 — 3 cards */}
-          <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
-            {/* Brochure */}
-            <button className="relative group block w-full text-left bg-navy text-cream p-7 md:p-9 overflow-hidden hover:bg-navy-deep transition-colors min-h-[230px]">
-              <div className="absolute -top-10 -right-10 w-44 h-44 rounded-full opacity-30"
-                   style={{ background: 'radial-gradient(circle, rgba(194,152,76,0.5) 0%, transparent 70%)' }} />
-              <FileText size={26} className="text-gold mb-4" />
-              <p className="eyebrow mb-2">Brochure</p>
-              <p className="font-display text-[1.35rem] md:text-[1.55rem] leading-tight">Download the full programme brochure.</p>
-              <span className="link-gold mt-5 inline-flex"><Download size={14} /> PDF · Free</span>
-            </button>
-
-            {/* Moodle */}
-            <a href="https://moodle.org/login/index.php" target="_blank" rel="noopener noreferrer"
-               className="relative group block w-full bg-gold text-navy p-7 md:p-9 overflow-hidden hover:bg-[#d8b876] transition-colors min-h-[230px]">
-              <LogIn size={26} className="text-navy mb-4" />
-              <p className="font-caps text-[0.7rem] font-bold mb-2">Already a Student?</p>
-              <p className="font-display text-[1.35rem] md:text-[1.55rem] leading-tight">Sign in to your learning environment.</p>
-              <span className="mt-5 inline-flex items-center gap-1.5 font-caps text-[0.7rem] font-bold">
-                Sign In to Moodle <ArrowUpRight size={14} />
-              </span>
-            </a>
-
-            {/* Live Online image card */}
-            <Link to="/programs" className="relative group block w-full overflow-hidden min-h-[230px]">
-              <img src="https://images.unsplash.com/photo-1716471453667-94383b1e4859?auto=format&fit=crop&w=1200&q=80"
-                   alt="Live online cohort" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/40 to-transparent" />
-              <div className="relative p-7 md:p-9 flex flex-col justify-end h-full text-cream">
-                <BookOpen size={22} className="text-gold mb-4" />
-                <p className="font-caps text-[0.7rem] text-gold mb-2">Live Online</p>
-                <p className="font-display text-[1.35rem] md:text-[1.55rem] leading-tight">Built for the schedule of senior professionals.</p>
+          <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-stretch">
+            {/* Big image */}
+            <div className="relative overflow-hidden min-h-[480px]">
+              <img src={featured.image} alt={featured.title} className="absolute inset-0 w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-navy-deep/80 via-navy-deep/30 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10 text-cream">
+                <p className="font-caps text-[0.65rem] text-gold mb-2">{featured.weeks} weeks · {featured.levelLabel}</p>
+                <p className="font-display text-[1.6rem] md:text-[2rem] leading-tight max-w-md">{featured.subtitle}</p>
               </div>
-            </Link>
+            </div>
+
+            {/* Content */}
+            <div className="flex flex-col justify-center">
+              <h2 className="font-display text-navy text-[2rem] md:text-[3rem] leading-[1.05]">
+                {featured.title}
+              </h2>
+              <p className="font-editorial italic text-gold text-[1.3rem] md:text-[1.5rem] mt-4">
+                {featured.tagline}
+              </p>
+              <p className="font-editorial text-navy/85 text-[1.15rem] leading-relaxed mt-6">
+                {featured.long}
+              </p>
+
+              <ul className="mt-8 space-y-3">
+                {featured.outcomes.slice(0, 4).map((o) => (
+                  <li key={o} className="flex gap-3 items-start">
+                    <Check size={18} className="text-gold mt-1 flex-shrink-0" />
+                    <span className="font-editorial text-navy/85 text-[1.1rem] leading-relaxed">{o}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-8 grid grid-cols-3 gap-4 max-w-md border-t border-b border-navy/10 py-6">
+                <div>
+                  <p className="font-caps text-[0.6rem] text-navy/60">Fee</p>
+                  <p className="font-display text-navy text-lg mt-1">{featured.fee}</p>
+                </div>
+                <div>
+                  <p className="font-caps text-[0.6rem] text-navy/60">Duration</p>
+                  <p className="font-display text-navy text-lg mt-1">{featured.weeks} weeks</p>
+                </div>
+                <div>
+                  <p className="font-caps text-[0.6rem] text-navy/60">Next Cohort</p>
+                  <p className="font-display text-navy text-[0.92rem] mt-1 leading-tight">{featured.nextCohort}</p>
+                </div>
+              </div>
+
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Link to="/apply" className="btn-gold">
+                  Enroll Now <ArrowRight size={16} />
+                </Link>
+                <Link to={`/programs/${featured.slug}`} className="btn-outline-gold border-navy/30 text-navy hover:text-gold">
+                  Full Curriculum <ArrowUpRight size={14} />
+                </Link>
+              </div>
+            </div>
           </div>
 
-          {/* Row 2 — 2 image cards */}
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-            <div className="relative overflow-hidden min-h-[360px] group">
-              <img src="https://images.unsplash.com/photo-1675664535418-959dd68004fd?auto=format&fit=crop&w=1600&q=80"
-                   alt="Capstone" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-navy-deep/30 to-transparent" />
-              <div className="relative p-8 md:p-10 flex flex-col justify-end h-full text-cream">
-                <p className="eyebrow mb-2">Capstone</p>
-                <p className="font-display text-[1.6rem] md:text-[2rem] leading-tight">A portfolio that proves capability</p>
-              </div>
-            </div>
-            <div className="relative overflow-hidden min-h-[360px] group">
-              <img src="https://images.unsplash.com/photo-1675664532731-c8caede9ef6b?auto=format&fit=crop&w=1600&q=80"
-                   alt="Senior cohort" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-navy-deep/30 to-transparent" />
-              <div className="relative p-8 md:p-10 flex flex-col justify-end h-full text-cream">
-                <p className="eyebrow mb-2">Senior Cohort</p>
-                <p className="font-display text-[1.6rem] md:text-[2rem] leading-tight">Working professionals · 5–15 yrs experience</p>
-              </div>
-            </div>
+          {/* Other programmes strip */}
+          <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6">
+            {programs.slice(1).map((p) => (
+              <Link to={`/programs/${p.slug}`} key={p.slug}
+                    className="group bg-white border border-navy/10 hover:border-gold/50 transition-colors">
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                </div>
+                <div className="p-6">
+                  <p className="font-caps text-[0.6rem] text-gold">{p.weeks} weeks · {p.levelLabel}</p>
+                  <h3 className="font-display text-navy text-[1.25rem] leading-tight mt-3">{p.subtitle}</h3>
+                  <p className="font-editorial italic text-navy/70 text-base mt-2">{p.tagline}</p>
+                  <span className="link-gold mt-5 inline-flex">Explore <ArrowUpRight size={13} /></span>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ONLINE EXPERIENCE */}
+      {/* 3. BROCHURE DOWNLOAD (gated) */}
+      <BrochureDownload />
+
+      {/* 4. FACULTY */}
+      <FacultyShowcase />
+
+      {/* 5. ADMISSIONS + CONTACT */}
+      <AdmissionsContact />
+
+      {/* 6. ABOUT */}
       <section className="bg-bone py-24 md:py-32">
         <div className="container-x">
-          <p className="eyebrow mb-4">The Online Experience</p>
-          <span className="gold-rule-lg" />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start mt-8">
-            <h2 className="font-display text-navy text-[2rem] md:text-[3.2rem] leading-[1.05]">
-              Live, intimate, <span className="italic font-editorial text-gold">and rigorous.</span>
-            </h2>
-            <p className="font-editorial text-navy/80 text-[1.2rem] leading-relaxed">
-              Three evenings a week, you join your cohort live online &mdash; same screen, real conversation, faculty within reach. No pre-recorded sessions, no asynchronous drift.
-            </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-14 items-start">
+            <div>
+              <p className="eyebrow mb-4">About Epsilon</p>
+              <span className="gold-rule-lg" />
+              <h2 className="font-display text-navy text-[2rem] md:text-[3rem] leading-[1.05] mt-6">
+                A school for the people who <span className="italic font-editorial text-gold">decide.</span>
+              </h2>
+            </div>
+            <div className="space-y-6">
+              <p className="font-editorial text-navy/85 text-[1.2rem] leading-relaxed">
+                Knowing about AI is not the same as deciding with it. Reading a model report is not the same as defending a recommendation to a board. Our programmes are built around that gap &mdash; the difference between knowing and deciding.
+              </p>
+              <p className="font-editorial text-navy/85 text-[1.2rem] leading-relaxed">
+                We pair practitioner-educators with senior cohorts, hold them to a high bar of evidence, and end every programme with a portfolio-grade capstone &mdash; an artefact that proves capability, not attendance.
+              </p>
+              <Link to="/about" className="link-gold inline-flex">Read more <ArrowUpRight size={13} /></Link>
+            </div>
           </div>
 
-          <div className="mt-14 grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-6">
-            <div className="relative aspect-[4/3] overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1675664532493-ab9f3e5ed1ea?auto=format&fit=crop&w=1600&q=80" alt="Working professional learning online" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-navy-deep/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-7 text-cream">
-                <p className="eyebrow mb-2">Evenings · Live</p>
-                <p className="font-display text-[1.6rem] leading-tight">3 sessions a week, 6 hours total</p>
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+            {beliefs.map((b) => (
+              <div key={b.n} className="bg-white p-8 hover:shadow-lg transition-shadow">
+                <p className="font-display text-gold text-[2.5rem] leading-none">{b.n}</p>
+                <h3 className="font-display text-navy text-[1.35rem] leading-tight mt-5">{b.title}</h3>
+                <p className="font-editorial text-navy/75 text-base leading-relaxed mt-4">{b.body}</p>
               </div>
-            </div>
-            <div className="grid grid-rows-2 gap-6">
-              <div className="aspect-[16/9] overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1716471551703-e8bb5ca9bf23?auto=format&fit=crop&w=900&q=80" alt="" className="w-full h-full object-cover" />
-              </div>
-              <div className="aspect-[16/9] overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1654262609484-76d1a8f3b016?auto=format&fit=crop&w=900&q=80" alt="" className="w-full h-full object-cover" />
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* TESTIMONIAL BAND */}
+      {/* 7. TESTIMONIALS */}
       <section className="bg-navy-deep text-cream py-24 md:py-32 relative overflow-hidden">
         <div className="absolute inset-0 starfield opacity-40" />
         <div className="container-x relative">
           <p className="eyebrow mb-4">In Their Words</p>
           <span className="gold-rule-lg" />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-12">
+          <h2 className="font-display text-cream text-[2rem] md:text-[3rem] leading-[1.05] mt-6 max-w-3xl">
+            The judgement shows up in <span className="italic font-editorial text-gold">their work.</span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-14">
             {testimonials.map((t, i) => (
               <div key={i} className="border border-gold/15 p-8 bg-navy/40">
                 <Quote size={20} className="text-gold mb-4" />
-                <p className="font-editorial italic text-[1.25rem] leading-relaxed text-cream/90">&ldquo;{t.quote}&rdquo;</p>
+                <p className="font-editorial italic text-[1.2rem] leading-relaxed text-cream/90">&ldquo;{t.quote}&rdquo;</p>
                 <div className="mt-6 flex items-center gap-3">
                   <img src={t.avatar} alt={t.name} className="w-12 h-12 rounded-full object-cover border border-gold/40" />
                   <div>
@@ -192,43 +457,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FACULTY SHOWCASE */}
-      <FacultyShowcase />
-
-      {/* PROGRAMMES */}
-      <section className="bg-cream py-24 md:py-32">
-        <div className="container-x">
-          <p className="eyebrow mb-4">More Programmes</p>
-          <span className="gold-rule-lg" />
-          <h2 className="font-display text-navy text-[2rem] md:text-[3rem] leading-[1.05] mt-6 max-w-3xl">
-            Built for senior professionals. Taught by people who do the work.
-          </h2>
-
-          <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {programs.slice(1).map((p) => (
-              <div key={p.slug} className="bg-white border border-navy/10 group hover:border-gold/50 transition-colors">
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img src={p.image} alt={p.title}
-                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                </div>
-                <div className="p-7">
-                  <p className="font-caps text-[0.6rem] text-gold">
-                    {p.weeks} weeks · {p.levelLabel}
-                  </p>
-                  <h3 className="font-display text-navy text-[1.35rem] leading-tight mt-3">{p.subtitle}</h3>
-                  <p className="font-editorial italic text-navy/70 mt-3">{p.tagline}</p>
-                  <Link to={`/programs/${p.slug}`} className="link-gold mt-6 inline-flex">
-                    Explore <ArrowUpRight size={13} />
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA BAND */}
-      <section className="relative bg-navy-deep text-cream py-28 md:py-36 overflow-hidden">
+      {/* 8. FINAL CTA */}
+      <section className="relative bg-navy-deep text-cream py-28 md:py-36 overflow-hidden border-t border-gold/10">
         <div className="absolute inset-0 starfield opacity-60" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[1100px] rounded-full glow-gold" />
         <div className="relative container-x text-center">
