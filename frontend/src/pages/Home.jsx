@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import FacultyShowcase from '../components/FacultyShowcase';
 import NetworkBackground from '../components/NetworkBackground';
+import SectionHeader, { SectionOrnament } from '../components/SectionHeader';
 import { useSiteContent } from '../context/SiteContent';
 import { api as adminApi } from '../admin/api';
 import { LOGO_URL as MOCK_LOGO } from '../mock';
@@ -41,8 +42,16 @@ function BrochureDownload({ programs, brochure }) {
   };
 
   return (
-    <section className="bg-bone py-24 md:py-32">
-      <div className="container-x grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
+    <section className="bg-bone py-24 md:py-32 relative">
+      <div className="container-x">
+        <SectionHeader
+          chapter="Chapter II"
+          eyebrow={brochure?.eyebrow || 'Programme Brochure'}
+          title="The whole programme,"
+          accent="on a single PDF."
+          subtitle={brochure?.description || '28-page PDF · Programme overview, modules, fees, capstone, faculty and admissions.'}
+        />
+        <div className="mt-14 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
         {/* Left: visual */}
           <div className="relative bg-navy-deep overflow-hidden min-h-[380px] flex items-center justify-center p-10">
             <div className="absolute inset-0 starfield opacity-30" />
@@ -140,6 +149,7 @@ function BrochureDownload({ programs, brochure }) {
             </form>
           )}
         </div>
+        </div>
       </div>
     </section>
   );
@@ -158,28 +168,30 @@ function AdmissionsContact({ sections, contact }) {
   };
 
   return (
-    <section className="bg-cream py-24 md:py-32">
-      <div className="container-x grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-14 lg:gap-16">
+    <section className="bg-cream py-24 md:py-32 relative">
+      <div className="container-x">
+        <SectionHeader
+          chapter="Chapter IV"
+          eyebrow={sections?.admissionsEyebrow || 'Admissions'}
+          title="A personal conversation."
+          accent="Not a funnel."
+          subtitle={sections?.admissionsSubtitle || 'Every applicant speaks with an admissions lead before a seat is offered. Start with a message — we will write back personally.'}
+          align="center"
+        />
+
+        <div className="mt-16 grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-14 lg:gap-16">
         {/* Admissions process */}
         <div>
-          <p className="eyebrow mb-4">{sections?.admissionsEyebrow || 'Admissions'}</p>
-          <span className="gold-rule-lg" />
-          <h2 className="font-display text-navy text-[2rem] md:text-[3rem] leading-[1.05] mt-6 max-w-lg">
-            {sections?.admissionsTitle || 'A personal conversation. Not a funnel.'}
-          </h2>
-          <p className="font-editorial text-navy/80 text-[1.15rem] leading-relaxed mt-6 max-w-xl">
-            {sections?.admissionsSubtitle || 'Every applicant speaks with an admissions lead before a seat is offered. Start with a message — we will write back personally.'}
-          </p>
-
-          <div className="mt-10 space-y-6 max-w-md">
+          <p className="font-caps text-[0.65rem] text-gold tracking-[0.22em] mb-5">The Process</p>
+          <div className="space-y-6 max-w-md">
             {[
               { n: '01', t: 'Application', b: 'Tell us about your work and what you want to learn.' },
               { n: '02', t: 'Conversation', b: 'A personal call to discuss fit and expectations.' },
               { n: '03', t: 'Decision', b: 'A seat is offered based on fit, not first-come-first-served.' },
               { n: '04', t: 'Onboarding', b: 'Pre-work, cohort introductions, and access to Moodle.' },
             ].map((s) => (
-              <div key={s.n} className="flex gap-5 border-b border-navy/10 pb-5 last:border-0">
-                <p className="font-display text-gold text-[1.8rem] leading-none flex-shrink-0">{s.n}</p>
+              <div key={s.n} className="flex gap-5 border-b border-navy/10 pb-5 last:border-0 group">
+                <p className="font-display text-gold text-[1.8rem] leading-none flex-shrink-0 group-hover:scale-110 transition-transform origin-left">{s.n}</p>
                 <div>
                   <h4 className="font-display text-navy text-[1.1rem] leading-tight">{s.t}</h4>
                   <p className="font-editorial text-navy/70 text-base leading-relaxed mt-1">{s.b}</p>
@@ -256,6 +268,7 @@ function AdmissionsContact({ sections, contact }) {
             </form>
           )}
         </div>
+        </div>
       </div>
     </section>
   );
@@ -323,15 +336,25 @@ export default function Home() {
       </section>
 
       {/* 2. PROGRAM SHOWCASE */}
-      <section className="bg-cream py-24 md:py-32">
+      <section className="bg-cream py-24 md:py-32 relative">
         <div className="container-x">
-          <p className="eyebrow mb-4">{sections.flagshipEyebrow || 'Flagship Programme'}</p>
-          <span className="gold-rule-lg" />
+          <SectionHeader
+            chapter="Chapter I"
+            eyebrow={sections.flagshipEyebrow || 'Flagship Programme'}
+            title={featured.subtitle || 'Professional Certificate'}
+            accent="designed for the AI era."
+            subtitle="Twelve weeks. Evidence-based. Defended before senior peers. An artefact that travels with you."
+          />
 
-          <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-stretch">
-            <div className="relative overflow-hidden min-h-[480px]">
-              <img src={featured.image} alt={featured.title} className="absolute inset-0 w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-tr from-navy-deep/80 via-navy-deep/30 to-transparent" />
+          <div className="mt-14 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-stretch">
+            <div className="relative overflow-hidden min-h-[480px] group">
+              <img src={featured.image} alt={featured.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-navy-deep/85 via-navy-deep/30 to-transparent" />
+              {/* Gold corner accents */}
+              <span className="absolute top-5 left-5 w-8 h-8 border-t border-l border-gold/70" />
+              <span className="absolute top-5 right-5 w-8 h-8 border-t border-r border-gold/70" />
+              <span className="absolute bottom-5 left-5 w-8 h-8 border-b border-l border-gold/70" />
+              <span className="absolute bottom-5 right-5 w-8 h-8 border-b border-r border-gold/70" />
               <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10 text-cream">
                 <p className="font-caps text-[0.65rem] text-gold mb-2">{featured.weeks} weeks · {featured.levelLabel}</p>
                 <p className="font-display text-[1.6rem] md:text-[2rem] leading-tight max-w-md">{featured.subtitle}</p>
@@ -339,8 +362,9 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col justify-center">
-              <h2 className="font-display text-navy text-[2rem] md:text-[3rem] leading-[1.05]">{featured.title}</h2>
-              <p className="font-editorial italic text-gold text-[1.3rem] md:text-[1.5rem] mt-4">{featured.tagline}</p>
+              <p className="font-editorial italic text-gold text-[1.3rem] md:text-[1.5rem]">{featured.tagline}</p>
+              <div className="w-16 h-px bg-gold/40 my-5" />
+              <h3 className="font-display text-navy text-[1.6rem] md:text-[2rem] leading-[1.15]">{featured.title}</h3>
               <p className="font-editorial text-navy/85 text-[1.15rem] leading-relaxed mt-6">{featured.long}</p>
 
               <ul className="mt-8 space-y-3">
@@ -367,21 +391,25 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {programs.filter((p) => p.slug !== featured.slug).slice(0, 3).map((p) => (
-              <Link to={`/programs/${p.slug}`} key={p.slug || p._id}
-                    className="group bg-white border border-navy/10 hover:border-gold/50 transition-colors">
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                </div>
-                <div className="p-6">
-                  <p className="font-caps text-[0.6rem] text-gold">{p.weeks} weeks · {p.levelLabel}</p>
-                  <h3 className="font-display text-navy text-[1.25rem] leading-tight mt-3">{p.subtitle}</h3>
-                  <p className="font-editorial italic text-navy/70 text-base mt-2">{p.tagline}</p>
-                  <span className="link-gold mt-5 inline-flex">Explore <ArrowUpRight size={13} /></span>
-                </div>
-              </Link>
-            ))}
+          <div className="mt-20">
+            <SectionOrnament tone="light" />
+            <p className="font-caps text-[0.65rem] text-gold tracking-[0.22em] text-center mt-6 mb-10">More Programmes</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {programs.filter((p) => p.slug !== featured.slug).slice(0, 3).map((p) => (
+                <Link to={`/programs/${p.slug}`} key={p.slug || p._id}
+                      className="group bg-white border border-navy/10 hover:border-gold/60 transition-colors lift-card">
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  </div>
+                  <div className="p-6">
+                    <p className="font-caps text-[0.6rem] text-gold">{p.weeks} weeks · {p.levelLabel}</p>
+                    <h3 className="font-display text-navy text-[1.25rem] leading-tight mt-3">{p.subtitle}</h3>
+                    <p className="font-editorial italic text-navy/70 text-base mt-2">{p.tagline}</p>
+                    <span className="link-gold mt-5 inline-flex">Explore <ArrowUpRight size={13} /></span>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -390,38 +418,55 @@ export default function Home() {
       <BrochureDownload programs={programs} brochure={brochure} />
 
       {/* 4. FACULTY */}
+      <div className="bg-navy-deep">
+        <div className="container-x pt-20">
+          <SectionHeader
+            chapter="Chapter III"
+            eyebrow="Faculty"
+            title="Practitioner-educators who"
+            accent="do the work."
+            align="center"
+            tone="dark"
+          />
+        </div>
+      </div>
       <FacultyShowcase />
 
       {/* 5. ADMISSIONS + CONTACT */}
       <AdmissionsContact sections={sections} contact={contact} />
 
       {/* 6. ABOUT */}
-      <section className="bg-bone py-24 md:py-32">
+      <section className="bg-bone py-24 md:py-32 relative">
         <div className="container-x">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-14 items-start">
-            <div>
-              <p className="eyebrow mb-4">{about.eyebrow || 'About Epsilon'}</p>
-              <span className="gold-rule-lg" />
-              <h2 className="font-display text-navy text-[2rem] md:text-[3rem] leading-[1.05] mt-6">
-                {(about.title || 'A school for the people who decide.').replace(/\.$/, '')}
-                <span className="italic font-editorial text-gold">.</span>
-              </h2>
-            </div>
-            <div className="space-y-6">
-              <p className="font-editorial text-navy/85 text-[1.2rem] leading-relaxed">{about.paragraph1}</p>
-              <p className="font-editorial text-navy/85 text-[1.2rem] leading-relaxed">{about.paragraph2}</p>
-              <Link to="/about" className="link-gold inline-flex">Read more <ArrowUpRight size={13} /></Link>
-            </div>
+          <SectionHeader
+            chapter="Chapter V"
+            eyebrow={about.eyebrow || 'About Epsilon'}
+            title="A school for the people"
+            accent="who decide."
+            align="center"
+          />
+
+          <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-14 items-start max-w-5xl mx-auto">
+            <p className="font-editorial text-navy/85 text-[1.2rem] leading-relaxed">{about.paragraph1}</p>
+            <p className="font-editorial text-navy/85 text-[1.2rem] leading-relaxed">{about.paragraph2}</p>
+          </div>
+          <div className="text-center mt-10">
+            <Link to="/about" className="link-gold inline-flex">Read more <ArrowUpRight size={13} /></Link>
           </div>
 
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {beliefs.map((b) => (
-              <div key={b._id || b.n} className="bg-white p-8 hover:shadow-lg transition-shadow">
-                <p className="font-display text-gold text-[2.5rem] leading-none">{b.n}</p>
-                <h3 className="font-display text-navy text-[1.35rem] leading-tight mt-5">{b.title}</h3>
-                <p className="font-editorial text-navy/75 text-base leading-relaxed mt-4">{b.body}</p>
-              </div>
-            ))}
+          <div className="mt-20">
+            <SectionOrnament tone="light" />
+            <p className="font-caps text-[0.65rem] text-gold tracking-[0.22em] text-center mt-6 mb-10">What we believe</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {beliefs.map((b) => (
+                <div key={b._id || b.n} className="bg-white p-10 lift-card border border-transparent hover:border-gold/40">
+                  <p className="font-display text-gold text-[3rem] leading-none">{b.n}</p>
+                  <div className="w-10 h-px bg-gold/40 mt-3 mb-5" />
+                  <h3 className="font-display text-navy text-[1.4rem] leading-tight">{b.title}</h3>
+                  <p className="font-editorial text-navy/75 text-base leading-relaxed mt-4">{b.body}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -429,15 +474,19 @@ export default function Home() {
       {/* 7. TESTIMONIALS */}
       <section className="bg-navy-deep text-cream py-24 md:py-32 relative overflow-hidden">
         <div className="absolute inset-0 starfield opacity-40" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full glow-gold pointer-events-none" />
         <div className="container-x relative">
-          <p className="eyebrow mb-4">{sections.testimonialsEyebrow || 'In Their Words'}</p>
-          <span className="gold-rule-lg" />
-          <h2 className="font-display text-cream text-[2rem] md:text-[3rem] leading-[1.05] mt-6 max-w-3xl">
-            {sections.testimonialsTitle || 'The judgement shows up in their work.'}
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-14">
+          <SectionHeader
+            chapter="Chapter VI"
+            eyebrow={sections.testimonialsEyebrow || 'In Their Words'}
+            title="The judgement shows up"
+            accent="in their work."
+            align="center"
+            tone="dark"
+          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
             {testimonials.map((t) => (
-              <div key={t._id || t.name} className="border border-gold/15 p-8 bg-navy/40">
+              <div key={t._id || t.name} className="border border-gold/20 p-8 bg-navy/40 lift-card hover:border-gold/60">
                 <Quote size={20} className="text-gold mb-4" />
                 <p className="font-editorial italic text-[1.2rem] leading-relaxed text-cream/90">&ldquo;{t.quote}&rdquo;</p>
                 <div className="mt-6 flex items-center gap-3">
