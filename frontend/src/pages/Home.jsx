@@ -292,7 +292,7 @@ export default function Home() {
   const sections = home?.sections || {};
   const contact = home?.contact || {};
   const footer = home?.footer || {};
-  const heroImage = hero.heroImage || 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=2400&q=80';
+  const heroImage = hero.heroImage || '/generated/hero-indian-online-learner.png';
 
   return (
     <div>
@@ -487,7 +487,7 @@ export default function Home() {
         <div className="absolute inset-0 starfield opacity-60" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[1100px] rounded-full glow-gold" />
         <div className="relative container-x text-center">
-          <img src={logoUrl} alt="Epsilon" className="mx-auto mb-8 h-[120px] w-auto object-contain" />
+          <img src={logoUrl} alt="Epsilon" className="mx-auto mb-8 h-[150px] w-auto object-contain" />
           <p className="eyebrow">{cta.eyebrow || 'Take the next step'}</p>
           <h2 className="font-display uppercase text-[2rem] md:text-[3.4rem] leading-[1.05] max-w-4xl mx-auto mt-5">
             {(cta.title || 'Build the judgement your next decade demands.')}

@@ -12,7 +12,7 @@ export const programs = [
     audience: '5–15 yrs experience',
     fee: '₹1,25,000',
     nextCohort: 'Cohort 04 · 15 March 2026',
-    image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1600&q=80',
+    image: '/generated/applied-ai-ml.png',
     short: 'Build evidence-based AI capability, from first principles to production judgement.',
     long: 'A twelve-week live online cohort that builds the judgement to lead AI initiatives — reading models critically, designing disciplined workflows, and defending recommendations to the people who decide.',
     outcomes: [
