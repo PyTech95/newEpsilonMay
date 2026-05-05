@@ -39,7 +39,7 @@ export default function Navbar() {
     >
       <div className="container-x flex items-center justify-between h-[140px]">
         <Link to="/" className="flex items-center gap-2">
-          <img src={logoUrl} alt="Epsilon" className="h-[113px] w-auto object-contain" />
+          <img src={logoUrl} alt="Epsilon" className="h-[113px] w-auto object-contain logo-white" />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-10">

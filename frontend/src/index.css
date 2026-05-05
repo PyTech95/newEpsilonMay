@@ -198,6 +198,9 @@ html, body {
 }
 .gold-shimmer { animation: shimmer 3.2s ease-in-out infinite; }
 
+/* White-out logo (single-color treatment) for dark backgrounds */
+.logo-white { filter: brightness(0) invert(1); }
+
 /* Hide platform "Made with Emergent" badge (best-effort) */
 a[href*="emergent.sh"][target="_blank"][class*="fixed"],
 a[href*="app.emergent.sh"],
