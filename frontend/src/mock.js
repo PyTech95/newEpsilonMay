@@ -41,7 +41,7 @@ export const programs = [
     audience: '10–20 yrs experience',
     fee: '₹1,45,000',
     nextCohort: 'Cohort 03 · 22 April 2026',
-    image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1600&q=80',
+    image: '/generated/strategic-leadership.png',
     short: 'Lead with Clarity. Decide with Conviction.',
     long: 'A ten-week programme for senior professionals who must set direction under ambiguity — combining decision science, executive communication, and frameworks that survive the boardroom.',
     outcomes: [
@@ -69,7 +69,7 @@ export const programs = [
     audience: '5–12 yrs experience',
     fee: '₹85,000',
     nextCohort: 'Cohort 02 · 10 May 2026',
-    image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1600&q=80',
+    image: '/generated/finance-non-finance.png',
     short: 'Read the Numbers. Lead the Business.',
     long: 'An eight-week programme that gives non-finance leaders the vocabulary and judgement to read statements, interrogate assumptions, and lead commercial conversations with confidence.',
     outcomes: [
@@ -96,7 +96,7 @@ export const programs = [
     audience: '8–18 yrs experience',
     fee: '₹1,20,000',
     nextCohort: 'Cohort 02 · 05 June 2026',
-    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=80',
+    image: '/generated/digital-transformation.png',
     short: 'From Strategy to Shipped Reality.',
     long: 'A ten-week programme that bridges the gap between transformation slideware and shipped change — operating models, technology choice, and the craft of leading delivery.',
     outcomes: [
