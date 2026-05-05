@@ -4,7 +4,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // Public
 import Layout from './components/Layout';
+import Layout2 from './components/Layout2';
 import Home from './pages/Home';
+import Home2 from './pages/Home2';
 import Programs from './pages/Programs';
 import ProgramDetail from './pages/ProgramDetail';
 import Faculty from './pages/Faculty';
@@ -57,6 +59,17 @@ function App() {
               <Route path="events" element={<EventsEditor />} />
               <Route path="submissions" element={<SubmissionsInbox />} />
               <Route path="password" element={<ChangePassword />} />
+            </Route>
+
+            {/* Public · Home 2 (alternate design — centered logo nav) */}
+            <Route
+              element={
+                <SiteContentProvider>
+                  <Layout2 />
+                </SiteContentProvider>
+              }
+            >
+              <Route path="/home2" element={<Home2 />} />
             </Route>
 
             {/* Public */}
