@@ -147,6 +147,7 @@ export default function HomeEditor() {
       <Section title="Contact Details (used across the site)">
         <F label="Email" value={data.contact?.email} onChange={(v) => update('contact.email', v)} />
         <F label="Phone" value={data.contact?.phone} onChange={(v) => update('contact.phone', v)} />
+        <F label="WhatsApp number (with country code, e.g. +919876543210)" value={data.contact?.whatsapp} onChange={(v) => update('contact.whatsapp', v)} />
         <F label="Address / Location" value={data.contact?.address} onChange={(v) => update('contact.address', v)} />
         <F label="Contact page subtext" textarea value={data.contact?.subtext} onChange={(v) => update('contact.subtext', v)} />
       </Section>
