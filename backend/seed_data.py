@@ -1,7 +1,7 @@
 """Initial seed content for Epsilon Executive Education."""
 from datetime import datetime
 
-LOGO_URL = "https://customer-assets.emergentagent.com/job_look-creation/artifacts/dqpbmit4_background_removal%23TUFISU9ndjE5dUUjMSM2Y2FmMjhhNTNhMzRiYzBiNTFlMTQ3ZGQxNmEyZTRmMCM5MjAjI1RSQU5TRk9STUFUSU9OX1JFUVVFU1Q.png"
+LOGO_URL = "https://customer-assets.emergentagent.com/job_logos-11/artifacts/d7h51yi7_EPSILON%20LOGO2%20%281%29.png"
 
 HOME_CONTENT = {
     "_id": "home",
