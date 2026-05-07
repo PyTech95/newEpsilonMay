@@ -51,7 +51,7 @@ export default function Home2() {
           <div>
             <Eyebrow>{hero.eyebrow || 'The AI era of executive education'}</Eyebrow>
             <GoldRule />
-            <h1 className="font-display uppercase text-[2.6rem] md:text-[4.4rem] leading-[1.04] mt-7">
+            <h1 className="font-display uppercase text-[2.1rem] md:text-[3.5rem] leading-[1.04] mt-7">
               {hero.titleLine1 || 'Turning technical fluency'}
             </h1>
             <h2 className="font-editorial italic text-gold text-[2rem] md:text-[3rem] leading-[1.05] mt-3">
