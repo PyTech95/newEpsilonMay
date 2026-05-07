@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import PageHero from '../components/PageHero';
 import { beliefs, LOGO_URL } from '../mock';
+import { useSiteContent } from '../context/SiteContent';
 
 export default function About() {
+  const ctx = useSiteContent();
   return (
     <div>
       <PageHero
@@ -18,7 +20,7 @@ export default function About() {
         <div className="container-x grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-14 items-center">
           <div className="relative aspect-[4/5] overflow-hidden bg-navy-deep order-2 lg:order-1">
             <img
-              src="/generated/online-class-female-professional.png"
+              src={ctx?.home?.siteImages?.aboutPhilosophy || "/generated/online-class-female-professional.png"}
               alt="Senior professional studying with Epsilon"
               className="w-full h-full object-cover"
             />

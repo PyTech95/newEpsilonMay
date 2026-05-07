@@ -184,6 +184,50 @@ export default function HomeEditor() {
         <ImageField label="Logo" value={data.logoUrl} onChange={(v) => update('logoUrl', v)} help="Recommended: PNG with transparent background." />
       </Section>
 
+      <Section title="Section Images (across the site)">
+        <p className="text-xs text-navy/60 -mt-2 mb-4">
+          Upload a new photo or paste a URL. Each image controls a specific block on the public site. Leave blank to use the default.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <ImageField
+            label="About — Philosophy block"
+            value={data.siteImages?.aboutPhilosophy}
+            onChange={(v) => update('siteImages.aboutPhilosophy', v)}
+            help="Shown on /about beside 'Turning technical fluency into strategic value.'"
+          />
+          <ImageField
+            label="Admissions — Process block"
+            value={data.siteImages?.admissionsProcess}
+            onChange={(v) => update('siteImages.admissionsProcess', v)}
+            help="Sticky portrait on /admissions next to the four-step process."
+          />
+          <ImageField
+            label="Schedule — Sidebar"
+            value={data.siteImages?.scheduleSidebar}
+            onChange={(v) => update('siteImages.scheduleSidebar', v)}
+            help="Sidebar portrait on /schedule above 'What to Expect'."
+          />
+          <ImageField
+            label="Contact — Sidebar"
+            value={data.siteImages?.contactSidebar}
+            onChange={(v) => update('siteImages.contactSidebar', v)}
+            help="Portrait above the email/phone/where info on /contact."
+          />
+          <ImageField
+            label="Apply — Sidebar"
+            value={data.siteImages?.applyHero}
+            onChange={(v) => update('siteImages.applyHero', v)}
+            help="Portrait beside the Apply form. Defaults to the home hero image if blank."
+          />
+          <ImageField
+            label="Corporate — Hero"
+            value={data.siteImages?.corporateHero}
+            onChange={(v) => update('siteImages.corporateHero', v)}
+            help="Optional banner image for /corporate. Leave blank for the default dark hero."
+          />
+        </div>
+      </Section>
+
       <div className="flex justify-end">
         <button onClick={save} disabled={saving} className="btn-gold">
           <Save size={14} /> {saving ? 'Saving…' : 'Save Changes'}

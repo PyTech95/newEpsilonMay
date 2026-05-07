@@ -343,7 +343,7 @@ export default function Apply() {
   const programs = ctx?.programs?.length ? ctx.programs : mockPrograms;
   const leadFaculty = ctx?.leadFaculty?.length ? ctx.leadFaculty : mockLead;
   const guestLecturers = ctx?.guestLecturers?.length ? ctx.guestLecturers : mockGuests;
-  const heroImage = ctx?.home?.hero?.heroImage || '/generated/hero-indian-online-learner.png';
+  const heroImage = ctx?.home?.siteImages?.applyHero || ctx?.home?.hero?.heroImage || '/generated/hero-indian-online-learner.png';
 
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);

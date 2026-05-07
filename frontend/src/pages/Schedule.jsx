@@ -55,7 +55,7 @@ export default function Schedule() {
           <aside>
             <div className="relative aspect-[4/5] overflow-hidden bg-navy-deep mb-8">
               <img
-                src="/generated/online-class-young-student.png"
+                src={ctx?.home?.siteImages?.scheduleSidebar || "/generated/online-class-young-student.png"}
                 alt="Indian professional preparing for an admissions call"
                 className="w-full h-full object-cover"
               />

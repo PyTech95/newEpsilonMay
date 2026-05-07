@@ -33,7 +33,7 @@ export default function Contact() {
           <div>
             <div className="relative aspect-[4/5] overflow-hidden bg-navy-deep mb-9">
               <img
-                src="/generated/online-class-collaboration.png"
+                src={ctx?.home?.siteImages?.contactSidebar || "/generated/online-class-collaboration.png"}
                 alt="Senior professional in conversation with admissions"
                 className="w-full h-full object-cover"
               />

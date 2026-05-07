@@ -23,7 +23,7 @@ export default function Admissions() {
           <div className="lg:sticky lg:top-32">
             <div className="relative aspect-[4/5] overflow-hidden bg-navy-deep">
               <img
-                src="/generated/online-class-male-student.png"
+                src={ctx?.home?.siteImages?.admissionsProcess || "/generated/online-class-male-student.png"}
                 alt="An admissions conversation, online"
                 className="w-full h-full object-cover"
               />
