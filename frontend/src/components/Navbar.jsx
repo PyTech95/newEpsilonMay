@@ -31,15 +31,15 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#08131fd6] backdrop-blur-md ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-navy-deep lg:bg-[#08131fd6] backdrop-blur-md ${
         transparent
           ? 'border-b border-transparent'
           : 'border-b border-gold/15 shadow-[0_4px_20px_rgba(8,19,31,0.35)]'
       }`}
     >
-      <div className="container-x flex items-center justify-between h-[96px]">
+      <div className="container-x flex items-center justify-between h-[78px] lg:h-[96px]">
         <Link to="/" className="flex items-center gap-2">
-          <img src={logoUrl} alt="Epsilon" className="h-[68px] w-auto object-contain" />
+          <img src={logoUrl} alt="Epsilon" className="h-[58px] sm:h-[64px] lg:h-[68px] w-auto object-contain" />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-10 -ml-[50px]" data-testid="primary-nav">
