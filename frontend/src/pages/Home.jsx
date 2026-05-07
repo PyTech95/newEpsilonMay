@@ -491,7 +491,12 @@ export default function Home() {
         <div className="absolute inset-0 starfield opacity-60" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[1100px] rounded-full glow-gold" />
         <div className="relative container-x text-center">
-          <img src={logoUrl} alt="Epsilon" className="mx-auto mb-8 h-[85px] w-auto object-contain" />
+          <img
+            src="https://customer-assets.emergentagent.com/job_logos-11/artifacts/uy3e0q7m_background_removal%23TUFISU9ndjE5dUUjMSM2Y2FmMjhhNTNhMzRiYzBiNTFlMTQ3ZGQxNmEyZTRmMCM5MjAjI1RSQU5TRk9STUFUSU9OX1JFUVVFU1Q.png"
+            alt="Epsilon Executive Education"
+            data-testid="cta-square-logo"
+            className="mx-auto mb-8 h-[150px] md:h-[180px] w-auto object-contain"
+          />
           <p className="eyebrow">{cta.eyebrow || 'Take the next step'}</p>
           <h2 className="font-display uppercase text-[2rem] md:text-[3.4rem] leading-[1.05] max-w-4xl mx-auto mt-5">
             {(cta.title || 'Build the judgement your next decade demands.')}
