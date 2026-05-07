@@ -33,7 +33,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-10">
           {/* Brand + email signup */}
           <div className="lg:col-span-2">
-            <img src={logoUrl} alt="Epsilon" className="h-[113px] w-auto object-contain mb-6 -ml-1 logo-white" />
+            <img src={logoUrl} alt="Epsilon" className="h-[85px] w-auto object-contain mb-6 -ml-1" />
             <p className="font-editorial text-[1.1rem] leading-relaxed text-cream/80 max-w-md">
               {footer.tagline || 'Turning technical fluency into strategic value — executive education for the AI era.'}
             </p>

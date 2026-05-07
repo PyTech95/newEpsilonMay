@@ -37,9 +37,9 @@ export default function Navbar() {
           : 'bg-navy-deep/95 backdrop-blur border-b border-gold/10'
       }`}
     >
-      <div className="container-x flex items-center justify-between h-[140px]">
+      <div className="container-x flex items-center justify-between h-[110px]">
         <Link to="/" className="flex items-center gap-2">
-          <img src={logoUrl} alt="Epsilon" className="h-[113px] w-auto object-contain logo-white" />
+          <img src={logoUrl} alt="Epsilon" className="h-[85px] w-auto object-contain" />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-10">

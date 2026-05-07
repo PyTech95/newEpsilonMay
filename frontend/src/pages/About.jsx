@@ -68,7 +68,7 @@ export default function About() {
         <div className="absolute inset-0 starfield opacity-50" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full glow-gold" />
         <div className="relative container-x text-center">
-          <img src={LOGO_URL} alt="Epsilon" className="mx-auto mb-8 h-[100px] w-auto object-contain" />
+          <img src={LOGO_URL} alt="Epsilon" className="mx-auto mb-8 h-[85px] w-auto object-contain" />
           <h2 className="font-display uppercase text-[2rem] md:text-[3rem] leading-[1.05] max-w-3xl mx-auto">
             Build the judgement your <span className="italic font-editorial text-gold normal-case">next decade</span> demands.
           </h2>
