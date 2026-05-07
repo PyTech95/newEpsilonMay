@@ -195,20 +195,19 @@ export default function ProgramDetail() {
         <section className="bg-bone py-20 md:py-24">
           <div className="container-x grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-16 items-center">
             {/* Visual */}
-            <div className="relative bg-navy-deep min-h-[360px] aspect-[4/5] lg:aspect-auto lg:h-full overflow-hidden flex items-center justify-center p-8 order-2 lg:order-1">
+            <div className="relative bg-white min-h-[360px] aspect-[4/5] lg:aspect-auto lg:h-full overflow-hidden flex items-center justify-center p-8 order-2 lg:order-1 border border-navy/10">
               {p.certificateImage ? (
                 /* Admin-uploaded certificate image — show as-is, no overlay */
                 <img
                   src={p.certificateImage}
                   alt={`${p.subtitle || p.title} certificate`}
-                  className="absolute inset-0 w-full h-full object-contain bg-navy-deep"
+                  className="absolute inset-0 w-full h-full object-contain bg-white"
                 />
               ) : (
                 /* Default decorative placeholder */
                 <>
-                  <div className="absolute inset-0 starfield opacity-30" />
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] rounded-full glow-gold" />
-                  <div className="relative text-center text-cream">
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] rounded-full" style={{background: 'radial-gradient(circle, rgba(201,162,39,0.18) 0%, transparent 70%)'}} />
+                  <div className="relative text-center text-navy">
                     <Award size={72} className="text-gold mx-auto mb-5" />
                     <p className="font-caps text-[0.65rem] tracking-[0.28em] text-gold mb-2">Certificate</p>
                     <p className="font-display text-[1.6rem] md:text-[2rem] leading-tight max-w-xs mx-auto">
