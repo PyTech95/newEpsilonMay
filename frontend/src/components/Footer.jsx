@@ -75,11 +75,6 @@ export default function Footer() {
             <p className="font-caps text-[0.65rem] text-gold tracking-[0.22em] mb-5">Discover</p>
             <ul className="space-y-3 font-sans text-[0.95rem]">
               <li><Link to="/" className="text-cream/85 hover:text-gold transition-colors">Home</Link></li>
-              <li>
-                <Link to="/home2" data-testid="footer-home2-link" className="text-cream/85 hover:text-gold transition-colors inline-flex items-center gap-2">
-                  Home 2 <span className="font-caps text-[0.5rem] text-gold border border-gold/40 px-1.5 py-[1px]">NEW</span>
-                </Link>
-              </li>
               <li><Link to="/faculty" className="text-cream/85 hover:text-gold transition-colors">Faculty</Link></li>
               <li><Link to="/admissions" className="text-cream/85 hover:text-gold transition-colors">Admissions</Link></li>
               <li><Link to="/about" className="text-cream/85 hover:text-gold transition-colors">About</Link></li>

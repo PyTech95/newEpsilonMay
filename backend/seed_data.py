@@ -18,7 +18,7 @@ HOME_CONTENT = {
         "stats": [
             {"value": "12 weeks", "label": "Cohort duration"},
             {"value": "Live online", "label": "Executive-friendly"},
-            {"value": "15–20 hrs", "label": "Per-week commitment"},
+            {"value": "3 classes", "label": "Per-week commitment"},
             {"value": "Capstone", "label": "Portfolio outcome"},
         ],
     },
