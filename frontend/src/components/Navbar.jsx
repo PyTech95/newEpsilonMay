@@ -33,8 +33,8 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         transparent
-          ? 'bg-navy-deep/30 backdrop-blur-sm'
-          : 'bg-navy-deep/95 backdrop-blur border-b border-gold/10'
+          ? 'bg-navy-deep/55 backdrop-blur-md border-b border-transparent'
+          : 'bg-navy-deep/90 backdrop-blur-xl border-b border-gold/15 shadow-[0_4px_20px_rgba(8,19,31,0.35)]'
       }`}
     >
       <div className="container-x flex items-center justify-between h-[110px]">
