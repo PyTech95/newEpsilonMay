@@ -43,6 +43,30 @@ const schema = [
   { key: 'ctaPrimaryText', label: '› Final CTA · Primary button text' },
   { key: 'ctaSecondaryText', label: '› Final CTA · Secondary button text' },
 
+  // Certificate section
+  { key: 'certificateEnabled', label: 'Show "Certificate" section', type: 'boolean' },
+  { key: 'certificateEyebrow', label: '› Certificate · Eyebrow', help: 'Default: "Certificate"' },
+  { key: 'certificateTitle', label: '› Certificate · Title' },
+  { key: 'certificateTitleAccent', label: '› Certificate · Title (italic gold accent)' },
+  { key: 'certificateDescription', label: '› Certificate · Description', type: 'textarea' },
+  { key: 'certificateBullets', label: '› Certificate · Bullets (one per line)', type: 'list-lines' },
+  { key: 'certificateNote', label: '› Certificate · Footnote', type: 'textarea' },
+  { key: 'certificateImage', label: '› Certificate · Side image (optional)', type: 'image' },
+
+  // Experience section
+  { key: 'experienceEnabled', label: 'Show "Experience" section', type: 'boolean' },
+  { key: 'experienceEyebrow', label: '› Experience · Eyebrow' },
+  { key: 'experienceTitle', label: '› Experience · Title' },
+  { key: 'experienceTitleAccent', label: '› Experience · Title (italic gold accent)' },
+  { key: 'experienceItems', label: '› Experience items', type: 'experience-items' },
+
+  // Contact section
+  { key: 'contactEnabled', label: 'Show "Contact us" form on this page', type: 'boolean' },
+  { key: 'contactEyebrow', label: '› Contact · Eyebrow' },
+  { key: 'contactTitle', label: '› Contact · Title' },
+  { key: 'contactTitleAccent', label: '› Contact · Title (italic gold accent)' },
+  { key: 'contactSubtitle', label: '› Contact · Subtitle', type: 'textarea' },
+
   // Visibility toggles
   { key: 'showOutcomes', label: 'Show "Outcomes" section', type: 'boolean' },
   { key: 'showModules', label: 'Show "Modules" section', type: 'boolean' },
@@ -71,6 +95,13 @@ export default function ProgramsEditor() {
         faqEyebrow: '', faqTitle: '', faqTitleAccent: '',
         ctaTitle: '', ctaTitleAccent: '', ctaSubtitle: '',
         ctaPrimaryText: '', ctaSecondaryText: '',
+        certificateEnabled: true, certificateEyebrow: '', certificateTitle: '',
+        certificateTitleAccent: '', certificateDescription: '',
+        certificateBullets: [], certificateNote: '', certificateImage: '',
+        experienceEnabled: true, experienceEyebrow: '', experienceTitle: '',
+        experienceTitleAccent: '', experienceItems: [],
+        contactEnabled: true, contactEyebrow: '', contactTitle: '',
+        contactTitleAccent: '', contactSubtitle: '',
         showOutcomes: true, showModules: true, showCurriculum: true, showFaq: true,
         featured: false, order: 999,
       }}

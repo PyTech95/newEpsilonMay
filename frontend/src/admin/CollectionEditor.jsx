@@ -217,6 +217,30 @@ function FieldInput({ schema, value, onChange }) {
       </div>
     );
   }
+  if (type === 'experience-items') {
+    const items = Array.isArray(value) ? value : [];
+    const update = (i, key2, v) => { const c = [...items]; c[i] = { ...c[i], [key2]: v }; onChange(c); };
+    const add = () => onChange([...items, { title: '', body: '' }]);
+    const rm = (i) => onChange(items.filter((_, idx) => idx !== i));
+    return (
+      <div>
+        <p className="fld-label">{label}</p>
+        {items.map((row, i) => (
+          <div key={i} className="bg-bone/40 p-4 mb-3 border border-navy/10">
+            <div className="grid grid-cols-[1fr_auto] gap-3 items-end">
+              <input className="fld-input" placeholder="Title (e.g. Live Learning)"
+                value={row.title || ''} onChange={(e) => update(i, 'title', e.target.value)} />
+              <button onClick={() => rm(i)} type="button"
+                className="p-2.5 border border-navy/20 text-navy hover:text-red-500"><Trash2 size={14} /></button>
+            </div>
+            <textarea rows={3} placeholder="Description" className="fld-input mt-2"
+              value={row.body || ''} onChange={(e) => update(i, 'body', e.target.value)} />
+          </div>
+        ))}
+        <button onClick={add} type="button" className="btn-outline-gold border-navy/30 text-navy"><Plus size={14} /> Add item</button>
+      </div>
+    );
+  }
   if (type === 'faqs') {
     const items = Array.isArray(value) ? value : [];
     const update = (i, key2, v) => { const c = [...items]; c[i] = { ...c[i], [key2]: v }; onChange(c); };
