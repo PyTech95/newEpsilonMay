@@ -48,9 +48,15 @@ export default function Navbar() {
             onMouseEnter={() => setProgOpen(true)}
             onMouseLeave={() => setProgOpen(false)}
           >
-            <NavLink to="/programs" className={`${baseNav} ${navColor} flex items-center gap-1`}>
-              Programs <ChevronDown size={12} strokeWidth={2} />
-            </NavLink>
+            <button
+              type="button"
+              onClick={() => setProgOpen((v) => !v)}
+              data-testid="nav-programs-toggle"
+              className={`${baseNav} ${navColor} flex items-center gap-1 cursor-pointer`}
+              aria-expanded={progOpen}
+            >
+              Programs <ChevronDown size={12} strokeWidth={2} className={`transition-transform ${progOpen ? 'rotate-180' : ''}`} />
+            </button>
             {progOpen && (
               <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 z-50">
                 <div className="bg-navy-deep text-cream border border-gold/20 shadow-2xl w-[380px] p-2">
@@ -117,13 +123,50 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="lg:hidden bg-navy-deep text-cream border-t border-gold/20">
-          <div className="container-x py-6 flex flex-col gap-5">
-            <Link to="/programs" className="font-caps text-sm text-cream tracking-[0.2em]">Programs</Link>
-            <Link to="/corporate" className="font-caps text-sm text-cream tracking-[0.2em] pl-4 border-l border-gold/30">Corporate Program</Link>
-            <Link to="/faculty" className="font-caps text-sm text-cream tracking-[0.2em]">Faculty</Link>
-            <Link to="/about" className="font-caps text-sm text-cream tracking-[0.2em]">About</Link>
-            <div className="flex gap-3 mt-2">
+        <div className="lg:hidden bg-navy-deep text-cream border-t border-gold/20 max-h-[calc(100vh-110px)] overflow-y-auto">
+          <div className="container-x py-6 flex flex-col gap-3">
+            {/* Programs accordion */}
+            <button
+              type="button"
+              onClick={() => setProgOpen((v) => !v)}
+              data-testid="mobile-programs-toggle"
+              className="font-caps text-sm text-cream tracking-[0.2em] flex items-center justify-between w-full py-1"
+              aria-expanded={progOpen}
+            >
+              <span>Programs</span>
+              <ChevronDown size={14} className={`transition-transform ${progOpen ? 'rotate-180' : ''}`} />
+            </button>
+            {progOpen && (
+              <div className="border-l border-gold/30 ml-1 pl-4 -mt-1 mb-2">
+                {programs.map((p) => (
+                  <Link
+                    key={p.slug}
+                    to={`/programs/${p.slug}`}
+                    className="block py-3 hover:bg-navy/40 -mx-2 px-2 transition-colors"
+                  >
+                    <div className="font-display text-sm text-cream leading-tight">{p.subtitle}</div>
+                    <div className="font-caps text-[0.6rem] text-gold mt-1">{p.weeks} weeks · {p.levelLabel}</div>
+                  </Link>
+                ))}
+                <Link
+                  to="/corporate"
+                  className="flex items-start gap-2 py-3 hover:bg-navy/40 -mx-2 px-2 transition-colors border-t border-gold/15 mt-1"
+                >
+                  <Building2 size={14} className="text-gold mt-1" />
+                  <div>
+                    <div className="font-display text-sm text-cream leading-tight">Corporate Program</div>
+                    <div className="font-caps text-[0.6rem] text-gold mt-1">Private cohorts for teams</div>
+                  </div>
+                </Link>
+                <Link to="/programs" className="block py-3 -mx-2 px-2 font-caps text-[0.65rem] text-gold border-t border-gold/15 mt-1">
+                  View all programs →
+                </Link>
+              </div>
+            )}
+
+            <Link to="/faculty" className="font-caps text-sm text-cream tracking-[0.2em] py-1">Faculty</Link>
+            <Link to="/about" className="font-caps text-sm text-cream tracking-[0.2em] py-1">About</Link>
+            <div className="flex gap-3 mt-3">
               <Link to="/apply" className="btn-gold">Apply</Link>
               <a href={signInUrl} target="_blank" rel="noopener noreferrer" className="btn-outline-gold">
                 <LogIn size={14} /> Sign In
