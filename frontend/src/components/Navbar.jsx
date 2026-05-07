@@ -31,10 +31,10 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#08131fd6] backdrop-blur-md ${
         transparent
-          ? 'bg-navy-deep/55 backdrop-blur-md border-b border-transparent'
-          : 'bg-navy-deep/90 backdrop-blur-xl border-b border-gold/15 shadow-[0_4px_20px_rgba(8,19,31,0.35)]'
+          ? 'border-b border-transparent'
+          : 'border-b border-gold/15 shadow-[0_4px_20px_rgba(8,19,31,0.35)]'
       }`}
     >
       <div className="container-x flex items-center justify-between h-[110px]">
