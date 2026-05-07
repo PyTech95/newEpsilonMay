@@ -4,6 +4,22 @@ import { ArrowRight, ArrowUpRight, Check, Calendar, ChevronDown } from 'lucide-r
 import { programs as mockPrograms } from '../mock';
 import { useSiteContent } from '../context/SiteContent';
 
+/* small helper — render a title that may have an italic gold "accent" tail */
+function TitleWithAccent({ title, accent, className }) {
+  if (!title && !accent) return null;
+  return (
+    <h2 className={className}>
+      {title}
+      {accent && (
+        <>
+          {title ? ' ' : ''}
+          <span className="italic font-editorial text-gold">{accent}</span>
+        </>
+      )}
+    </h2>
+  );
+}
+
 export default function ProgramDetail() {
   const { slug } = useParams();
   const ctx = useSiteContent();
@@ -24,6 +40,10 @@ export default function ProgramDetail() {
 
   const modules = p.modules || [];
   const faqs = p.faqs || [];
+  const showOutcomes = p.showOutcomes !== false && (p.outcomes || []).length > 0;
+  const showModules = p.showModules !== false && modules.length > 0;
+  const showCurriculum = p.showCurriculum !== false && (p.curriculum || []).length > 0;
+  const showFaq = p.showFaq !== false && faqs.length > 0;
 
   return (
     <div>
@@ -63,35 +83,41 @@ export default function ProgramDetail() {
       </section>
 
       {/* Outcomes */}
-      <section className="bg-cream py-24">
-        <div className="container-x grid grid-cols-1 md:grid-cols-2 gap-14">
-          <div>
-            <p className="eyebrow mb-4">What you leave with</p>
-            <span className="gold-rule-lg" />
-            <h2 className="font-display text-navy text-[2rem] md:text-[2.8rem] leading-[1.05] mt-6">
-              Outcomes worth <span className="italic font-editorial text-gold">defending.</span>
-            </h2>
+      {showOutcomes && (
+        <section className="bg-cream py-24">
+          <div className="container-x grid grid-cols-1 md:grid-cols-2 gap-14">
+            <div>
+              <p className="eyebrow mb-4">{p.outcomesEyebrow || 'What you leave with'}</p>
+              <span className="gold-rule-lg" />
+              <TitleWithAccent
+                title={p.outcomesTitle || 'Outcomes worth'}
+                accent={p.outcomesTitleAccent || 'defending.'}
+                className="font-display text-navy text-[2rem] md:text-[2.8rem] leading-[1.05] mt-6"
+              />
+            </div>
+            <ul className="space-y-5">
+              {(p.outcomes || []).map((o, i) => (
+                <li key={i} className="flex gap-4 items-start border-b border-navy/10 pb-5">
+                  <Check size={20} className="text-gold mt-1 flex-shrink-0" />
+                  <p className="font-editorial text-navy text-[1.2rem] leading-relaxed">{o}</p>
+                </li>
+              ))}
+            </ul>
           </div>
-          <ul className="space-y-5">
-            {(p.outcomes || []).map((o, i) => (
-              <li key={i} className="flex gap-4 items-start border-b border-navy/10 pb-5">
-                <Check size={20} className="text-gold mt-1 flex-shrink-0" />
-                <p className="font-editorial text-navy text-[1.2rem] leading-relaxed">{o}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Modules — detailed cards */}
-      {modules.length > 0 && (
+      {showModules && (
         <section className="bg-bone py-24">
           <div className="container-x">
-            <p className="eyebrow mb-4">Modules</p>
+            <p className="eyebrow mb-4">{p.modulesEyebrow || 'Modules'}</p>
             <span className="gold-rule-lg" />
-            <h2 className="font-display text-navy text-[2rem] md:text-[2.8rem] leading-[1.05] mt-6 max-w-3xl">
-              Six modules. Each <span className="italic font-editorial text-gold">defended in front of peers.</span>
-            </h2>
+            <TitleWithAccent
+              title={p.modulesTitle || `${modules.length} modules. Each`}
+              accent={p.modulesTitleAccent || 'defended in front of peers.'}
+              className="font-display text-navy text-[2rem] md:text-[2.8rem] leading-[1.05] mt-6 max-w-3xl"
+            />
 
             <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-6">
               {modules.map((m) => (
@@ -120,13 +146,13 @@ export default function ProgramDetail() {
       )}
 
       {/* Curriculum (week-by-week schedule) */}
-      {p.curriculum?.length > 0 && (
+      {showCurriculum && (
         <section className="bg-cream py-24">
           <div className="container-x">
-            <p className="eyebrow mb-4">Week-by-Week Schedule</p>
+            <p className="eyebrow mb-4">{p.curriculumEyebrow || 'Week-by-Week Schedule'}</p>
             <span className="gold-rule-lg" />
             <h2 className="font-display text-navy text-[2rem] md:text-[2.8rem] leading-[1.05] mt-6 max-w-3xl">
-              A disciplined sequence, end to end.
+              {p.curriculumTitle || 'A disciplined sequence, end to end.'}
             </h2>
 
             <div className="mt-12 grid gap-0 border-t border-navy/15">
@@ -142,14 +168,16 @@ export default function ProgramDetail() {
       )}
 
       {/* FAQ */}
-      {faqs.length > 0 && (
+      {showFaq && (
         <section className="bg-bone py-24">
           <div className="container-x max-w-4xl">
-            <p className="eyebrow mb-4">FAQ</p>
+            <p className="eyebrow mb-4">{p.faqEyebrow || 'FAQ'}</p>
             <span className="gold-rule-lg" />
-            <h2 className="font-display text-navy text-[2rem] md:text-[2.8rem] leading-[1.05] mt-6">
-              Questions, <span className="italic font-editorial text-gold">answered.</span>
-            </h2>
+            <TitleWithAccent
+              title={p.faqTitle || 'Questions,'}
+              accent={p.faqTitleAccent || 'answered.'}
+              className="font-display text-navy text-[2rem] md:text-[2.8rem] leading-[1.05] mt-6"
+            />
 
             <div className="mt-12 border-t border-navy/15">
               {faqs.map((f, i) => {
@@ -192,14 +220,15 @@ export default function ProgramDetail() {
         <div className="container-x relative text-center">
           <Calendar size={26} className="text-gold mx-auto mb-4" />
           <h2 className="font-display text-[2rem] md:text-[3rem] leading-[1.05] max-w-3xl mx-auto">
-            Next cohort: <span className="italic font-editorial text-gold">{p.nextCohort}</span>
+            {p.ctaTitle || 'Next cohort:'}{' '}
+            <span className="italic font-editorial text-gold">{p.ctaTitleAccent || p.nextCohort}</span>
           </h2>
           <p className="font-editorial text-cream/80 text-lg mt-5 max-w-xl mx-auto">
-            Applications are reviewed personally. Start a conversation with admissions.
+            {p.ctaSubtitle || 'Applications are reviewed personally. Start a conversation with admissions.'}
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <Link to="/apply" className="btn-gold">Apply Now <ArrowRight size={16} /></Link>
-            <Link to="/schedule" className="btn-outline-gold">Schedule a Call</Link>
+            <Link to="/apply" className="btn-gold">{p.ctaPrimaryText || 'Apply Now'} <ArrowRight size={16} /></Link>
+            <Link to="/schedule" className="btn-outline-gold">{p.ctaSecondaryText || 'Schedule a Call'}</Link>
           </div>
         </div>
       </section>
