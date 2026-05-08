@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import {
   ArrowRight, ArrowUpRight, Check, Calendar, ChevronDown,
-  Award, Send, CheckCircle2,
+  Award, Send, CheckCircle2, Lightbulb, Users, Cog, Gem, 
+  FileText, Target, MessageCircle, BookOpen, TrendingUp, 
+  Zap, Layout, Laptop, Globe,
 } from 'lucide-react';
 import { programs as mockPrograms } from '../mock';
 import { useSiteContent } from '../context/SiteContent';
@@ -286,35 +288,109 @@ export default function ProgramDetail() {
 
       {/* Modules — detailed cards (hidden by default for AI/ML; toggleable per program) */}
       {showModules && (
-        <section className="bg-bone py-20 md:py-24">
+        <section className="bg-cream py-20 md:py-28" id="modules">
           <div className="container-x">
-            <p className="eyebrow mb-4">{p.modulesEyebrow || 'Modules'}</p>
+            <p className="eyebrow mb-4">{p.modulesEyebrow || 'Programme Modules'}</p>
             <span className="gold-rule-lg" />
             <TitleWithAccent
-              title={p.modulesTitle || `${modules.length} modules. Each`}
-              accent={p.modulesTitleAccent || 'defended in front of peers.'}
-              className="font-display text-navy text-[2rem] md:text-[2.8rem] leading-[1.05] mt-6 max-w-3xl"
+              title={p.modulesTitle || `12-Week`}
+              accent={p.modulesTitleAccent || 'Roadmap'}
+              className="font-display text-navy text-[2rem] md:text-[3.2rem] leading-[1.05] mt-6 max-w-3xl"
             />
+            <p className="font-editorial text-navy/75 text-[1.1rem] leading-relaxed mt-5 max-w-2xl">
+              {p.modulesDescription || 'A structured journey from data foundations to strategic AI leadership.'}
+            </p>
 
-            <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-6">
-              {modules.map((m) => (
-                <div key={m.n} className="bg-white p-8 lift-card border border-transparent hover:border-gold/40">
-                  <div className="flex items-center gap-4 mb-4">
-                    <p className="font-display text-gold text-[2.4rem] leading-none">{m.n}</p>
-                    <div className="w-12 h-px bg-gold/40" />
+            <div className="mt-16 space-y-12">
+              {modules.map((m, idx) => (
+                <div key={m.n} 
+                  className="bg-white border border-navy/10 shadow-sm hover:shadow-lg transition-all duration-500 overflow-hidden"
+                >
+                  {/* Module Header */}
+                  <div className="bg-gradient-to-r from-navy-deep to-navy p-8 md:p-10">
+                    <div className="flex items-start gap-6">
+                      <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-full bg-gold/20 backdrop-blur-sm flex items-center justify-center">
+                        {idx === 0 && <Lightbulb size={32} className="text-gold" />}
+                        {idx === 1 && <Target size={32} className="text-gold" />}
+                        {idx === 2 && <Cog size={32} className="text-gold" />}
+                        {idx === 3 && <TrendingUp size={32} className="text-gold" />}
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-caps text-[0.65rem] tracking-[0.25em] text-gold/90">
+                          Module {m.n} · {m.weeks || `Weeks ${idx * 3 + 1}-${idx * 3 + 4}`}
+                        </p>
+                        <h3 className="font-display text-cream text-[1.6rem] md:text-[2rem] leading-tight mt-3">
+                          {m.title}
+                        </h3>
+                        {m.description && (
+                          <p className="font-editorial text-cream/85 text-[1.05rem] leading-relaxed mt-4">
+                            {m.description}
+                          </p>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="font-display text-navy text-[1.45rem] leading-tight">{m.title}</h3>
-                  <p className="font-editorial text-navy/75 leading-relaxed mt-4">{m.description}</p>
-                  {m.topics && m.topics.length > 0 && (
-                    <ul className="mt-5 space-y-2">
-                      {m.topics.map((t) => (
-                        <li key={t} className="flex gap-2 items-start font-sans text-navy/80 text-sm">
-                          <span className="text-gold mt-[7px] w-1 h-1 rounded-full bg-gold flex-shrink-0" />
-                          <span>{t}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+
+                  {/* Module Content */}
+                  <div className="p-8 md:p-10">
+                    {/* Learning Objectives */}
+                    {m.topics && m.topics.length > 0 && (
+                      <div className="mb-8">
+                        <p className="font-caps text-[0.65rem] tracking-[0.22em] text-gold mb-4">
+                          Key Learning Objectives
+                        </p>
+                        <ul className="space-y-3">
+                          {m.topics.map((t, i) => (
+                            <li key={i} className="flex gap-3 items-start">
+                              <span className="flex-shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-gold" />
+                              <span className="font-sans text-navy/85 text-[0.95rem] leading-relaxed">{t}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Week Breakdown */}
+                    {m.weekBreakdown && m.weekBreakdown.length > 0 && (
+                      <div className="mb-8">
+                        <p className="font-caps text-[0.65rem] tracking-[0.22em] text-navy/60 mb-4">
+                          Week-by-Week
+                        </p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {m.weekBreakdown.map((week, i) => (
+                            <div 
+                              key={i} 
+                              className="group bg-navy-deep/5 hover:bg-navy-deep hover:text-cream transition-all duration-300 p-4 border border-navy/10 hover:border-gold/50"
+                            >
+                              <p className="font-caps text-[0.6rem] tracking-[0.22em] text-gold mb-2">
+                                Week {week.weekNumber || i + 1}
+                              </p>
+                              <p className="font-sans text-[0.9rem] font-medium text-navy group-hover:text-cream transition-colors">
+                                {week.title}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Milestone */}
+                    {m.milestone && (
+                      <div className="bg-gold/10 border-l-4 border-gold p-6">
+                        <div className="flex gap-3 items-start">
+                          <Award size={20} className="text-gold flex-shrink-0 mt-0.5" />
+                          <div>
+                            <p className="font-caps text-[0.65rem] tracking-[0.22em] text-gold mb-2">
+                              Milestone
+                            </p>
+                            <p className="font-sans text-navy text-[0.95rem] leading-relaxed">
+                              {m.milestone}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
@@ -324,26 +400,59 @@ export default function ProgramDetail() {
 
       {/* Experience */}
       {showExperience && (
-        <section className="bg-navy-deep text-cream py-20 md:py-24 relative overflow-hidden">
+        <section className="bg-navy-deep text-cream py-20 md:py-28 relative overflow-hidden">
           <div className="absolute inset-0 starfield opacity-40 pointer-events-none" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[1100px] rounded-full glow-gold pointer-events-none" />
           <div className="relative container-x">
             <p className="font-caps text-[0.65rem] tracking-[0.28em] text-gold">{p.experienceEyebrow || 'The Epsilon Experience'}</p>
             <span className="block w-12 h-px bg-gold/60 mt-3" />
             <TitleWithAccent
-              title={p.experienceTitle || 'Explore the'}
-              accent={p.experienceTitleAccent || 'experience.'}
-              className="font-display uppercase text-cream text-[2rem] md:text-[2.6rem] leading-[1.08] mt-6 max-w-3xl"
+              title={p.experienceTitle || 'What this'}
+              accent={p.experienceTitleAccent || 'experience builds'}
+              className="font-display text-cream text-[2rem] md:text-[3rem] leading-[1.08] mt-6 max-w-3xl"
             />
+            <p className="font-editorial text-cream/75 text-[1.05rem] leading-relaxed mt-5 max-w-2xl">
+              {p.experienceDescription || 'A holistic learning journey that goes beyond theory to build real professional capability.'}
+            </p>
 
-            <div className="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-gold/15">
-              {experienceItems.map((it, i) => (
-                <div key={i} className="bg-navy-deep p-8 hover:bg-navy transition-colors">
-                  <p className="font-display text-gold text-[1.6rem] leading-none">{String(i + 1).padStart(2, '0')}</p>
-                  <h3 className="font-display text-cream text-[1.3rem] leading-tight mt-4">{it.title}</h3>
-                  <p className="font-editorial text-cream/80 text-[1rem] leading-relaxed mt-4">{it.body}</p>
-                </div>
-              ))}
+            <div className="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {experienceItems.map((it, i) => {
+                // Icon mapping based on common experience titles
+                let Icon = Laptop;
+                const titleLower = it.title?.toLowerCase() || '';
+                if (titleLower.includes('live') || titleLower.includes('learning')) Icon = Laptop;
+                else if (titleLower.includes('peer') || titleLower.includes('environment')) Icon = Users;
+                else if (titleLower.includes('applied') || titleLower.includes('skill')) Icon = Cog;
+                else if (titleLower.includes('capstone') || titleLower.includes('project')) Icon = Gem;
+                else if (titleLower.includes('output') || titleLower.includes('deliverable')) Icon = FileText;
+                else if (titleLower.includes('feedback') || titleLower.includes('expert')) Icon = MessageCircle;
+                else if (titleLower.includes('judge') || titleLower.includes('growth')) Icon = TrendingUp;
+                else if (i % 7 === 0) Icon = Laptop;
+                else if (i % 7 === 1) Icon = Users;
+                else if (i % 7 === 2) Icon = Cog;
+                else if (i % 7 === 3) Icon = Gem;
+                else if (i % 7 === 4) Icon = FileText;
+                else if (i % 7 === 5) Icon = MessageCircle;
+                else Icon = TrendingUp;
+
+                return (
+                  <div 
+                    key={i} 
+                    className="group bg-navy border border-gold/15 p-8 hover:border-gold/40 hover:bg-navy/80 transition-all duration-300 hover:scale-[1.02]"
+                  >
+                    <div className="flex items-center justify-between mb-5">
+                      <div className="w-14 h-14 rounded-full bg-gold/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-gold/20 transition-colors">
+                        <Icon size={24} className="text-gold" />
+                      </div>
+                      <p className="font-display text-gold/50 text-[2.2rem] leading-none group-hover:text-gold/70 transition-colors">
+                        {String(i + 1).padStart(2, '0')}
+                      </p>
+                    </div>
+                    <h3 className="font-display text-cream text-[1.25rem] leading-tight">{it.title}</h3>
+                    <p className="font-editorial text-cream/75 text-[0.95rem] leading-relaxed mt-4">{it.body}</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>

@@ -12,6 +12,7 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   background: #F5EFE0;
   color: #0E1F32;
+  scroll-behavior: smooth;
 }
 
 :root {
