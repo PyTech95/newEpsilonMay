@@ -148,10 +148,10 @@ export default function Navbar() {
 
       {/* Mobile menu - Clean Modern Style */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-0 z-[9999] bg-navy-deep backdrop-blur-xl">
-          <div className="relative h-full overflow-y-auto">
+        <div className="lg:hidden fixed inset-0 z-[9999] bg-navy-deep">
+          <div className="relative h-full overflow-y-auto bg-navy-deep">
             {/* Header with logo and close */}
-            <div className="container-x py-6 flex items-center justify-between border-b border-gold/10">
+            <div className="container-x py-6 flex items-center justify-between border-b border-gold/10 bg-navy-deep">
               <img src={logoUrl} alt="Epsilon" className="h-8 relative z-10" />
               <button
                 onClick={() => setMobileOpen(false)}
@@ -163,7 +163,7 @@ export default function Navbar() {
             </div>
 
             {/* Menu content */}
-            <div className="container-x py-12">
+            <div className="container-x py-12 bg-navy-deep">
               <nav className="space-y-1">
                 {/* Programs Accordion */}
                 <div className="border-b border-gold/10 pb-1">
