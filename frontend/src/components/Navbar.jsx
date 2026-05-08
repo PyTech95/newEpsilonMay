@@ -34,24 +34,6 @@ export default function Navbar() {
 
   useEffect(() => { setMobileOpen(false); setProgOpen(false); }, [pathname]);
 
-  // Prevent body scroll when mobile menu is open
-  useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.width = '100%';
-    } else {
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
-    };
-  }, [mobileOpen]);
-
   const transparent = onHome && !scrolled;
 
   const baseNav = 'font-caps text-[0.7rem] font-semibold tracking-[0.2em] transition-colors';
@@ -146,86 +128,94 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu - Clean Modern Style */}
+      {/* Mobile menu - Side Drawer Style */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-0 z-[9999] bg-navy-deep">
-          <div className="relative h-full overflow-y-auto bg-navy-deep">
-            {/* Header with logo and close */}
-            <div className="container-x py-6 flex items-center justify-between border-b border-gold/10 bg-navy-deep">
-              <img src={logoUrl} alt="Epsilon" className="h-8 relative z-10" />
+        <>
+          {/* Backdrop */}
+          <div 
+            className="lg:hidden fixed inset-0 bg-black/70 z-[999]"
+            onClick={() => setMobileOpen(false)}
+          />
+          
+          {/* Drawer */}
+          <div 
+            className="lg:hidden fixed top-0 right-0 bottom-0 w-[85%] max-w-sm bg-cream z-[1000] shadow-2xl overflow-y-auto transform translate-x-0"
+          >
+            {/* Header */}
+            <div className="bg-navy-deep p-6 flex items-center justify-between sticky top-0 z-10">
+              <img src={logoUrl} alt="Epsilon" className="h-7" />
               <button
                 onClick={() => setMobileOpen(false)}
-                className="text-cream hover:text-gold transition-colors p-2 -mr-2 relative z-10"
+                className="text-cream hover:text-gold transition-colors -mr-2"
                 aria-label="Close Menu"
               >
                 <X size={28} strokeWidth={2} />
               </button>
             </div>
 
-            {/* Menu content */}
-            <div className="container-x py-12 bg-navy-deep">
-              <nav className="space-y-1">
-                {/* Programs Accordion */}
-                <div className="border-b border-gold/10 pb-1">
-                  <button
-                    type="button"
-                    onClick={() => setProgOpen((v) => !v)}
-                    className="w-full flex items-center justify-between py-5 group"
-                  >
-                    <span className="font-caps text-[0.75rem] tracking-[0.2em] text-cream group-hover:text-gold transition-colors">
-                      PROGRAMS
-                    </span>
-                    <ChevronDown 
-                      size={18} 
-                      className={`text-gold transition-transform duration-300 ${progOpen ? 'rotate-180' : ''}`}
-                    />
-                  </button>
-                  
-                  {progOpen && (
-                    <div className="pb-6 space-y-1 animate-in slide-in-from-top-2 duration-300">
-                      {programs.map((p) => (
-                        <Link
-                          key={p.slug}
-                          to={`/programs/${p.slug}`}
-                          onClick={() => setMobileOpen(false)}
-                          className="block py-4 px-4 -mx-4 hover:bg-gold/10 transition-colors group"
-                        >
-                          <div className="font-display text-cream text-[0.95rem] leading-tight group-hover:text-gold transition-colors">
-                            {p.subtitle}
-                          </div>
-                          <div className="font-caps text-[0.6rem] text-gold/70 mt-1.5 tracking-wider">
-                            {p.weeks} WEEKS · {p.levelLabel?.toUpperCase()}
-                          </div>
-                        </Link>
-                      ))}
-                      
-                      {/* Corporate Program */}
+            {/* Menu Content */}
+            <div className="p-6 bg-cream">
+              {/* Programs Accordion */}
+              <div className="mb-6">
+                <button
+                  type="button"
+                  onClick={() => setProgOpen((v) => !v)}
+                  className="w-full flex items-center justify-between py-3 border-b-2 border-navy/10 group bg-cream"
+                >
+                  <span className="font-caps text-[0.7rem] tracking-[0.2em] text-navy group-hover:text-gold transition-colors font-semibold">
+                    PROGRAMS
+                  </span>
+                  <ChevronDown 
+                    size={18} 
+                    className={`text-gold transition-transform duration-300 ${progOpen ? 'rotate-180' : ''}`}
+                  />
+                </button>
+                
+                {progOpen && (
+                  <div className="mt-4 space-y-2 pl-2 bg-cream">
+                    {programs.map((p) => (
                       <Link
-                        to="/corporate"
+                        key={p.slug}
+                        to={`/programs/${p.slug}`}
                         onClick={() => setMobileOpen(false)}
-                        className="flex items-start gap-3 py-4 px-4 -mx-4 hover:bg-gold/10 transition-colors group"
+                        className="block py-3 px-4 bg-navy/5 hover:bg-gold/10 transition-colors group rounded"
                       >
-                        <Building2 size={16} className="text-gold mt-0.5 flex-shrink-0" />
-                        <div>
-                          <div className="font-display text-cream text-[0.95rem] leading-tight group-hover:text-gold transition-colors">
-                            Corporate Program
-                          </div>
-                          <div className="font-caps text-[0.6rem] text-gold/70 mt-1.5 tracking-wider">
-                            PRIVATE COHORTS FOR TEAMS
-                          </div>
+                        <div className="font-display text-navy text-[0.9rem] leading-tight group-hover:text-gold transition-colors">
+                          {p.subtitle}
+                        </div>
+                        <div className="font-caps text-[0.55rem] text-navy/60 mt-1 tracking-wider">
+                          {p.weeks} WEEKS · {p.levelLabel?.toUpperCase()}
                         </div>
                       </Link>
-                    </div>
-                  )}
-                </div>
+                    ))}
+                    
+                    <Link
+                      to="/corporate"
+                      onClick={() => setMobileOpen(false)}
+                      className="flex items-start gap-3 py-3 px-4 bg-gold/10 hover:bg-gold/20 transition-colors group rounded"
+                    >
+                      <Building2 size={14} className="text-gold mt-1 flex-shrink-0" />
+                      <div>
+                        <div className="font-display text-navy text-[0.9rem] leading-tight group-hover:text-gold transition-colors">
+                          Corporate Program
+                        </div>
+                        <div className="font-caps text-[0.55rem] text-navy/60 mt-1 tracking-wider">
+                          PRIVATE COHORTS
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                )}
+              </div>
 
-                {/* Other Menu Items */}
+              {/* Other Menu Items */}
+              <nav className="space-y-0 bg-cream">
                 {menuItems.map((item, idx) => (
                   <Link 
                     key={idx} 
                     to={item.link} 
                     onClick={() => setMobileOpen(false)}
-                    className="block font-caps text-[0.75rem] tracking-[0.2em] text-cream hover:text-gold transition-colors py-5 border-b border-gold/10"
+                    className="block font-caps text-[0.7rem] tracking-[0.2em] text-navy hover:text-gold transition-colors py-4 border-b-2 border-navy/10 font-semibold bg-cream"
                   >
                     {item.label.toUpperCase()}
                   </Link>
@@ -233,11 +223,11 @@ export default function Navbar() {
               </nav>
 
               {/* Action Buttons */}
-              <div className="flex flex-col gap-3 mt-12 pt-12 border-t border-gold/10">
+              <div className="flex flex-col gap-3 mt-8 pt-8 border-t-2 border-navy/10 bg-cream">
                 <Link 
                   to="/apply" 
                   onClick={() => setMobileOpen(false)}
-                  className="btn-gold w-full text-center justify-center py-4 font-caps tracking-wider"
+                  className="btn-gold w-full text-center justify-center py-4 font-caps tracking-wider text-sm shadow-lg"
                 >
                   {applyButtonText?.toUpperCase() || 'APPLY'}
                 </Link>
@@ -245,14 +235,16 @@ export default function Navbar() {
                   href={signInUrl} 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="btn-outline-gold w-full text-center justify-center py-4 font-caps tracking-wider"
+                  className="w-full text-center py-4 font-caps tracking-wider text-sm border-2 border-navy text-navy hover:bg-navy hover:text-cream transition-all"
                 >
-                  <LogIn size={14} /> {signInButtonText?.toUpperCase() || 'SIGN IN'}
+                  <span className="flex items-center justify-center gap-2">
+                    <LogIn size={14} /> {signInButtonText?.toUpperCase() || 'SIGN IN'}
+                  </span>
                 </a>
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </header>
   );

@@ -386,24 +386,28 @@ frontend:
     implemented: true
     working: false
     file: "/app/frontend/src/components/Navbar.jsx"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
     needs_retesting: false
     status_history:
       - working: false
         agent: "testing"
         comment: "CRITICAL ISSUE: Page content shows through mobile menu overlay. Hero section text, buttons, and program details are visible behind menu items. Menu has bg-navy-deep and backdrop-blur-xl but background is not opaque. All menu functionality works: opens/closes, logo and X button visible, PROGRAMS accordion expands, FACULTY/ABOUT links accessible, APPLY/SIGN IN buttons visible, navigation works correctly, menu scrollable, proper z-index. Issue is purely visual - menu background must be fully opaque to block page content as per requirements."
+      - working: false
+        agent: "testing"
+        comment: "CRITICAL ISSUE PERSISTS: Tested NEW side drawer design (cream drawer from right, dark backdrop on left). Page content STILL shows through drawer. Hero text 'TURNING TECHNICAL FLUENCY', buttons 'APPLY NOW', 'CONTACT US', and all page content clearly visible in all screenshots. Drawer has correct styling: backdrop rgba(0,0,0,0.7), drawer bg-cream rgb(245,239,224), navy header rgb(8,19,31), z-index 1000. All menu items visible with correct colors (gold apply button, navy text). ADDITIONAL ISSUES: 1) Programs accordion clicked but 0 program links found (may not be expanding). 2) Backdrop close not working (drawer still visible after backdrop click). 3) Sticky navy header intercepts clicks on PROGRAMS button (had to use force=True). The transparency issue is NOT FIXED - same problem as before."
 
 metadata:
   created_by: "testing_agent"
   version: "1.0"
-  test_sequence: 2
+  test_sequence: 3
   run_ui: false
 
 test_plan:
   current_focus:
-    - "Mobile Menu - Background opacity issue needs fix"
+    - "Mobile Menu - Page content transparency issue STILL NOT FIXED"
   stuck_tasks:
+    - "Mobile Menu - Visibility and Navigation"
     - "Footer Editing - UI Accessibility"
   test_all: false
   test_priority: "high_first"
@@ -415,3 +419,5 @@ agent_communication:
     message: "Completed Programme Modules accordion testing on Applied AI & ML program page. ALL TESTS PASSED: ✅ All 4 modules display correctly with proper icons, titles, and styling. ✅ Expansion/collapse works smoothly with chevron rotation. ✅ All content displays correctly (Key Learning Objectives, Week-by-Week Breakdown with correct weeks 1-12, Milestones with Award icons). ✅ Multiple modules can be expanded simultaneously without conflicts. ✅ Visual styling matches brochure aesthetic with gold borders, navy backgrounds, and smooth animations. ✅ Week cards have hover effects. ✅ No console errors detected. The accordion functionality is fully working as specified in the review request."
   - agent: "testing"
     message: "Completed mobile menu visibility testing on iPhone X viewport (375x812). CRITICAL ISSUE FOUND: Page content is showing through the mobile menu overlay. The hero section text ('TURNING TECHNICAL FLUENCY', 'THE AI ERA OF EXECUTIVE EDUCATION'), buttons ('APPLY NOW', 'CONTACT US'), and program details are all visible behind the menu items. The menu has bg-navy-deep and backdrop-blur-xl classes, but the background is not solid/opaque as required. ALL OTHER TESTS PASSED: ✅ Menu opens/closes correctly. ✅ Logo and X button visible at top. ✅ PROGRAMS accordion with chevron works. ✅ FACULTY and ABOUT links are visible and accessible. ✅ APPLY (gold) and SIGN IN (outlined) buttons visible at bottom. ✅ Programs accordion expands showing program list and Corporate Program. ✅ Navigation works (clicked FACULTY, navigated correctly, menu closed). ✅ Menu is scrollable (439px content in 78px viewport). ✅ Proper z-index (9999). FIX NEEDED: Make mobile menu background fully opaque to prevent page content from showing through."
+  - agent: "testing"
+    message: "RE-TESTED NEW side drawer mobile menu design. CRITICAL ISSUE PERSISTS - NOT FIXED. Page content is STILL showing through the drawer in all screenshots. Hero text 'TURNING TECHNICAL FLUENCY', buttons 'APPLY NOW'/'CONTACT US', and all page content clearly visible behind the cream drawer. The new design has correct styling (cream drawer from right, dark backdrop on left, navy header), but the transparency problem remains. WHAT WORKS: ✅ Drawer appearance correct (backdrop rgba(0,0,0,0.7), cream bg rgb(245,239,224), navy header rgb(8,19,31), width 318.75px = 85%). ✅ All menu items visible (PROGRAMS with chevron, FACULTY, ABOUT, APPLY gold button, SIGN IN navy border). ✅ Text colors correct (navy rgb(14,31,50)). ✅ Drawer scrollable (478px scroll height). ✅ X button close works. NEW ISSUES FOUND: ❌ Programs accordion not expanding (0 program links found after click). ❌ Backdrop close not working (drawer still visible after backdrop click). ❌ Sticky header intercepts PROGRAMS button clicks. This task is now STUCK - same transparency issue after redesign."
