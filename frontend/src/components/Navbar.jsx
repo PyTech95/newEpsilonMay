@@ -34,6 +34,24 @@ export default function Navbar() {
 
   useEffect(() => { setMobileOpen(false); setProgOpen(false); }, [pathname]);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    };
+  }, [mobileOpen]);
+
   const transparent = onHome && !scrolled;
 
   const baseNav = 'font-caps text-[0.7rem] font-semibold tracking-[0.2em] transition-colors';
@@ -130,14 +148,14 @@ export default function Navbar() {
 
       {/* Mobile menu - Clean Modern Style */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-0 z-50 bg-navy-deep/98 backdrop-blur-lg">
-          <div className="h-full overflow-y-auto">
+        <div className="lg:hidden fixed inset-0 z-[9999] bg-navy-deep backdrop-blur-xl">
+          <div className="relative h-full overflow-y-auto">
             {/* Header with logo and close */}
             <div className="container-x py-6 flex items-center justify-between border-b border-gold/10">
-              <img src={logoUrl} alt="Epsilon" className="h-8" />
+              <img src={logoUrl} alt="Epsilon" className="h-8 relative z-10" />
               <button
                 onClick={() => setMobileOpen(false)}
-                className="text-cream hover:text-gold transition-colors p-2 -mr-2"
+                className="text-cream hover:text-gold transition-colors p-2 -mr-2 relative z-10"
                 aria-label="Close Menu"
               >
                 <X size={28} strokeWidth={2} />

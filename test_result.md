@@ -382,6 +382,18 @@ frontend:
         agent: "testing"
         comment: "Visual styling matches brochure aesthetic: Gold borders and accents present (170+ elements), Navy backgrounds for module headers (94+ elements), Icons display correctly in circular gold-accented containers, Smooth transitions and animations with proper CSS classes, Week cards have hover effects (navy background on hover), Chevron icons rotate smoothly with transition classes. No console errors detected."
 
+  - task: "Mobile Menu - Visibility and Navigation"
+    implemented: true
+    working: false
+    file: "/app/frontend/src/components/Navbar.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "CRITICAL ISSUE: Page content shows through mobile menu overlay. Hero section text, buttons, and program details are visible behind menu items. Menu has bg-navy-deep and backdrop-blur-xl but background is not opaque. All menu functionality works: opens/closes, logo and X button visible, PROGRAMS accordion expands, FACULTY/ABOUT links accessible, APPLY/SIGN IN buttons visible, navigation works correctly, menu scrollable, proper z-index. Issue is purely visual - menu background must be fully opaque to block page content as per requirements."
+
 metadata:
   created_by: "testing_agent"
   version: "1.0"
@@ -390,9 +402,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Programme Modules accordion fully tested and working"
-    - "All expansion/collapse functionality verified"
-    - "Content display and styling confirmed"
+    - "Mobile Menu - Background opacity issue needs fix"
   stuck_tasks:
     - "Footer Editing - UI Accessibility"
   test_all: false
@@ -403,3 +413,5 @@ agent_communication:
     message: "Completed Header & Footer editor testing. HEADER EDITING: Fully functional - successfully changed Apply Button Text to 'Start Application' and added 'Contact Us' menu item. Changes persist to database and display correctly on both desktop and mobile views. FOOTER EDITING: UI accessibility issue - footer section is difficult to access when scrolling, and Add buttons for footer columns are not consistently visible. This makes footer editing challenging. SAVE FUNCTIONALITY: Works correctly with success toast messages. Overall, the core functionality is working but footer editing UX needs improvement for better accessibility."
   - agent: "testing"
     message: "Completed Programme Modules accordion testing on Applied AI & ML program page. ALL TESTS PASSED: ✅ All 4 modules display correctly with proper icons, titles, and styling. ✅ Expansion/collapse works smoothly with chevron rotation. ✅ All content displays correctly (Key Learning Objectives, Week-by-Week Breakdown with correct weeks 1-12, Milestones with Award icons). ✅ Multiple modules can be expanded simultaneously without conflicts. ✅ Visual styling matches brochure aesthetic with gold borders, navy backgrounds, and smooth animations. ✅ Week cards have hover effects. ✅ No console errors detected. The accordion functionality is fully working as specified in the review request."
+  - agent: "testing"
+    message: "Completed mobile menu visibility testing on iPhone X viewport (375x812). CRITICAL ISSUE FOUND: Page content is showing through the mobile menu overlay. The hero section text ('TURNING TECHNICAL FLUENCY', 'THE AI ERA OF EXECUTIVE EDUCATION'), buttons ('APPLY NOW', 'CONTACT US'), and program details are all visible behind the menu items. The menu has bg-navy-deep and backdrop-blur-xl classes, but the background is not solid/opaque as required. ALL OTHER TESTS PASSED: ✅ Menu opens/closes correctly. ✅ Logo and X button visible at top. ✅ PROGRAMS accordion with chevron works. ✅ FACULTY and ABOUT links are visible and accessible. ✅ APPLY (gold) and SIGN IN (outlined) buttons visible at bottom. ✅ Programs accordion expands showing program list and Corporate Program. ✅ Navigation works (clicked FACULTY, navigated correctly, menu closed). ✅ Menu is scrollable (439px content in 78px viewport). ✅ Proper z-index (9999). FIX NEEDED: Make mobile menu background fully opaque to prevent page content from showing through."
