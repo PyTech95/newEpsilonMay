@@ -128,57 +128,109 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu - Modern Full Screen Overlay */}
       {mobileOpen && (
-        <div className="lg:hidden bg-navy-deep text-cream border-t border-gold/20 max-h-[calc(100vh-110px)] overflow-y-auto">
-          <div className="container-x py-6 flex flex-col gap-3">
-            {/* Programs accordion */}
-            <button
-              type="button"
-              onClick={() => setProgOpen((v) => !v)}
-              data-testid="mobile-programs-toggle"
-              className="font-caps text-sm text-cream tracking-[0.2em] flex items-center justify-between w-full py-1"
-              aria-expanded={progOpen}
-            >
-              <span>Programs</span>
-              <ChevronDown size={14} className={`transition-transform ${progOpen ? 'rotate-180' : ''}`} />
-            </button>
-            {progOpen && (
-              <div className="border-l border-gold/30 ml-1 pl-4 -mt-1 mb-2">
-                {programs.map((p) => (
-                  <Link
-                    key={p.slug}
-                    to={`/programs/${p.slug}`}
-                    className="block py-3 hover:bg-navy/40 -mx-2 px-2 transition-colors"
+        <div className="lg:hidden fixed inset-0 z-50 bg-navy-deep/95 backdrop-blur-md animate-in fade-in duration-300">
+          <div className="h-full overflow-y-auto">
+            {/* Close button */}
+            <div className="container-x py-6 flex justify-end">
+              <button
+                onClick={() => setMobileOpen(false)}
+                className="text-cream hover:text-gold transition-colors p-2"
+                aria-label="Close Menu"
+              >
+                <X size={32} strokeWidth={1.5} />
+              </button>
+            </div>
+
+            {/* Menu content */}
+            <div className="container-x pb-12 flex flex-col gap-8 pt-8">
+              {/* Programs Accordion */}
+              <div className="border-b border-gold/20 pb-6">
+                <button
+                  type="button"
+                  onClick={() => setProgOpen((v) => !v)}
+                  className="w-full flex items-center justify-between group"
+                >
+                  <span className="font-display text-cream text-2xl tracking-wide group-hover:text-gold transition-colors">
+                    Programs
+                  </span>
+                  <ChevronDown 
+                    size={24} 
+                    className={`text-gold transition-transform duration-300 ${progOpen ? 'rotate-180' : ''}`}
+                  />
+                </button>
+                
+                {progOpen && (
+                  <div className="mt-6 space-y-4 pl-4 animate-in slide-in-from-top-2 duration-300">
+                    {programs.map((p, i) => (
+                      <Link
+                        key={p.slug}
+                        to={`/programs/${p.slug}`}
+                        onClick={() => setMobileOpen(false)}
+                        className="block group py-3 border-l-2 border-gold/30 hover:border-gold pl-4 transition-all"
+                      >
+                        <div className="font-display text-cream text-base leading-tight group-hover:text-gold transition-colors">
+                          {p.subtitle}
+                        </div>
+                        <div className="font-caps text-[0.65rem] text-gold/70 mt-1.5 tracking-wider">
+                          {p.weeks} weeks · {p.levelLabel}
+                        </div>
+                      </Link>
+                    ))}
+                    
+                    {/* Corporate Program */}
+                    <Link
+                      to="/corporate"
+                      onClick={() => setMobileOpen(false)}
+                      className="flex items-start gap-3 py-3 border-l-2 border-gold/30 hover:border-gold pl-4 transition-all group"
+                    >
+                      <Building2 size={18} className="text-gold mt-1 flex-shrink-0" />
+                      <div>
+                        <div className="font-display text-cream text-base leading-tight group-hover:text-gold transition-colors">
+                          Corporate Program
+                        </div>
+                        <div className="font-caps text-[0.65rem] text-gold/70 mt-1.5 tracking-wider">
+                          Private cohorts for teams
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                )}
+              </div>
+
+              {/* Other Menu Items */}
+              <div className="space-y-6">
+                {menuItems.map((item, idx) => (
+                  <Link 
+                    key={idx} 
+                    to={item.link} 
+                    onClick={() => setMobileOpen(false)}
+                    className="block font-display text-cream text-2xl tracking-wide hover:text-gold transition-colors border-b border-gold/20 pb-6"
                   >
-                    <div className="font-display text-sm text-cream leading-tight">{p.subtitle}</div>
-                    <div className="font-caps text-[0.6rem] text-gold mt-1">{p.weeks} weeks · {p.levelLabel}</div>
+                    {item.label}
                   </Link>
                 ))}
-                <Link
-                  to="/corporate"
-                  className="flex items-start gap-2 py-3 hover:bg-navy/40 -mx-2 px-2 transition-colors border-t border-gold/15 mt-1"
-                >
-                  <Building2 size={14} className="text-gold mt-1" />
-                  <div>
-                    <div className="font-display text-sm text-cream leading-tight">Corporate Program</div>
-                    <div className="font-caps text-[0.6rem] text-gold mt-1">Private cohorts for teams</div>
-                  </div>
-                </Link>
               </div>
-            )}
 
-            {menuItems.map((item, idx) => (
-              <Link key={idx} to={item.link} className="font-caps text-sm text-cream tracking-[0.2em] py-1">
-                {item.label}
-              </Link>
-            ))}
-            
-            <div className="flex gap-3 mt-3">
-              <Link to="/apply" className="btn-gold">{applyButtonText}</Link>
-              <a href={signInUrl} target="_blank" rel="noopener noreferrer" className="btn-outline-gold">
-                <LogIn size={14} /> {signInButtonText}
-              </a>
+              {/* Action Buttons */}
+              <div className="flex flex-col gap-4 pt-8">
+                <Link 
+                  to="/apply" 
+                  onClick={() => setMobileOpen(false)}
+                  className="btn-gold w-full text-center justify-center py-4 text-lg"
+                >
+                  {applyButtonText}
+                </Link>
+                <a 
+                  href={signInUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="btn-outline-gold w-full text-center justify-center py-4 text-lg"
+                >
+                  <LogIn size={16} /> {signInButtonText}
+                </a>
+              </div>
             </div>
           </div>
         </div>
