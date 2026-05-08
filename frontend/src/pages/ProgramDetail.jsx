@@ -45,7 +45,7 @@ function ModuleAccordion({ module }) {
             <p className="font-caps text-[0.6rem] md:text-[0.65rem] tracking-[0.28em] text-gold/90 mb-2">
               Module {module.num} · {module.weeks}
             </p>
-            <h3 className="font-display text-cream text-[1.4rem] md:text-[2rem] leading-tight mb-2">
+            <h3 className="font-display text-cream/60 text-[1.4rem] md:text-[2rem] leading-tight mb-2">
               {module.title}
             </h3>
             <p className="font-editorial text-cream/75 text-[0.95rem] md:text-[1.05rem] leading-relaxed">
@@ -357,7 +357,7 @@ export default function ProgramDetail() {
         <section className="bg-bone py-20 md:py-24">
           <div className="container-x grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-16 items-center">
             {/* Visual */}
-            <div className="relative bg-white min-h-[360px] aspect-[4/5] lg:aspect-auto lg:h-full overflow-hidden flex items-center justify-center p-8 order-2 lg:order-1 border border-navy/10">
+            <div className="relative bg-white min-h-[360px] aspect-[4/5] lg:aspect-auto lg:h-full overflow-hidden flex items-center justify-center order-2 lg:order-1 border border-navy/10">
               {p.certificateImage ? (
                 /* Admin-uploaded certificate image — show as-is, no overlay */
                 <img
@@ -381,10 +381,10 @@ export default function ProgramDetail() {
                   </div>
                 </>
               )}
-              <span className="absolute top-4 left-4 w-8 h-8 border-t border-l border-gold/70 z-10" />
-              <span className="absolute top-4 right-4 w-8 h-8 border-t border-r border-gold/70 z-10" />
-              <span className="absolute bottom-4 left-4 w-8 h-8 border-b border-l border-gold/70 z-10" />
-              <span className="absolute bottom-4 right-4 w-8 h-8 border-b border-r border-gold/70 z-10" />
+              <span className="absolute top-0 left-0 w-8 h-8 border-t border-l border-gold/70 z-10" />
+              <span className="absolute top-0 right-0 w-8 h-8 border-t border-r border-gold/70 z-10" />
+              <span className="absolute bottom-0 left-0 w-8 h-8 border-b border-l border-gold/70 z-10" />
+              <span className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-gold/70 z-10" />
             </div>
 
             {/* Copy */}
@@ -601,8 +601,8 @@ export default function ProgramDetail() {
                     className="group bg-navy border border-gold/15 p-8 hover:border-gold/40 hover:bg-navy/80 transition-all duration-300 hover:scale-[1.02]"
                   >
                     <div className="flex items-center justify-between mb-5">
-                      <div className="w-14 h-14 rounded-full bg-gold/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-gold/20 transition-colors">
-                        <Icon size={24} className="text-gold" />
+                      <div className="w-20 h-20 rounded-full bg-gold/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-gold/20 transition-colors">
+                        <Icon size={48} className="text-gold" />
                       </div>
                       <p className="font-display text-gold/50 text-[2.2rem] leading-none group-hover:text-gold/70 transition-colors">
                         {String(i + 1).padStart(2, '0')}

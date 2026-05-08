@@ -93,12 +93,6 @@ export default function Navbar() {
                     </div>
                     <div className="font-caps text-[0.6rem] text-gold mt-1 ml-6">Private cohorts for teams</div>
                   </Link>
-
-                  <div className="border-t border-gold/10 mt-1 pt-1">
-                    <Link to="/programs" className="block px-4 py-3 hover:bg-navy transition-colors font-caps text-[0.65rem] text-gold">
-                      View all programs →
-                    </Link>
-                  </div>
                 </div>
               </div>
             )}
@@ -170,9 +164,6 @@ export default function Navbar() {
                     <div className="font-display text-sm text-cream leading-tight">Corporate Program</div>
                     <div className="font-caps text-[0.6rem] text-gold mt-1">Private cohorts for teams</div>
                   </div>
-                </Link>
-                <Link to="/programs" className="block py-3 -mx-2 px-2 font-caps text-[0.65rem] text-gold border-t border-gold/15 mt-1">
-                  View all programs →
                 </Link>
               </div>
             )}
