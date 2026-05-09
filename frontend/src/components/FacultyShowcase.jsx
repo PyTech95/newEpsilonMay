@@ -127,21 +127,21 @@ export default function FacultyShowcase() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent
           data-testid="faculty-bio-modal"
-          className="max-w-3xl w-[95vw] max-h-[92vh] bg-bone border border-gold/40 p-0 overflow-hidden text-navy"
+          className="max-w-3xl w-[92vw] max-h-[calc(100vh-180px)] md:max-h-[92vh] bg-bone border border-gold/40 p-0 overflow-hidden text-navy"
         >
           {selected && (
-            <div className="grid grid-cols-1 md:grid-cols-[260px_1fr] max-h-[92vh] overflow-y-auto md:overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-[260px_1fr] max-h-[calc(100vh-180px)] md:max-h-[92vh] overflow-y-auto md:overflow-hidden">
               {/* Portrait — show whole image, no cropping on any device */}
-              <div className="relative bg-navy-deep flex items-center justify-center">
+              <div className="relative bg-navy-deep flex items-center justify-center py-3">
                 <img
                   src={selected.image}
                   alt={selected.name}
-                  className="w-full max-h-[55vh] md:max-h-[92vh] md:h-full object-contain"
+                  className="w-full max-h-[38vh] md:max-h-[92vh] md:h-full object-contain"
                 />
               </div>
 
               {/* Bio */}
-              <div className="p-7 md:p-9 md:max-h-[92vh] md:overflow-y-auto">
+              <div className="p-6 md:p-9 md:max-h-[92vh] md:overflow-y-auto">
                 <DialogHeader className="text-left">
                   <p className="font-caps text-[0.6rem] tracking-[0.22em] text-gold">
                     {selected.expertise}
