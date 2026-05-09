@@ -131,24 +131,19 @@ export default function FacultyShowcase() {
         >
           {selected && (
             <div className="grid grid-cols-1 md:grid-cols-[260px_1fr] max-h-[92vh] overflow-y-auto md:overflow-hidden">
-              {/* Portrait */}
-              <div className="relative bg-navy-deep">
+              {/* Portrait — show whole image, no cropping on any device */}
+              <div className="relative bg-navy-deep flex items-center justify-center">
                 <img
                   src={selected.image}
                   alt={selected.name}
-                  className="w-full aspect-[4/5] md:aspect-auto md:h-full object-cover object-top"
+                  className="w-full max-h-[55vh] md:max-h-[92vh] md:h-full object-contain"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/70 to-transparent md:bg-none pointer-events-none" />
-                <div className="md:hidden absolute bottom-4 left-5 right-5">
-                  <p className="font-caps text-[0.6rem] tracking-[0.22em] text-gold">{selected.expertise}</p>
-                  <p className="font-display text-cream text-[1.4rem] leading-tight mt-1">{selected.name}</p>
-                </div>
               </div>
 
               {/* Bio */}
               <div className="p-7 md:p-9 md:max-h-[92vh] md:overflow-y-auto">
                 <DialogHeader className="text-left">
-                  <p className="font-caps text-[0.6rem] tracking-[0.22em] text-gold hidden md:block">
+                  <p className="font-caps text-[0.6rem] tracking-[0.22em] text-gold">
                     {selected.expertise}
                   </p>
                   <DialogTitle className="font-display text-navy text-[1.6rem] md:text-[1.9rem] leading-tight mt-1">
