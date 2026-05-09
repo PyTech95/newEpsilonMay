@@ -51,7 +51,7 @@ function BrochureDownload({ programs, brochure }) {
           accent="on a single PDF."
           subtitle={brochure?.description || '28-page PDF · Program overview, modules, fees, capstone, faculty and admissions.'}
         />
-        <div className="mt-14 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
+        <div className="mt-8 md:mt-14 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
         {/* Left: visual */}
           <div className="relative bg-navy-deep overflow-hidden min-h-[380px] flex items-center justify-center p-10">
             <img
@@ -184,7 +184,7 @@ function AdmissionsContact({ sections, contact }) {
           subtitle={sections?.admissionsSubtitle || 'Every applicant speaks with an admissions lead before a seat is offered. Start with a message — we will write back personally.'}
         />
 
-        <div className="mt-16 grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-14 lg:gap-16">
+        <div className="mt-8 md:mt-16 grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-14 lg:gap-16">
         {/* Admissions process */}
         <div>
           <p className="font-caps text-[0.65rem] text-gold tracking-[0.22em] mb-5">The Process</p>
@@ -302,7 +302,7 @@ export default function Home() {
   return (
     <div>
       {/* 1. HERO */}
-      <section className="relative overflow-hidden bg-navy-deep text-cream min-h-[100vh]">
+      <section className="relative overflow-hidden bg-navy-deep text-cream lg:min-h-[100vh]">
         <div className="absolute inset-0">
           <img src={heroImage} alt="" className="absolute inset-0 w-full h-full object-cover opacity-25" />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(8,19,31,0.55), rgba(14,31,50,0.88), rgba(8,19,31,1))' }} />
@@ -310,8 +310,8 @@ export default function Home() {
         <NetworkBackground className="opacity-70" />
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] rounded-full glow-gold pointer-events-none" />
 
-        <div className="relative container-x pt-32 sm:pt-40 md:pt-44 pb-[25px] md:pb-[50px]">
-          <p className="eyebrow mb-7 fade-up">
+        <div className="relative container-x pt-28 sm:pt-36 md:pt-44 pb-12 md:pb-[50px]">
+          <p className="eyebrow mb-5 md:mb-7 fade-up">
             <Sparkles size={12} className="inline mr-2 -mt-1 text-gold" /> {hero.eyebrow || 'The AI Era of Executive Education'}
           </p>
           <h1 className="font-display uppercase text-[2.1rem] sm:text-[2.9rem] md:text-[4.3rem] lg:text-[5.1rem] leading-[1.02] tracking-tight max-w-6xl fade-up">
@@ -320,10 +320,10 @@ export default function Home() {
           <h2 className="font-editorial italic text-gold text-[2.2rem] md:text-[4rem] lg:text-[4.8rem] leading-[1.05] mt-2 fade-up">
             {hero.titleLine2 || 'into strategic value.'}
           </h2>
-          <p className="font-editorial text-[1.25rem] md:text-[1.55rem] leading-relaxed text-cream/85 mt-9 max-w-2xl fade-up">
+          <p className="font-editorial text-[1.25rem] md:text-[1.55rem] leading-relaxed text-cream/85 mt-5 md:mt-9 max-w-2xl fade-up">
             {hero.subtitle || 'Live online cohorts for working professionals who want to translate AI, data, and modern decision systems into evidence-based action — not theatre.'}
           </p>
-          <div className="mt-12 flex flex-wrap items-center gap-4 fade-up">
+          <div className="mt-7 md:mt-12 flex flex-wrap items-center gap-4 fade-up">
             <Link to={hero.primaryCtaHref || '/apply'} className="btn-gold">
               {hero.primaryCtaText || 'Apply Now'} <ArrowRight size={16} />
             </Link>
@@ -334,7 +334,7 @@ export default function Home() {
               <LogIn size={16} /> {hero.secondaryCtaText || 'Sign In to Learn'}
             </a>
           </div>
-          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 fade-up">
+          <div className="mt-8 md:mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 fade-up">
             {(hero.stats || []).map((s, i) => <HeroStat key={i} value={s.value} label={s.label} />)}
           </div>
         </div>
@@ -404,7 +404,7 @@ export default function Home() {
 
       {/* 4. FACULTY */}
       <div className="bg-navy-deep">
-        <div className="container-x pt-20">
+        <div className="container-x pt-10 md:pt-20">
           <SectionHeader
             chapter="Chapter III"
             eyebrow="Faculty"
@@ -430,7 +430,7 @@ export default function Home() {
             align="center"
           />
 
-          <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-14 items-start max-w-5xl mx-auto">
+          <div className="mt-8 md:mt-14 grid grid-cols-1 md:grid-cols-2 gap-14 items-start max-w-5xl mx-auto">
             <p className="font-editorial text-navy/85 text-[1.2rem] leading-relaxed">{about.paragraph1}</p>
             <p className="font-editorial text-navy/85 text-[1.2rem] leading-relaxed">{about.paragraph2}</p>
           </div>
@@ -438,9 +438,9 @@ export default function Home() {
             <Link to="/about" className="link-gold inline-flex">Read more <ArrowUpRight size={13} /></Link>
           </div>
 
-          <div className="mt-20">
+          <div className="mt-12 md:mt-20">
             <SectionOrnament tone="light" />
-            <p className="font-caps text-[0.65rem] text-gold tracking-[0.22em] text-center mt-6 mb-10">What we believe</p>
+            <p className="font-caps text-[0.65rem] text-gold tracking-[0.22em] text-center mt-6 mb-6 md:mb-10">What we believe</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {beliefs.map((b) => (
                 <div key={b._id || b.n} className="bg-white p-10 lift-card border border-transparent hover:border-gold/40">
@@ -498,13 +498,13 @@ export default function Home() {
             className="mx-auto mb-8 h-[150px] md:h-[180px] w-auto object-contain"
           />
           <p className="eyebrow">{cta.eyebrow || 'Take the next step'}</p>
-          <h2 className="font-display uppercase text-[2rem] md:text-[3.4rem] leading-[1.05] max-w-4xl mx-auto mt-5">
+          <h2 className="font-display uppercase text-[2rem] md:text-[3.4rem] leading-[1.05] max-w-4xl mx-auto mt-3 md:mt-5">
             {(cta.title || 'Build the judgement your next decade demands.')}
           </h2>
-          <p className="font-editorial text-cream/80 text-[1.2rem] leading-relaxed mt-7 max-w-xl mx-auto">
+          <p className="font-editorial text-cream/80 text-[1.2rem] leading-relaxed mt-4 md:mt-7 max-w-xl mx-auto">
             {cta.subtitle || 'Apply, talk to admissions, or sign in to your learning environment.'}
           </p>
-          <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+          <div className="mt-7 md:mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
             <Link to="/apply" className="btn-gold justify-center">Apply Now <ArrowRight size={16} /></Link>
             <Link to="/contact" className="btn-outline-gold justify-center">Talk to Admissions</Link>
             <a href={footer.signInUrl || 'https://moodle.org/login/index.php'} target="_blank" rel="noopener noreferrer" className="btn-outline-gold justify-center">

@@ -253,7 +253,7 @@ export default function ProgramDetail() {
             <Link to="/schedule" className="btn-outline-gold">Schedule a Call</Link>
           </div>
 
-          <div className="mt-10 md:mt-12 grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-6">
+          <div className="mt-7 md:mt-12 grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-6">
             {[
               { v: p.fee, l: 'Program Fee' },
               { v: `${p.weeks} weeks`, l: 'Duration' },

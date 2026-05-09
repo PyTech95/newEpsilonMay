@@ -49,7 +49,7 @@ export default function SectionHeader({
         )}
       </h2>
       {subtitle && (
-        <p className={`font-editorial ${subColor} text-[1.15rem] md:text-[1.3rem] leading-relaxed mt-6 ${isCenter ? 'max-w-2xl mx-auto' : 'max-w-3xl'}`}>
+        <p className={`font-editorial ${subColor} text-[1.15rem] md:text-[1.3rem] leading-relaxed mt-3 md:mt-6 ${isCenter ? 'max-w-2xl mx-auto' : 'max-w-3xl'}`}>
           {subtitle}
         </p>
       )}
