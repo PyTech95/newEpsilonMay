@@ -6,7 +6,7 @@ import { useSiteContent } from '../context/SiteContent';
 
 export default function Footer() {
   const ctx = useSiteContent();
-  const programs = ctx?.programs?.length ? ctx.programs : mockPrograms;
+  const programs = ctx?.programs?.length ? ctx.programs : [];
   const home = ctx?.home || {};
   const contact = home.contact || {};
   

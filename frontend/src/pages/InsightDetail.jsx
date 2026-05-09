@@ -7,7 +7,7 @@ import { useSiteContent } from '../context/SiteContent';
 export default function InsightDetail() {
   const { slug } = useParams();
   const ctx = useSiteContent();
-  const insights = ctx?.insights?.length ? ctx.insights : mockInsights;
+  const insights = ctx?.insights?.length ? ctx.insights : [];
   const article = insights.find((i) => i.slug === slug);
 
   if (!article) {

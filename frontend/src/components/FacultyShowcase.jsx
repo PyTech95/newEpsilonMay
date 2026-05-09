@@ -13,8 +13,8 @@ import {
 
 export default function FacultyShowcase() {
   const ctx = useSiteContent();
-  const lead = (ctx?.leadFaculty?.[0]) || mockLead[0];
-  const guestLecturers = (ctx?.guestLecturers?.length ? ctx.guestLecturers : mockGuests);
+  const lead = ctx?.leadFaculty?.[0] || null;
+  const guestLecturers = ctx?.guestLecturers?.length ? ctx.guestLecturers : [];
 
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
@@ -23,6 +23,8 @@ export default function FacultyShowcase() {
     setSelected(g);
     setOpen(true);
   };
+
+  if (!lead) return null;
 
   return (
     <section className="relative bg-navy-deep text-cream pt-12 pb-24 md:pb-32 overflow-hidden">

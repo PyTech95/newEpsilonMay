@@ -205,7 +205,7 @@ function ContactForm({ p }) {
 export default function ProgramDetail() {
   const { slug } = useParams();
   const ctx = useSiteContent();
-  const programs = ctx?.programs?.length ? ctx.programs : mockPrograms;
+  const programs = ctx?.programs?.length ? ctx.programs : [];
   const p = programs.find((x) => x.slug === slug);
   const [openFaq, setOpenFaq] = useState(0);
 

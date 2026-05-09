@@ -7,7 +7,7 @@ import { useSiteContent } from '../context/SiteContent';
 
 export default function Events() {
   const ctx = useSiteContent();
-  const events = ctx?.events?.length ? ctx.events : mockEvents;
+  const events = ctx?.events?.length ? ctx.events : [];
   return (
     <div>
       <PageHero

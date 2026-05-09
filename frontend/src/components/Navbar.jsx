@@ -6,7 +6,7 @@ import { useSiteContent } from '../context/SiteContent';
 
 export default function Navbar() {
   const ctx = useSiteContent();
-  const programs = ctx?.programs?.length ? ctx.programs : mockPrograms;
+  const programs = ctx?.programs?.length ? ctx.programs : [];
   
   // Use navbar data from context if available, otherwise fallback to ctx.logoUrl and defaults
   const navbar = ctx?.navbar || {};

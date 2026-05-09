@@ -6,20 +6,21 @@ const Ctx = createContext(null);
 
 /**
  * Fetch all site content from backend on mount.
- * Falls back to static mock data on any fetch failure so the site never goes blank.
+ * Initial state is empty (no mock images) to avoid flicker on refresh —
+ * the real API content is the single source of truth for images and data.
  */
 export function SiteContentProvider({ children }) {
   const [state, setState] = useState({
     loaded: false,
     home: null,
     beliefs: [],
-    programs: mock.programs,
-    cohorts: mock.cohorts,
-    testimonials: mock.testimonials,
-    leadFaculty: mock.leadFaculty,
-    guestLecturers: mock.guestLecturers,
-    insights: mock.insights,
-    events: mock.events,
+    programs: [],
+    cohorts: [],
+    testimonials: [],
+    leadFaculty: [],
+    guestLecturers: [],
+    insights: [],
+    events: [],
     logoUrl: mock.LOGO_URL,
     navbar: null,
     footer: null,

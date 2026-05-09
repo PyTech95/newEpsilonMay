@@ -13,7 +13,7 @@ const FILTERS = [
 
 export default function Programs() {
   const ctx = useSiteContent();
-  const programs = ctx?.programs?.length ? ctx.programs : mockPrograms;
+  const programs = ctx?.programs?.length ? ctx.programs : [];
   const [filter, setFilter] = useState('all');
   const list = programs.filter((p) => filter === 'all' || p.level === filter);
 

@@ -340,9 +340,9 @@ function FAQs({ program }) {
 /* ====================== APPLY PAGE ====================== */
 export default function Apply() {
   const ctx = useSiteContent();
-  const programs = ctx?.programs?.length ? ctx.programs : mockPrograms;
-  const leadFaculty = ctx?.leadFaculty?.length ? ctx.leadFaculty : mockLead;
-  const guestLecturers = ctx?.guestLecturers?.length ? ctx.guestLecturers : mockGuests;
+  const programs = ctx?.programs?.length ? ctx.programs : [];
+  const leadFaculty = ctx?.leadFaculty?.length ? ctx.leadFaculty : [];
+  const guestLecturers = ctx?.guestLecturers?.length ? ctx.guestLecturers : [];
   const heroImage = ctx?.home?.siteImages?.applyHero || ctx?.home?.hero?.heroImage || '/generated/hero-indian-online-learner.png';
 
   const [sent, setSent] = useState(false);

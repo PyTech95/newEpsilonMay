@@ -146,8 +146,8 @@ function GuestCard({ g }) {
 
 export default function Faculty() {
   const ctx = useSiteContent();
-  const leadFaculty = ctx?.leadFaculty?.length ? ctx.leadFaculty : mockLead;
-  const guestLecturers = ctx?.guestLecturers?.length ? ctx.guestLecturers : mockGuests;
+  const leadFaculty = ctx?.leadFaculty?.length ? ctx.leadFaculty : [];
+  const guestLecturers = ctx?.guestLecturers?.length ? ctx.guestLecturers : [];
   const lead = leadFaculty[0];
 
   return (

@@ -8,7 +8,7 @@ import { useSiteContent } from '../context/SiteContent';
 export default function Admissions() {
   const ctx = useSiteContent();
   const cohorts = ctx?.cohorts?.length ? ctx.cohorts : mockCohorts;
-  const programs = ctx?.programs?.length ? ctx.programs : mockPrograms;
+  const programs = ctx?.programs?.length ? ctx.programs : [];
   return (
     <div>
       <PageHero

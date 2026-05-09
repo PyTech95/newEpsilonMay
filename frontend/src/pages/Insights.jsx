@@ -7,7 +7,7 @@ import { useSiteContent } from '../context/SiteContent';
 
 export default function Insights() {
   const ctx = useSiteContent();
-  const insights = ctx?.insights?.length ? ctx.insights : mockInsights;
+  const insights = ctx?.insights?.length ? ctx.insights : [];
   const featured = insights.find((i) => i.featured);
   const rest = insights.filter((i) => !i.featured);
 
