@@ -25,6 +25,8 @@ load_dotenv(ROOT_DIR / ".env")
 UPLOAD_DIR = ROOT_DIR / "uploads"
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 ALLOWED_IMAGE_EXT = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg", ".avif"}
+ALLOWED_DOC_EXT = {".pdf"}
+ALLOWED_UPLOAD_EXT = ALLOWED_IMAGE_EXT | ALLOWED_DOC_EXT
 
 mongo_url = os.environ["MONGO_URL"]
 client = AsyncIOMotorClient(mongo_url)
@@ -342,7 +344,7 @@ async def admin_stats(email: str = Depends(require_admin)):
 @api.post("/admin/upload")
 async def upload_image(file: UploadFile = File(...), email: str = Depends(require_admin)):
     ext = Path(file.filename or "").suffix.lower()
-    if ext not in ALLOWED_IMAGE_EXT:
+    if ext not in ALLOWED_UPLOAD_EXT:
         raise HTTPException(400, f"Unsupported file type: {ext}")
     safe_name = f"{uuid.uuid4().hex}{ext}"
     dest = UPLOAD_DIR / safe_name

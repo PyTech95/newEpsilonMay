@@ -21,10 +21,11 @@ function HeroStat({ value, label }) {
 }
 
 /* ---------- PDF Brochure gated download ---------- */
-function BrochureDownload({ programs, brochure }) {
+function BrochureDownload({ programs, brochure, visualImage }) {
   const [form, setForm] = useState({ name: '', phone: '', email: '', course: programs[0]?.title || '' });
   const [sent, setSent] = useState(false);
   const pdfUrl = brochure?.pdfUrl || 'https://customer-assets.emergentagent.com/job_logos-11/artifacts/pjvgovi6_brochure%203e%20sample.pdf';
+  const bgImage = visualImage || 'https://customer-assets.emergentagent.com/job_logos-11/artifacts/x9cwf42w_ChatGPT%20Image%20May%207%2C%202026%2C%2002_00_19%20PM.png';
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -55,7 +56,7 @@ function BrochureDownload({ programs, brochure }) {
         {/* Left: visual */}
           <div className="relative bg-navy-deep overflow-hidden min-h-[380px] flex items-center justify-center p-10">
             <img
-              src="https://customer-assets.emergentagent.com/job_logos-11/artifacts/x9cwf42w_ChatGPT%20Image%20May%207%2C%202026%2C%2002_00_19%20PM.png"
+              src={bgImage}
               alt=""
               className="absolute inset-0 w-full h-full object-cover"
             />

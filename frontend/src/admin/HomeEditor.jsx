@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { api } from './api';
 import { Save, Plus, Trash2 } from 'lucide-react';
 import ImageField from './ImageField';
+import FileField from './FileField';
 
 const F = ({ label, value, onChange, textarea, type = 'text' }) => (
   <label className="block">
@@ -116,7 +117,19 @@ export default function HomeEditor() {
         <F label="Eyebrow" value={data.brochure?.eyebrow} onChange={(v) => update('brochure.eyebrow', v)} />
         <F label="Title" value={data.brochure?.title} onChange={(v) => update('brochure.title', v)} />
         <F label="Description" textarea value={data.brochure?.description} onChange={(v) => update('brochure.description', v)} />
-        <F label="PDF URL" value={data.brochure?.pdfUrl} onChange={(v) => update('brochure.pdfUrl', v)} />
+        <FileField
+          label="Brochure PDF"
+          value={data.brochure?.pdfUrl}
+          onChange={(v) => update('brochure.pdfUrl', v)}
+          accept=".pdf"
+          help="Upload a PDF file or paste a URL. Visitors download this after filling the brochure form."
+        />
+        <ImageField
+          label="Brochure visual background"
+          value={data.siteImages?.brochureVisual}
+          onChange={(v) => update('siteImages.brochureVisual', v)}
+          help="Background image on the left tile of the Brochure section (Chapter II). Leave blank for default."
+        />
       </Section>
 
       <Section title="About / Philosophy">
@@ -228,6 +241,12 @@ export default function HomeEditor() {
             value={data.siteImages?.corporateHero}
             onChange={(v) => update('siteImages.corporateHero', v)}
             help="Optional banner image for /corporate. Leave blank for the default dark hero."
+          />
+          <ImageField
+            label="Home — Final CTA logo"
+            value={data.siteImages?.ctaLogo}
+            onChange={(v) => update('siteImages.ctaLogo', v)}
+            help="Large square logo shown at the bottom of the home page's final CTA band."
           />
         </div>
       </Section>
