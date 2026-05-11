@@ -483,19 +483,19 @@ async def admin_test_email(email: str = Depends(require_admin)):
 # ==================================================================
 THEME_COLORS_KEY = "theme_colors"
 DEFAULT_THEME_COLORS = {
-    "heroTitle": "#0b1733",        # page hero main title
+    "heroTitle": "#ffffff",        # page hero main title (over dark hero bg)
     "heroAccent": "#c9a227",       # italic accent
-    "programTitle": "#0b1733",     # programme detail title
-    "moduleTitle": "#0b1733",      # module/section titles inside programs
+    "programTitle": "#ffffff",     # programme detail title (over dark hero bg)
+    "moduleTitle": "#f5efe6",      # module/section titles inside programs
     "navBrand": "#f5efe6",         # navbar text / brand
 }
 
 
 class ThemeColorsIn(BaseModel):
-    heroTitle: str = "#0b1733"
+    heroTitle: str = "#ffffff"
     heroAccent: str = "#c9a227"
-    programTitle: str = "#0b1733"
-    moduleTitle: str = "#0b1733"
+    programTitle: str = "#ffffff"
+    moduleTitle: str = "#f5efe6"
     navBrand: str = "#f5efe6"
 
 

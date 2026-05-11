@@ -39,7 +39,7 @@ export default function About() {
           <div className="order-1 lg:order-2">
             <p className="eyebrow mb-4">{phil.eyebrow || 'Our Philosophy'}</p>
             <span className="gold-rule-lg" />
-            <h2 className="font-display theme-hero-title text-[2rem] md:text-[3rem] leading-[1.05] mt-6">
+            <h2 className="font-display text-navy text-[2rem] md:text-[3rem] leading-[1.05] mt-6">
               {phil.title || 'Turning technical fluency into'}{' '}
               <span className="italic font-editorial theme-hero-accent">{phil.titleItalic || 'strategic value.'}</span>
             </h2>

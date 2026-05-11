@@ -477,7 +477,9 @@ export default function Home() {
                 <Quote size={20} className="text-gold mb-4" />
                 <p className="font-editorial italic text-[1.2rem] leading-relaxed text-cream/90">&ldquo;{t.quote}&rdquo;</p>
                 <div className="mt-6 flex items-center gap-3">
-                  <img src={t.avatar} alt={t.name} className="w-12 h-12 rounded-full object-cover border border-gold/40" />
+                  {t.avatar && (
+                    <img src={t.avatar} alt={t.name} className="w-12 h-12 rounded-full object-cover border border-gold/40" />
+                  )}
                   <div>
                     <p className="font-display text-cream">{t.name}</p>
                     <p className="font-caps text-[0.6rem] text-gold">{t.role}</p>
