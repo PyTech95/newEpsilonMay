@@ -33,15 +33,27 @@ function ruleFor(path, style) {
 /**
  * Injects a <style> tag that applies all saved per-element styles via
  * the [data-cms-path="..."] attribute selector. Mounted globally.
+ * Also hides sections marked as hidden when NOT in edit mode.
  */
 export default function StyleInjector() {
-  const { styles } = useEditMode();
+  const { styles, hiddenSections, editMode } = useEditMode();
   const css = useMemo(() => {
-    return Object.entries(styles || {})
+    const rules = Object.entries(styles || {})
       .map(([path, style]) => ruleFor(path, style))
-      .filter(Boolean)
-      .join('\n');
-  }, [styles]);
+      .filter(Boolean);
+    // Hidden sections: completely removed from layout when not editing;
+    // dimmed + striped overlay when editing so admin can find & restore them.
+    const hidden = Object.keys(hiddenSections || {});
+    if (hidden.length) {
+      const sel = hidden.map((s) => `[data-cms-section="${escapeCss(s)}"]`).join(', ');
+      if (editMode) {
+        rules.push(`${sel} { opacity: 0.35 !important; filter: grayscale(1) !important; outline: 2px dashed rgba(201,162,39,0.7) !important; outline-offset: -4px !important; }`);
+      } else {
+        rules.push(`${sel} { display: none !important; }`);
+      }
+    }
+    return rules.join('\n');
+  }, [styles, hiddenSections, editMode]);
   if (!css) return null;
   return <style data-cms-styles="1">{css}</style>;
 }

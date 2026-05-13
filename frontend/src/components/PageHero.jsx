@@ -8,7 +8,7 @@ import React from 'react';
 export default function PageHero({ eyebrow, title, subtitle, children, pathPrefix }) {
   const p = (k) => (pathPrefix ? `${pathPrefix}.${k}` : undefined);
   return (
-    <section className="relative bg-navy-deep text-cream pt-[130px] md:pt-[200px] pb-12 md:pb-28 overflow-hidden">
+    <section data-cms-section={pathPrefix ? `${pathPrefix.replace(/\./g, '-')}-section` : undefined} className="relative bg-navy-deep text-cream pt-[130px] md:pt-[200px] pb-12 md:pb-28 overflow-hidden">
       <div className="absolute inset-0 starfield opacity-40 pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full glow-gold pointer-events-none" />
       <div className="container-x relative">

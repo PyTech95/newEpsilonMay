@@ -22,7 +22,7 @@ export default function EditModeButton() {
         position: 'fixed',
         right: '20px',
         bottom: '90px',
-        zIndex: 9998,
+        zIndex: 999991,
         display: 'inline-flex',
         alignItems: 'center',
         gap: '8px',

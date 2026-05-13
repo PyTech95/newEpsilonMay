@@ -21,7 +21,7 @@ export default function Insights() {
         pathPrefix="pages.insights.hero"
       />
 
-      <section className="bg-cream py-10 md:py-20">
+      <section data-cms-section="insights-grid" className="bg-cream py-10 md:py-20">
         <div className="container-x">
           {featured && (
             <Link to={`/insights/${featured.slug}`} className="group grid grid-cols-1 md:grid-cols-2 gap-10 mb-20">

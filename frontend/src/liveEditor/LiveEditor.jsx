@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 import { useEditMode } from './EditModeContext';
 import EditToolbar from './EditToolbar';
 
@@ -10,9 +11,10 @@ import EditToolbar from './EditToolbar';
  *  - Renders <EditToolbar> next to the active element.
  */
 export default function LiveEditor() {
-  const { editMode, styles } = useEditMode();
+  const { editMode, styles, hiddenSections, setSectionHidden } = useEditMode();
   const [active, setActive] = useState(null); // { el, path, type, rect }
   const [hoverRect, setHoverRect] = useState(null);
+  const [sectionRects, setSectionRects] = useState([]); // [{id, rect, hidden}]
   const rafRef = useRef(0);
 
   const computeRect = (el) => {
@@ -26,22 +28,37 @@ export default function LiveEditor() {
     return 'text';
   };
 
-  // Re-position rectangles on scroll/resize
+  // Re-position rectangles on scroll/resize; also re-scan when DOM mutates
+  // (sections that depend on async data appear after initial mount).
   useEffect(() => {
-    if (!editMode || !active) return;
+    if (!editMode) return;
+    const scan = () => {
+      const nodes = document.querySelectorAll('[data-cms-section]');
+      setSectionRects(Array.from(nodes).map((el) => ({
+        id: el.dataset.cmsSection,
+        rect: computeRect(el),
+        hidden: !!(hiddenSections && hiddenSections[el.dataset.cmsSection]),
+      })));
+    };
     const onScroll = () => {
       cancelAnimationFrame(rafRef.current);
       rafRef.current = requestAnimationFrame(() => {
         setActive((a) => a ? { ...a, rect: computeRect(a.el) } : a);
+        scan();
       });
     };
     window.addEventListener('scroll', onScroll, true);
     window.addEventListener('resize', onScroll);
+    onScroll();
+    // Watch for new sections appearing (async-loaded content)
+    const mo = new MutationObserver(() => onScroll());
+    mo.observe(document.body, { childList: true, subtree: true });
     return () => {
       window.removeEventListener('scroll', onScroll, true);
       window.removeEventListener('resize', onScroll);
+      mo.disconnect();
     };
-  }, [editMode, active]);
+  }, [editMode, hiddenSections]);
 
   // Attach DOM-wide hover + click handlers
   useEffect(() => {
@@ -140,6 +157,53 @@ export default function LiveEditor() {
           onClose={() => setActive(null)}
         />
       )}
+
+      {/* Section hide/show badges */}
+      {sectionRects.map((sr) => {
+        // Keep the badge clear of the fixed navbar at the top of the viewport.
+        const minVpTop = 120;
+        const vpTop = sr.rect.top - window.scrollY;
+        const offsetTop = vpTop < minVpTop ? (window.scrollY + minVpTop) : (sr.rect.top + 14);
+        return (
+          <div
+            key={sr.id}
+            data-live-editor-ui="1"
+            style={{
+              position: 'absolute',
+              top: offsetTop,
+              left: Math.max(12, sr.rect.left + sr.rect.width - 192),
+              zIndex: 999990,
+            }}
+          >
+            <button
+              type="button"
+              data-testid={`section-toggle-${sr.id}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setSectionHidden(sr.id, !sr.hidden);
+              }}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '6px',
+                padding: '6px 12px',
+                borderRadius: '999px',
+                background: sr.hidden ? '#c9a227' : 'rgba(11,23,51,0.92)',
+                color: sr.hidden ? '#0b1733' : '#f5efe6',
+                border: '1px solid ' + (sr.hidden ? '#c9a227' : 'rgba(201,162,39,0.55)'),
+                fontFamily: 'Inter, system-ui, sans-serif',
+                fontSize: '11px', fontWeight: 600,
+                letterSpacing: '0.06em',
+                cursor: 'pointer',
+                boxShadow: '0 6px 14px rgba(0,0,0,0.18)',
+                backdropFilter: 'blur(4px)',
+              }}
+              title={sr.hidden ? 'Restore this section' : 'Hide this section from the live site'}
+            >
+              {sr.hidden ? <Eye size={12} /> : <EyeOff size={12} />}
+              {sr.hidden ? `Show ${sr.id}` : `Hide ${sr.id}`}
+            </button>
+          </div>
+        );
+      })}
     </>
   );
 }

@@ -27,7 +27,7 @@ export default function Programs() {
         pathPrefix="pages.programs.hero"
       />
 
-      <section className="bg-cream py-10 md:py-24">
+      <section data-cms-section="programs-grid" className="bg-cream py-10 md:py-24">
         <div className="container-x">
           <div className="flex flex-wrap items-center gap-3 mb-12">
             <span className="font-caps text-[0.65rem] text-navy/60 flex items-center gap-2 mr-2">

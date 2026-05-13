@@ -8,7 +8,7 @@ import { useSiteContent } from '../context/SiteContent';
 /* ---------- Lead Faculty: image left, text right; text never overflows below image ---------- */
 function LeadFacultyBlock({ lead }) {
   return (
-    <section className="relative bg-navy-deep text-cream py-14 md:py-16 overflow-hidden">
+    <section data-cms-section="faculty-card" className="relative bg-navy-deep text-cream py-14 md:py-16 overflow-hidden">
       <div className="absolute inset-0 starfield opacity-35 pointer-events-none" />
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full glow-gold pointer-events-none" />
 
@@ -164,7 +164,7 @@ export default function Faculty() {
       {lead && <LeadFacultyBlock lead={lead} />}
 
       {/* Guest Lecturers — uniform 4-up grid, smaller portraits, no editorial flips */}
-      <section className="bg-cream py-14 md:py-16">
+      <section data-cms-section="faculty-grid" className="bg-cream py-14 md:py-16">
         <div className="container-x">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <p className="font-caps text-[0.62rem] tracking-[0.28em] text-gold">
@@ -185,7 +185,7 @@ export default function Faculty() {
       </section>
 
       {/* CTA */}
-      <section className="bg-navy-deep text-cream py-14 md:py-16 relative overflow-hidden">
+      <section data-cms-section="faculty-cta" className="bg-navy-deep text-cream py-14 md:py-16 relative overflow-hidden">
         <div className="absolute inset-0 starfield opacity-40" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full glow-gold" />
         <div className="container-x relative text-center">

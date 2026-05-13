@@ -71,4 +71,9 @@ export const api = {
   getElementStyles: () => axios.get(`${API}/content/element-styles`).then((r) => r.data),
   putElementStyle: (path, style) =>
     axios.put(`${API}/admin/element-styles`, { path, style }, { headers: authHeader() }).then((r) => r.data),
+
+  // live editor — section visibility (hide / restore)
+  getSectionVisibility: () => axios.get(`${API}/content/section-visibility`).then((r) => r.data),
+  putSectionVisibility: (section, hidden) =>
+    axios.put(`${API}/admin/section-visibility`, { section, hidden }, { headers: authHeader() }).then((r) => r.data),
 };

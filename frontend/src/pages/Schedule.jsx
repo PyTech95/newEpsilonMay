@@ -40,7 +40,7 @@ export default function Schedule() {
   return (
     <div>
       {/* Hero */}
-      <section className="relative bg-navy-deep text-cream pt-[180px] md:pt-[200px] pb-20 overflow-hidden">
+      <section data-cms-section="schedule-hero" className="relative bg-navy-deep text-cream pt-[180px] md:pt-[200px] pb-20 overflow-hidden">
         <div className="absolute inset-0 starfield opacity-40" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full glow-gold pointer-events-none" />
         <div className="container-x relative max-w-4xl">
@@ -59,7 +59,7 @@ export default function Schedule() {
       </section>
 
       {/* Form */}
-      <section className="bg-cream py-12 md:py-24">
+      <section data-cms-section="schedule-form" className="bg-cream py-12 md:py-24">
         <div className="container-x grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-12">
           <aside>
             <div className="relative aspect-[4/5] overflow-hidden bg-navy-deep mb-8">

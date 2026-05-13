@@ -77,7 +77,7 @@ function InfoStrip({ program }) {
     { icon: Award, label: 'Outcome', value: 'Defended capstone · Certificate' },
   ];
   return (
-    <section className="bg-navy text-cream border-y border-gold/20">
+    <section data-cms-section="apply-deadline" className="bg-navy text-cream border-y border-gold/20">
       <div className="container-x grid grid-cols-2 lg:grid-cols-4 divide-x divide-gold/15">
         {items.map((it) => {
           const Icon = it.icon;
@@ -101,7 +101,7 @@ function InfoStrip({ program }) {
 /* ---------- Deadline strip (gold band) ---------- */
 function DeadlineStrip({ program, label }) {
   return (
-    <section className="bg-gold text-navy-deep">
+    <section data-cms-section="apply-info-strip" className="bg-gold text-navy-deep">
       <div className="container-x flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 py-8 sm:py-4">
         <p className="font-caps text-[0.65rem] tracking-[0.28em]" data-cms-path="apply.deadlineLabel">{label || 'Application Deadline'}</p>
         <p className="font-display text-[1rem] md:text-[1.15rem] leading-tight">
@@ -119,7 +119,7 @@ function DeadlineStrip({ program, label }) {
 /* ---------- Program overview narrative + 2 stat panels ---------- */
 function Overview({ program }) {
   return (
-    <section className="bg-bone py-12 md:py-28">
+    <section data-cms-section="apply-overview" className="bg-bone py-12 md:py-28">
       <div className="container-x grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-14">
         <div>
           <p className="eyebrow mb-4" data-cms-path="apply.overview.eyebrow">Program Overview</p>
@@ -155,7 +155,7 @@ function KeyTakeaways({ program }) {
   const outcomes = program.outcomes || [];
   if (!outcomes.length) return null;
   return (
-    <section className="bg-cream py-12 md:py-28">
+    <section data-cms-section="apply-takeaways" className="bg-cream py-12 md:py-28">
       <div className="container-x">
         <div className="text-center max-w-2xl mx-auto">
           <p className="eyebrow" data-cms-path="apply.takeaways.eyebrow">Key Takeaways</p>
@@ -191,7 +191,7 @@ function WhoFor({ program }) {
     'Founders & operators raising the evidence bar in their organisations',
   ];
   return (
-    <section className="bg-bone py-12 md:py-24">
+    <section data-cms-section="apply-who" className="bg-bone py-12 md:py-24">
       <div className="container-x grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-16 items-start">
         <div>
           <p className="eyebrow" data-cms-path="apply.who.eyebrow">Who is this designed for?</p>
@@ -229,7 +229,7 @@ function Highlights({ program }) {
   ].slice(0, 8);
 
   return (
-    <section className="bg-navy-deep text-cream py-12 md:py-28 relative overflow-hidden">
+    <section data-cms-section="apply-highlights" className="bg-navy-deep text-cream py-12 md:py-28 relative overflow-hidden">
       <div className="absolute inset-0 starfield opacity-40 pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[1100px] rounded-full glow-gold pointer-events-none" />
       <div className="container-x relative">
@@ -260,7 +260,7 @@ function Highlights({ program }) {
 /* ---------- Faculty teaser ---------- */
 function FacultyTeaser({ lead, guests }) {
   return (
-    <section className="bg-cream py-12 md:py-24">
+    <section data-cms-section="apply-faculty" className="bg-cream py-12 md:py-24">
       <div className="container-x">
         <div className="flex items-end justify-between flex-wrap gap-4">
           <div>
@@ -311,7 +311,7 @@ function FAQs({ program }) {
   const faqs = program.faqs || [];
   if (!faqs.length) return null;
   return (
-    <section className="bg-bone py-12 md:py-28">
+    <section data-cms-section="apply-faq" className="bg-bone py-12 md:py-28">
       <div className="container-x max-w-4xl">
         <div className="text-center">
           <p className="eyebrow" data-cms-path="apply.faq.eyebrow">Frequently Asked</p>
@@ -384,7 +384,7 @@ export default function Apply() {
   return (
     <div>
       {/* ---------- 1. Page hero ---------- */}
-      <section className="relative bg-navy-deep text-cream pt-[130px] sm:pt-[150px] md:pt-[190px] pb-12 md:pb-20 overflow-hidden">
+      <section data-cms-section="apply-hero" className="relative bg-navy-deep text-cream pt-[130px] sm:pt-[150px] md:pt-[190px] pb-12 md:pb-20 overflow-hidden">
         <div className="absolute inset-0 starfield opacity-40 pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full glow-gold pointer-events-none" />
         <div className="container-x relative grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-8 lg:gap-10 items-end">
@@ -427,7 +427,7 @@ export default function Apply() {
       <FacultyTeaser lead={leadFaculty[0]} guests={guestLecturers} />
 
       {/* ---------- 9. THE FORM (kept as-is) ---------- */}
-      <section id="apply-form" className="bg-cream py-10 md:py-24 scroll-mt-32">
+      <section id="apply-form" data-cms-section="apply-form" className="bg-cream py-10 md:py-24 scroll-mt-32">
         <div className="container-x">
           <div className="text-center mb-12 max-w-2xl mx-auto">
             <p className="eyebrow">{ap.formEyebrow || 'Apply'}</p>
@@ -579,7 +579,7 @@ export default function Apply() {
       <FAQs program={selectedProgram} />
 
       {/* ---------- 11. Final CTA ---------- */}
-      <section className="bg-navy-deep text-cream py-12 md:py-24 relative overflow-hidden border-t border-gold/10">
+      <section data-cms-section="apply-cta" className="bg-navy-deep text-cream py-12 md:py-24 relative overflow-hidden border-t border-gold/10">
         <div className="absolute inset-0 starfield opacity-50" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] rounded-full glow-gold pointer-events-none" />
         <div className="relative container-x text-center">

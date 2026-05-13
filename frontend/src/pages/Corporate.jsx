@@ -26,7 +26,7 @@ export default function Corporate() {
   return (
     <div>
       {/* Hero */}
-      <section className="relative bg-navy-deep text-cream pt-[180px] md:pt-[200px] pb-24 md:pb-28 overflow-hidden">
+      <section data-cms-section="corporate-hero" className="relative bg-navy-deep text-cream pt-[180px] md:pt-[200px] pb-24 md:pb-28 overflow-hidden">
         <div className="absolute inset-0 starfield opacity-40" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] rounded-full glow-gold pointer-events-none" />
         <div className="container-x relative">
@@ -46,7 +46,7 @@ export default function Corporate() {
       </section>
 
       {/* Intro */}
-      <section className="bg-cream py-24">
+      <section data-cms-section="corporate-intro" className="bg-cream py-24">
         <div className="container-x grid grid-cols-1 md:grid-cols-2 gap-14 items-start">
           <div>
             <p className="eyebrow mb-4" data-cms-path="corporate.introEyebrow">Why Epsilon for Corporate</p>
@@ -63,7 +63,7 @@ export default function Corporate() {
 
       {/* Why */}
       {c.whyItems?.length > 0 && (
-        <section className="bg-bone py-12 md:py-24">
+        <section data-cms-section="corporate-why" className="bg-bone py-12 md:py-24">
           <div className="container-x">
             <p className="eyebrow mb-4" data-cms-path="corporate.whyTitle">{c.whyTitle || 'Why companies partner with Epsilon'}</p>
             <span className="gold-rule-lg" />
@@ -85,7 +85,7 @@ export default function Corporate() {
 
       {/* Audiences */}
       {c.audiences?.length > 0 && (
-        <section className="bg-cream py-12 md:py-24">
+        <section data-cms-section="corporate-audiences" className="bg-cream py-12 md:py-24">
           <div className="container-x">
             <p className="eyebrow mb-4" data-cms-path="corporate.audiencesTitle">{c.audiencesTitle || 'Who we run cohorts for'}</p>
             <span className="gold-rule-lg" />
@@ -105,7 +105,7 @@ export default function Corporate() {
       )}
 
       {/* CTA + form */}
-      <section id="corporate-form" className="bg-bone py-12 md:py-24">
+      <section id="corporate-form" data-cms-section="corporate-cta" className="bg-bone py-12 md:py-24">
         <div className="container-x grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-14">
           <div>
             <p className="eyebrow mb-4" data-cms-path="corporate.ctaEyebrow">{c.ctaEyebrow || 'Get in Touch'}</p>

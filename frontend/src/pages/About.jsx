@@ -23,7 +23,7 @@ export default function About() {
       />
 
       {/* Philosophy */}
-      <section className="bg-cream py-24">
+      <section data-cms-section="about-philosophy" className="bg-cream py-24">
         <div className="container-x grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-14 items-center">
           <div className="relative aspect-[4/5] overflow-hidden bg-navy-deep order-2 lg:order-1">
             <img
@@ -57,7 +57,7 @@ export default function About() {
       </section>
 
       {/* Beliefs — white cards */}
-      <section className="bg-bone py-12 md:py-24">
+      <section data-cms-section="about-beliefs" className="bg-bone py-12 md:py-24">
         <div className="container-x">
           <p className="eyebrow mb-4" data-cms-path="about.beliefsEyebrow">{a.beliefsEyebrow || 'What we believe'}</p>
           <span className="gold-rule-lg" />
@@ -74,7 +74,7 @@ export default function About() {
       </section>
 
       {/* CTA */}
-      <section className="bg-navy-deep text-cream py-14 md:py-28 relative overflow-hidden">
+      <section data-cms-section="about-cta" className="bg-navy-deep text-cream py-14 md:py-28 relative overflow-hidden">
         <div className="absolute inset-0 starfield opacity-50" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full glow-gold" />
         <div className="relative container-x text-center">

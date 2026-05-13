@@ -27,7 +27,7 @@ export default function FacultyShowcase() {
   if (!lead) return null;
 
   return (
-    <section className="relative bg-navy-deep text-cream pt-12 pb-24 md:pb-32 overflow-hidden">
+    <section data-cms-section="home-faculty" className="relative bg-navy-deep text-cream pt-12 pb-24 md:pb-32 overflow-hidden">
       <div className="absolute inset-0 starfield opacity-40 pointer-events-none" />
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full glow-gold pointer-events-none" />
 

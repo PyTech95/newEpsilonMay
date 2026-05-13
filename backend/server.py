@@ -327,6 +327,45 @@ async def put_element_style(body: ElementStyleIn, email: str = Depends(require_a
     return {"ok": True, "path": body.path, "style": style}
 
 
+# ==================================================================
+# LIVE EDITOR — section visibility (hide / restore entire sections)
+# ==================================================================
+SECTION_VIS_KEY = "section_visibility"
+
+
+@api.get("/content/section-visibility")
+async def get_section_visibility():
+    doc = await db.settings.find_one({"_id": SECTION_VIS_KEY})
+    if not doc:
+        return {}
+    doc.pop("_id", None)
+    doc.pop("updatedAt", None)
+    return doc.get("sections", {})
+
+
+class SectionVisibilityIn(BaseModel):
+    section: str
+    hidden: bool
+
+
+@api.put("/admin/section-visibility")
+async def put_section_visibility(body: SectionVisibilityIn, email: str = Depends(require_admin)):
+    if not body.section:
+        raise HTTPException(400, "section is required")
+    doc = await db.settings.find_one({"_id": SECTION_VIS_KEY}) or {}
+    sections_map = doc.get("sections", {}) or {}
+    if body.hidden:
+        sections_map[body.section] = True
+    else:
+        sections_map.pop(body.section, None)
+    await db.settings.update_one(
+        {"_id": SECTION_VIS_KEY},
+        {"$set": {"sections": sections_map, "updatedAt": datetime.now(tz=timezone.utc).isoformat()}},
+        upsert=True,
+    )
+    return {"ok": True, "section": body.section, "hidden": body.hidden}
+
+
 @api.get("/content/beliefs")
 async def list_beliefs():
     docs = await db.beliefs.find().sort("order", 1).to_list(100)

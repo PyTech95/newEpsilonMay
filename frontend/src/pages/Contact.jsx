@@ -31,7 +31,7 @@ export default function Contact() {
         pathPrefix="contact.hero"
       />
 
-      <section className="bg-cream py-12 md:py-24">
+      <section data-cms-section="contact-form" className="bg-cream py-12 md:py-24">
         <div className="container-x grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-14">
           <div>
             <div className="relative aspect-[4/5] overflow-hidden bg-navy-deep mb-9">

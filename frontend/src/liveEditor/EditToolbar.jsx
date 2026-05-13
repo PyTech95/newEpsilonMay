@@ -24,7 +24,7 @@ const WEIGHT_PRESETS = [
 const ui = {
   bar: {
     position: 'fixed',
-    zIndex: 9999,
+    zIndex: 999999,
     background: '#0b1733',
     color: '#f5efe6',
     border: '1px solid rgba(201,162,39,0.4)',

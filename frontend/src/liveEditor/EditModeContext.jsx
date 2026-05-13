@@ -17,6 +17,7 @@ export function EditModeProvider({ children }) {
   const { user } = useAuth();
   const [toggle, setToggle] = useState(false);
   const [styles, setStyles] = useState({});
+  const [hiddenSections, setHiddenSections] = useState({});
   const [stylesLoaded, setStylesLoaded] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
 
@@ -28,8 +29,14 @@ export function EditModeProvider({ children }) {
   const editMode = canEdit && (toggle || urlEdit);
 
   useEffect(() => {
-    api.getElementStyles().then((s) => { setStyles(s || {}); setStylesLoaded(true); })
-      .catch(() => setStylesLoaded(true));
+    Promise.all([
+      api.getElementStyles().catch(() => ({})),
+      api.getSectionVisibility().catch(() => ({})),
+    ]).then(([s, v]) => {
+      setStyles(s || {});
+      setHiddenSections(v || {});
+      setStylesLoaded(true);
+    });
   }, []);
 
   const refreshContent = useCallback(() => {
@@ -70,23 +77,35 @@ export function EditModeProvider({ children }) {
     });
   }, []);
 
+  const setSectionHidden = useCallback(async (section, hidden) => {
+    await api.putSectionVisibility(section, hidden);
+    setHiddenSections((prev) => {
+      const next = { ...prev };
+      if (hidden) next[section] = true;
+      else delete next[section];
+      return next;
+    });
+  }, []);
+
   const value = useMemo(() => ({
     canEdit,
     editMode,
     toggle,
     setToggle,
     styles,
+    hiddenSections,
     stylesLoaded,
     reloadKey,
     saveText,
     saveImage,
     uploadAndSaveImage,
     saveStyle,
-  }), [canEdit, editMode, toggle, styles, stylesLoaded, reloadKey, saveText, saveImage, uploadAndSaveImage, saveStyle]);
+    setSectionHidden,
+  }), [canEdit, editMode, toggle, styles, hiddenSections, stylesLoaded, reloadKey, saveText, saveImage, uploadAndSaveImage, saveStyle, setSectionHidden]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
 
 export const useEditMode = () => useContext(Ctx) || {
-  canEdit: false, editMode: false, styles: {}, stylesLoaded: true, reloadKey: 0,
+  canEdit: false, editMode: false, styles: {}, hiddenSections: {}, stylesLoaded: true, reloadKey: 0,
 };

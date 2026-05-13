@@ -37,7 +37,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-navy-deep text-cream pt-16 pb-10 border-t border-gold/10 relative overflow-hidden">
+    <footer data-cms-section="footer" className="bg-navy-deep text-cream pt-16 pb-10 border-t border-gold/10 relative overflow-hidden">
       <div className="absolute inset-0 starfield opacity-30 pointer-events-none" />
       <div className="container-x relative">
         {/* 4 columns in a row */}

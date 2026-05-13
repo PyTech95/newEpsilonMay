@@ -43,7 +43,7 @@ function BrochureDownload({ programs, brochure, visualImage }) {
   };
 
   return (
-    <section className="bg-bone py-12 md:py-16 relative">
+    <section data-cms-section="home-brochure" className="bg-bone py-12 md:py-16 relative">
       <div className="container-x">
         <SectionHeader
           chapter="Chapter II"
@@ -178,7 +178,7 @@ function AdmissionsContact({ sections, contact }) {
   };
 
   return (
-    <section className="bg-cream py-12 md:py-16 relative">
+    <section data-cms-section="home-admissions" className="bg-cream py-12 md:py-16 relative">
       <div className="container-x">
         <SectionHeader
           chapter="Chapter IV"
@@ -307,7 +307,7 @@ export default function Home() {
   return (
     <div>
       {/* 1. HERO */}
-      <section className="relative overflow-hidden bg-navy-deep text-cream lg:min-h-[100vh]">
+      <section data-cms-section="home-hero" className="relative overflow-hidden bg-navy-deep text-cream lg:min-h-[100vh]">
         <div className="absolute inset-0">
           {heroImage && (
             <img src={heroImage} alt="" className="absolute inset-0 w-full h-full object-cover opacity-25" data-cms-path="hero.heroImage" data-cms-type="image" />
@@ -348,7 +348,7 @@ export default function Home() {
       </section>
 
       {/* 2. PROGRAM SHOWCASE */}
-      <section className="bg-cream pt-6 pb-12 md:py-16 relative">
+      <section data-cms-section="home-flagship" className="bg-cream pt-6 pb-12 md:py-16 relative">
         <div className="container-x">
           <SectionHeader
             chapter="Chapter I"
@@ -429,7 +429,7 @@ export default function Home() {
       <AdmissionsContact sections={sections} contact={contact} />
 
       {/* 6. ABOUT */}
-      <section className="bg-bone py-12 md:py-16 relative">
+      <section data-cms-section="home-about" className="bg-bone py-12 md:py-16 relative">
         <div className="container-x">
           <SectionHeader
             chapter="Chapter V"
@@ -465,7 +465,7 @@ export default function Home() {
       </section>
 
       {/* 7. TESTIMONIALS */}
-      <section className="bg-navy-deep text-cream py-12 md:py-16 relative overflow-hidden">
+      <section data-cms-section="home-testimonials" className="bg-navy-deep text-cream py-12 md:py-16 relative overflow-hidden">
         <div className="absolute inset-0 starfield opacity-40" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full glow-gold pointer-events-none" />
         <div className="container-x relative">
@@ -498,7 +498,7 @@ export default function Home() {
       </section>
 
       {/* 8. FINAL CTA */}
-      <section className="relative bg-navy-deep text-cream py-14 md:py-20 overflow-hidden border-t border-gold/10">
+      <section data-cms-section="home-cta" className="relative bg-navy-deep text-cream py-14 md:py-20 overflow-hidden border-t border-gold/10">
         <div className="absolute inset-0 starfield opacity-60" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[1100px] rounded-full glow-gold" />
         <div className="relative container-x text-center">
