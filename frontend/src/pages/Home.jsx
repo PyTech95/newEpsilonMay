@@ -95,12 +95,14 @@ function BrochureDownload({ programs, brochure, visualImage }) {
               >
                 <Download size={16} /> Download Brochure
               </a>
-              <button
-                onClick={() => setSent(false)}
-                className="block mx-auto mt-6 link-gold"
-              >
-                Request again
-              </button>
+              <div className="mt-8">
+                <button
+                  onClick={() => setSent(false)}
+                  className="link-gold"
+                >
+                  Request again
+                </button>
+              </div>
             </div>
           ) : (
             <form onSubmit={onSubmit} className="space-y-6">
