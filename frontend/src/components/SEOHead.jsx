@@ -40,6 +40,7 @@ export default function SEOHead() {
   const title = cfg.title || DEFAULTS.title;
   const description = cfg.description || DEFAULTS.description;
   const keywords = cfg.keywords || DEFAULTS.keywords;
+  const ogImage = cfg.image || seoMap._default?.image || '';
 
   useEffect(() => {
     document.title = title;
@@ -49,7 +50,12 @@ export default function SEOHead() {
     setMeta('og:description', description, 'property');
     setMeta('twitter:title', title);
     setMeta('twitter:description', description);
-  }, [title, description, keywords]);
+    if (ogImage) {
+      setMeta('og:image', ogImage, 'property');
+      setMeta('twitter:image', ogImage);
+      setMeta('twitter:card', 'summary_large_image');
+    }
+  }, [title, description, keywords, ogImage]);
 
   return null;
 }

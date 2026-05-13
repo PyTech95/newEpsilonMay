@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { api } from './api';
 import { Save, ChevronDown, ChevronUp, Search } from 'lucide-react';
+import ImageField from './ImageField';
 
 const STATIC_PAGES = [
   { path: '/', label: 'Home' },
@@ -91,6 +92,20 @@ function PageRow({ page, value, onChange, expanded, onToggle }) {
               data-testid={`seo-keywords-${page.path}`}
             />
           </label>
+
+          <div>
+            <span className="fld-label flex items-center justify-between">
+              <span>Share Image (og:image)</span>
+              <span className="text-[0.65rem] text-navy/50 font-normal normal-case tracking-normal">
+                Shown when your page is shared on social media · 1200×630 recommended
+              </span>
+            </span>
+            <ImageField
+              value={v.image || ''}
+              onChange={(url) => onChange({ ...v, image: url })}
+              help="Used as og:image / twitter:image when this page is shared."
+            />
+          </div>
         </div>
       )}
     </section>

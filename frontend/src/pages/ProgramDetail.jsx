@@ -233,20 +233,22 @@ export default function ProgramDetail() {
   const showExperience = p.experienceEnabled !== false && experienceItems.length > 0;
   const showContact = p.contactEnabled !== false;
 
+  const path = (k) => `programs.${p.slug}.${k}`;
+
   return (
     <div>
       {/* Hero */}
-      <section className="relative bg-navy-deep text-cream pt-[130px] sm:pt-[150px] md:pt-[180px] pb-10 md:pb-12 overflow-hidden">
+      <section data-cms-section="program-hero" className="relative bg-navy-deep text-cream pt-[130px] sm:pt-[150px] md:pt-[180px] pb-10 md:pb-12 overflow-hidden">
         <div className="absolute inset-0">
-          <img src={p.image} alt="" className="w-full h-full object-cover opacity-25" />
+          <img src={p.image} alt="" className="w-full h-full object-cover opacity-25" data-cms-path={path('image')} data-cms-type="image" />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(8,19,31,0.6), rgba(8,19,31,0.95))' }} />
         </div>
         <div className="absolute inset-0 starfield opacity-30" />
         <div className="relative container-x">
-          <p className="eyebrow mb-3 md:mb-4">{p.weeks} weeks · {p.levelLabel}</p>
-          <h1 className="font-display theme-program-title text-[1.9rem] sm:text-[2.4rem] md:text-[4rem] leading-[1.05] max-w-4xl">{p.title}</h1>
-          <p className="font-editorial italic theme-hero-accent text-[1.1rem] sm:text-[1.3rem] md:text-[1.6rem] mt-4 md:mt-5">{p.tagline}</p>
-          <p className="font-editorial text-cream/80 text-[1.02rem] md:text-[1.2rem] leading-relaxed mt-5 md:mt-6 max-w-3xl">{p.long}</p>
+          <p className="eyebrow mb-3 md:mb-4" data-cms-path={path('levelLabel')}>{p.weeks} weeks · {p.levelLabel}</p>
+          <h1 className="font-display theme-program-title text-[1.9rem] sm:text-[2.4rem] md:text-[4rem] leading-[1.05] max-w-4xl" data-cms-path={path('title')}>{p.title}</h1>
+          <p className="font-editorial italic theme-hero-accent text-[1.1rem] sm:text-[1.3rem] md:text-[1.6rem] mt-4 md:mt-5" data-cms-path={path('tagline')}>{p.tagline}</p>
+          <p className="font-editorial text-cream/80 text-[1.02rem] md:text-[1.2rem] leading-relaxed mt-5 md:mt-6 max-w-3xl" data-cms-path={path('long')}>{p.long}</p>
 
           <div className="mt-7 md:mt-10 flex flex-wrap gap-3 md:gap-4">
             <Link to="/apply" className="btn-gold">Apply Now <ArrowRight size={16} /></Link>
@@ -255,13 +257,13 @@ export default function ProgramDetail() {
 
           <div className="mt-7 md:mt-12 grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-6">
             {[
-              { v: p.fee, l: 'Program Fee' },
-              { v: `${p.weeks} weeks`, l: 'Duration' },
-              { v: p.audience, l: 'Audience' },
-              { v: p.nextCohort, l: 'Next Cohort' },
+              { v: p.fee, l: 'Program Fee', k: 'fee' },
+              { v: `${p.weeks} weeks`, l: 'Duration', k: 'weeks' },
+              { v: p.audience, l: 'Audience', k: 'audience' },
+              { v: p.nextCohort, l: 'Next Cohort', k: 'nextCohort' },
             ].map((s) => (
               <div key={s.l} className="border-l border-gold/40 pl-3 md:pl-4">
-                <p className="font-display text-[1rem] sm:text-lg md:text-xl text-cream leading-snug">{s.v}</p>
+                <p className="font-display text-[1rem] sm:text-lg md:text-xl text-cream leading-snug" data-cms-path={path(s.k)}>{s.v}</p>
                 <p className="font-caps text-[0.55rem] sm:text-[0.6rem] text-cream/60 mt-1">{s.l}</p>
               </div>
             ))}
@@ -271,16 +273,16 @@ export default function ProgramDetail() {
 
       {/* Programme Modules (accordion-style with full brochure content) */}
       {showCurriculum && (
-        <section className="bg-cream py-12 md:py-28" id="programme-modules">
+        <section data-cms-section="program-curriculum" className="bg-cream py-12 md:py-28" id="programme-modules">
           <div className="container-x">
-            <p className="eyebrow mb-4">{p.curriculumEyebrow || 'Programme Modules'}</p>
+            <p className="eyebrow mb-4" data-cms-path={path('curriculumEyebrow')}>{p.curriculumEyebrow || 'Programme Modules'}</p>
             <span className="gold-rule-lg" />
             <TitleWithAccent
               title={p.curriculumTitle || '12-Week'}
               accent={p.curriculumTitleAccent || 'Learning Journey'}
               className="font-display text-navy text-[2.4rem] md:text-[3.4rem] leading-[1.02] mt-6 max-w-4xl"
             />
-            <p className="font-editorial text-navy/75 text-[1.1rem] leading-relaxed mt-6 max-w-2xl">
+            <p className="font-editorial text-navy/75 text-[1.1rem] leading-relaxed mt-6 max-w-2xl" data-cms-path={path('curriculumDescription')}>
               {p.curriculumDescription || 'Four comprehensive modules designed to transform technical knowledge into strategic business value.'}
             </p>
 
@@ -353,7 +355,7 @@ export default function ProgramDetail() {
 
       {/* Certificate */}
       {showCertificate && (
-        <section className="bg-bone py-12 md:py-24">
+        <section data-cms-section="program-certificate" className="bg-bone py-12 md:py-24">
           <div className="container-x grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-16 items-center">
             {/* Visual */}
             <div className="relative bg-bone h-[260px] lg:h-[420px] overflow-hidden flex items-center justify-center order-2 lg:order-1">
@@ -363,6 +365,8 @@ export default function ProgramDetail() {
                   src={p.certificateImage}
                   alt={`${p.subtitle || p.title} certificate`}
                   className="absolute inset-0 w-full h-full object-contain bg-bone"
+                  data-cms-path={path('certificateImage')}
+                  data-cms-type="image"
                 />
               ) : (
                 /* Default decorative placeholder */
@@ -388,7 +392,7 @@ export default function ProgramDetail() {
 
             {/* Copy */}
             <div className="order-1 lg:order-2">
-              <p className="eyebrow mb-3">{p.certificateEyebrow || 'Certificate'}</p>
+              <p className="eyebrow mb-3" data-cms-path={path('certificateEyebrow')}>{p.certificateEyebrow || 'Certificate'}</p>
               <span className="gold-rule-lg" />
               <TitleWithAccent
                 title={p.certificateTitle || 'A credible artefact of'}
@@ -396,7 +400,7 @@ export default function ProgramDetail() {
                 className="font-display text-navy text-[2rem] md:text-[2.6rem] leading-[1.06] mt-6"
               />
               {p.certificateDescription && (
-                <p className="font-editorial text-navy/85 text-[1.1rem] leading-[1.75] mt-6">
+                <p className="font-editorial text-navy/85 text-[1.1rem] leading-[1.75] mt-6" data-cms-path={path('certificateDescription')}>
                   {p.certificateDescription}
                 </p>
               )}
@@ -422,10 +426,10 @@ export default function ProgramDetail() {
 
       {/* Outcomes */}
       {showOutcomes && (
-        <section className="bg-cream py-12 md:py-24">
+        <section data-cms-section="program-outcomes" className="bg-cream py-12 md:py-24">
           <div className="container-x grid grid-cols-1 md:grid-cols-2 gap-14">
             <div>
-              <p className="eyebrow mb-4">{p.outcomesEyebrow || 'What you leave with'}</p>
+              <p className="eyebrow mb-4" data-cms-path={path('outcomesEyebrow')}>{p.outcomesEyebrow || 'What you leave with'}</p>
               <span className="gold-rule-lg" />
               <TitleWithAccent
                 title={p.outcomesTitle || 'Outcomes worth'}
@@ -447,9 +451,9 @@ export default function ProgramDetail() {
 
       {/* Modules — detailed cards (hidden by default for AI/ML; toggleable per program) */}
       {showModules && (
-        <section className="bg-cream py-12 md:py-28" id="modules">
+        <section data-cms-section="program-modules" className="bg-cream py-12 md:py-28" id="modules">
           <div className="container-x">
-            <p className="eyebrow mb-4">{p.modulesEyebrow || 'Programme Modules'}</p>
+            <p className="eyebrow mb-4" data-cms-path={path('modulesEyebrow')}>{p.modulesEyebrow || 'Programme Modules'}</p>
             <span className="gold-rule-lg" />
             <TitleWithAccent
               title={p.modulesTitle || `12-Week`}
@@ -559,18 +563,18 @@ export default function ProgramDetail() {
 
       {/* Experience */}
       {showExperience && (
-        <section className="bg-navy-deep text-cream py-12 md:py-28 relative overflow-hidden">
+        <section data-cms-section="program-experience" className="bg-navy-deep text-cream py-12 md:py-28 relative overflow-hidden">
           <div className="absolute inset-0 starfield opacity-40 pointer-events-none" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[1100px] rounded-full glow-gold pointer-events-none" />
           <div className="relative container-x">
-            <p className="font-caps text-[0.65rem] tracking-[0.28em] text-gold">{p.experienceEyebrow || 'The Epsilon Experience'}</p>
+            <p className="font-caps text-[0.65rem] tracking-[0.28em] text-gold" data-cms-path={path('experienceEyebrow')}>{p.experienceEyebrow || 'The Epsilon Experience'}</p>
             <span className="block w-12 h-px bg-gold/60 mt-3" />
             <TitleWithAccent
               title={p.experienceTitle || 'What this'}
               accent={p.experienceTitleAccent || 'experience builds'}
               className="font-display text-cream text-[2rem] md:text-[3rem] leading-[1.08] mt-6 max-w-3xl"
             />
-            <p className="font-editorial text-cream/75 text-[1.05rem] leading-relaxed mt-5 max-w-2xl">
+            <p className="font-editorial text-cream/75 text-[1.05rem] leading-relaxed mt-5 max-w-2xl" data-cms-path={path('experienceDescription')}>
               {p.experienceDescription || 'A holistic learning journey that goes beyond theory to build real professional capability.'}
             </p>
 
@@ -619,9 +623,9 @@ export default function ProgramDetail() {
 
       {/* FAQ */}
       {showFaq && (
-        <section className="bg-bone py-12 md:py-24">
+        <section data-cms-section="program-faq" className="bg-bone py-12 md:py-24">
           <div className="container-x max-w-4xl">
-            <p className="eyebrow mb-4">{p.faqEyebrow || 'FAQ'}</p>
+            <p className="eyebrow mb-4" data-cms-path={path('faqEyebrow')}>{p.faqEyebrow || 'FAQ'}</p>
             <span className="gold-rule-lg" />
             <TitleWithAccent
               title={p.faqTitle || 'Questions,'}
@@ -668,15 +672,15 @@ export default function ProgramDetail() {
       {showContact && <ContactForm p={p} />}
 
       {/* CTA */}
-      <section className="bg-navy-deep text-cream py-12 md:py-24 relative overflow-hidden">
+      <section data-cms-section="program-cta" className="bg-navy-deep text-cream py-12 md:py-24 relative overflow-hidden">
         <div className="absolute inset-0 starfield opacity-40" />
         <div className="container-x relative text-center">
           <Calendar size={26} className="text-gold mx-auto mb-4" />
-          <h2 className="font-display text-[2rem] md:text-[3rem] leading-[1.05] max-w-3xl mx-auto">
+          <h2 className="font-display text-[2rem] md:text-[3rem] leading-[1.05] max-w-3xl mx-auto" data-cms-path={path('ctaTitle')}>
             {p.ctaTitle || 'Next cohort:'}{' '}
-            <span className="italic font-editorial text-gold">{p.ctaTitleAccent || p.nextCohort}</span>
+            <span className="italic font-editorial text-gold" data-cms-path={path('ctaTitleAccent')}>{p.ctaTitleAccent || p.nextCohort}</span>
           </h2>
-          <p className="font-editorial text-cream/80 text-lg mt-5 max-w-xl mx-auto">
+          <p className="font-editorial text-cream/80 text-lg mt-5 max-w-xl mx-auto" data-cms-path={path('ctaSubtitle')}>
             {p.ctaSubtitle || 'Applications are reviewed personally. Start a conversation with admissions.'}
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
